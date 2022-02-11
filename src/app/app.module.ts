@@ -10,6 +10,7 @@ import { HttpClientModule} from '@angular/common/http'
 import { ObraService } from './services/obra.service';
 
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
