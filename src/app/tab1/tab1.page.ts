@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
+import { Obra, ObraService } from '../services/obra.service';
 
 @Component({
   selector: 'app-tab1',
@@ -8,22 +9,23 @@ import { IonInfiniteScroll } from '@ionic/angular';
 })
 export class Tab1Page {
 
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  @ViewChild(IonInfiniteScroll) infinite: IonInfiniteScroll;
+  public searchedItem: any;
+  public obras: Obra[] = [];
 
-  constructor() {}
+  constructor(private obra:ObraService) {}
 
-  loadData(event) {
-    setTimeout(() => {
-      console.log('Done');
-      event.target.complete();
-
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-    }, 500);
+  async ionViewDidEnter() {
+    await this.cargarObras();
+  }
+  public async cargarObras(event?) {
+    await this.obra.getAllObras().subscribe(obras => {
+      this.obras = obras;
+      if (event) {
+        event.target.complete();
+      }
+    });
   }
 
-  toggleInfiniteScroll() {
-    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
-  }
 }
 

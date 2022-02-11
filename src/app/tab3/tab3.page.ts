@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ObraService } from '../services/obra.service';
+import { Obra, ObraService } from '../services/obra.service';
 
 @Component({
   selector: 'app-tab3',
@@ -8,7 +8,7 @@ import { ObraService } from '../services/obra.service';
 })
 export class Tab3Page {
 
-  private obras:Array<any>;
+  private obras:Obra;
 
   constructor(public obraservice:ObraService) {}
 
