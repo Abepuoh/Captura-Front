@@ -11,7 +11,7 @@ export class Tab2Page {
 
   constructor() {}
 
-  ngAfterViewInit() {
+  ionViewDidEnter() {
     
     var streetMap =L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
@@ -35,4 +35,5 @@ export class Tab2Page {
     //find the location of the user and add a marker with high precision
     
   }
+  
 }

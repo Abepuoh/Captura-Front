@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Obra } from '../model/obra.interface';
 import { ObraService } from '../services/obra.service';
 
 @Component({
@@ -8,34 +9,34 @@ import { ObraService } from '../services/obra.service';
 })
 export class Tab3Page {
 
-  private obras:Array<any>;
+  private obras:Array<Obra>;
 
   constructor(public obraservice:ObraService) {}
 
   ngOnInit(){
-    this.obraservice.getAllObras().subscribe(obras=>{
+    this.obraservice.getAllObras().then(obras=>{
       this.obras = obras;
       console.log(this.obras)
     })
   }
 
-  public async borra (nota:any){
-    await this.obraservice.deleteObra(nota);
-    console.log(nota);
-  }
-
-  public async getOneObra(id:any){
-    await this.obraservice.getObra(id)
+  public async borra (id:Number){
+    await this.obraservice.deleteObra(id);
     console.log(id);
   }
 
-  public async getObraByName(nombre:any){
+  public async getOneObra(id:Number){
+    await this.obraservice.getObraById(id)
+    console.log(id);
+  }
+
+  public async getObraByName(nombre:String){
     await this.obraservice.getObraByName(nombre);
     console.log(nombre);
   }
 
-  public async getObraByCoordinates(coordenadas:any){
-    await this.obraservice.getObraByCoordinates(coordenadas);
-    console.log(coordenadas);
+  public async getObraByCoordinates(latitud:Number, longitud:Number){
+    await this.obraservice.getObraByCoordinates(latitud, longitud);
+    console.log(latitud, longitud);
   }
 }

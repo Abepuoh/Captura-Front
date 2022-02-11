@@ -8,6 +8,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule} from '@angular/common/http'
 import { ObraService } from './services/obra.service';
+import { VisitaService } from './services/visita.service';
+import { UsuarioService } from './services/usuario.service';
+import { FotoService } from './services/foto.service';
+import { IonicToastService } from './services/ionic-toast.service';
 
 
 
@@ -20,7 +24,8 @@ import { ObraService } from './services/obra.service';
     HttpClientModule,
 
     ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ObraService],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ObraService, VisitaService,
+  UsuarioService, FotoService, IonicToastService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

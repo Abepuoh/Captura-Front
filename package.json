@@ -30,6 +30,7 @@
     "@ionic/angular": "^6.0.0",
     "@types/leaflet": "^1.4.5",
     "firebase": "^9.6.6",
+    "leaflet": "^1.7.1",
     "leaflet.locatecontrol": "^0.76.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
