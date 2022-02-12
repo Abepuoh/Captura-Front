@@ -35,4 +35,5 @@ export class Tab2Page {
     // setTimeout(()=>{ this.map.invalidateSize()}, 200)
 
   }
+  
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ObraService } from 'src/services/obra.service';
 import { Obra } from 'src/shared/obra.interface';
-
+import { Obra, ObraService } from '../services/obra.service';
 
 
 @Component({
@@ -12,6 +12,7 @@ import { Obra } from 'src/shared/obra.interface';
 export class Tab3Page {
 
   public obras:Array<Obra>;
+
 
   constructor(public obraservice:ObraService) {}
 
