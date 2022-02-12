@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ObraService } from '../services/obra.service';
+import { Obra, ObraService } from '../services/obra.service';
 
 @Component({
   selector: 'app-tab3',
@@ -8,7 +8,7 @@ import { ObraService } from '../services/obra.service';
 })
 export class Tab3Page {
 
-  private obras:Array<any>;
+  private obras:Array<Obra>;
 
   constructor(public obraservice:ObraService) {}
 
@@ -19,9 +19,9 @@ export class Tab3Page {
     })
   }
 
-  public async borra (nota:any){
-    await this.obraservice.deleteObra(nota);
-    console.log(nota);
+  public async borra (id:Number){
+    await this.obraservice.deleteObra(id);
+    console.log(id);
   }
 
   public async getOneObra(id:any){
