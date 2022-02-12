@@ -7,7 +7,6 @@ import {Map, marker, tileLayer} from 'leaflet';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-
 export class Tab2Page {
   Map;
   constructor() {}
