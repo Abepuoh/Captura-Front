@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { ObraService } from 'src/services/obra.service';
 import { Obra } from 'src/shared/obra.interface';
-import { Obra, ObraService } from '../services/obra.service';
-
 
 @Component({
   selector: 'app-tab3',

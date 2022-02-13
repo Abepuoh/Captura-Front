@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { Obra, ObraService } from '../services/obra.service';
+import { ObraService } from 'src/services/obra.service';
+import { Obra } from 'src/shared/obra.interface';
+
 
 @Component({
   selector: 'app-tab1',
@@ -11,7 +13,7 @@ export class Tab1Page {
 
   @ViewChild(IonInfiniteScroll) infinite: IonInfiniteScroll;
   public searchedItem: any;
-  public obras: Obra[] = [];
+  public obras: Obra[];
 
   constructor(private obra:ObraService) {}
 
@@ -19,13 +21,22 @@ export class Tab1Page {
     await this.cargarObras();
   }
   public async cargarObras(event?) {
-    await this.obra.getAllObras().subscribe(obras => {
+    await this.obra.getAllObras().then(obras => {
       this.obras = obras;
       if (event) {
         event.target.complete();
       }
     });
   }
-
+  public buscarObras($event) {
+    const texto = $event.target.value;
+    if (texto.length > 0) {
+      this.obras = this.obras.filter((obra) => {
+        return (obra.nombre.toLowerCase().indexOf(texto.toLowerCase())) > -1;
+      });
+    } else {
+      this.cargarObras();
+    }
+  }
 }
 

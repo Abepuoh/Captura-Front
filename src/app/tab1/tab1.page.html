@@ -3,7 +3,7 @@
   <ion-row>
     <ion-col>
       <ion-toolbar>
-        <ion-searchbar debounce="500" [animated]="true"></ion-searchbar>
+        <ion-searchbar debounce="500" [animated]="true" (ionChange)="buscarObras($event)"></ion-searchbar>
       </ion-toolbar>
       </ion-col>
     </ion-row>    

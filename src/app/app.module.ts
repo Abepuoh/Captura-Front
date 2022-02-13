@@ -10,6 +10,7 @@ import { HttpClientModule} from '@angular/common/http'
 import { VisitaService } from 'src/services/visita-service.service.spec';
 import { UsuarioService } from 'src/services/usuario-service.service';
 import { FotoService } from 'src/services/foto-service.service';
+import { ObraService } from 'src/services/obra.service';
 
 
 
@@ -23,7 +24,7 @@ import { FotoService } from 'src/services/foto-service.service';
     HttpClientModule,
 
     ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, VisitaService, UsuarioService, FotoService],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, VisitaService, UsuarioService, FotoService, ObraService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

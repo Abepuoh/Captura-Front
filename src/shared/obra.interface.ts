@@ -6,7 +6,7 @@ export interface Obra {
     datos:String,
     latitud:Number,
     longitud:Number,
-    nombre:Number,
+    nombre:String,
     usuarios:Array<Usuario>,
     visitas:Array<Visita>
 } 

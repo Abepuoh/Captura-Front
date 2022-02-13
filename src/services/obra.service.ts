@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Obra } from '../../src/shared/obra.interface';
+import { Obra } from 'src/shared/obra.interface';
+
 
 
 
