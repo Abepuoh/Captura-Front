@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import * as L from 'leaflet';
-import {Map, marker, tileLayer} from 'leaflet';
+
 
 @Component({
   selector: 'app-tab2',
@@ -11,7 +11,7 @@ export class Tab2Page {
 
   constructor() {}
 
-  ngAfterViewInit() {
+  ionViewDidEnter() {
     
     var streetMap =L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
