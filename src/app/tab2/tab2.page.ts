@@ -7,8 +7,9 @@ import {Map, marker, tileLayer} from 'leaflet';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page {
 
+export class Tab2Page {
+  Map;
   constructor() {}
 
   ionViewDidEnter() {
@@ -21,7 +22,7 @@ export class Tab2Page {
       attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
     });
   
-    var map = L.map('map', {
+    this.Map = L.map('map', {
       center: [37.66994, -4.72531],
       zoom: 13,
       layers: [esriMap,streetMap]
@@ -31,9 +32,9 @@ export class Tab2Page {
       "streetMap": streetMap,
       "esriMap": esriMap
     };
-    L.control.layers(baseMaps).addTo(map);
-    //find the location of the user and add a marker with high precision
-    
+    L.control.layers(baseMaps).addTo(this.Map);
+    // setTimeout(()=>{ this.map.invalidateSize()}, 200)
+
   }
   
 }
