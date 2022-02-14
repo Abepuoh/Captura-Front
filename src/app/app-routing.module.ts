@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'modal-profile',
+    loadChildren: () => import('./modal/modal-profile/modal-profile.module').then( m => m.ModalProfilePageModule)
   }
 ];
 @NgModule({

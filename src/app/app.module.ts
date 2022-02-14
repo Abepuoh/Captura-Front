@@ -11,8 +11,10 @@ import { VisitaService } from 'src/services/visita-service.service.spec';
 import { UsuarioService } from 'src/services/usuario-service.service';
 import { FotoService } from 'src/services/foto-service.service';
 import { ObraService } from 'src/services/obra.service';
-
-
+import { AngularFireModule } from '@angular/fire/compat'
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/services/auth.service';
 
 
 @NgModule({
@@ -22,9 +24,10 @@ import { ObraService } from 'src/services/obra.service';
     IonicModule.forRoot(), 
     AppRoutingModule,
     HttpClientModule,
-
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
     ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, VisitaService, UsuarioService, FotoService, ObraService],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AuthService, VisitaService, UsuarioService, FotoService, ObraService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

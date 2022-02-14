@@ -16,4 +16,5 @@ export class LoginPage implements OnInit {
   goToTabsPage(){
     this.router.navigate(['private/tabs/tab1']);
   }
+  
 }

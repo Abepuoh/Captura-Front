@@ -6,12 +6,12 @@
       <div class="login-form">
         <div class="sign-in-htm">
           <div class="group">
-            <ion-label for="user" class="label">Correo</ion-label>
-            <ion-input id="user" type="text" class="input"></ion-input>
+            <ion-label class="label">Correo</ion-label>
+            <ion-input type="text" #email required ></ion-input>
           </div>
           <div class="group">
-            <ion-label for="pass" class="label">Contraseña</ion-label>
-            <ion-input id="pass" type="password" class="input" data-type="password"></ion-input>
+            <ion-label class="label">Contraseña</ion-label>
+            <ion-input type="password" #password required></ion-input>
           </div>
           <div>
             <ion-button (click)="goToTabsPage()" type="submit" color="danger" shape= "round" expand="block">
