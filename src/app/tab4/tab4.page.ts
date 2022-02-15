@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { FotoService } from 'src/services/foto-service.service';
 import { ObraService } from 'src/services/obra.service';
-import { Obra } from 'src/shared/obra.interface';
+import { VisitaServiceService } from 'src/services/visita-service.service';
+import { VisitaService } from 'src/services/visita-service.service.spec';
+import { Foto } from 'src/shared/foto.interface';
+import { Visita } from 'src/shared/visita.interface';
 
 @Component({
   selector: 'app-tab4',
@@ -9,32 +14,64 @@ import { Obra } from 'src/shared/obra.interface';
 })
 export class Tab4Page {
 
-  public obras:Array<Obra>;
+  public fotos:Foto[];
+  public visitas:Visita[];
+  public foto:Foto[];
+  public visita:Visita[];
 
 
-  constructor(public obraservice:ObraService) {}
+  constructor(public fotoservice:FotoService, public visitaservice:VisitaService) {}
 
-  async ngOnInit(){
-    this.obras = await this.obraservice.getAllObras();
-    console.log(this.obras);
+  async ionViewDidEnter(){
+  await this.cargarVisitas()
+  }
+  public async cargarVisitas(event?){
+    await this.visitaservice.getAllVisitas().then(visitas=>{
+      this.visitas = visitas;
+      if (event){
+        if(event){
+          event.target.complete();
+        }
+      }
+    })
   }
 
-  public async borra (id:Number){
-    await this.obraservice.deleteObra(id);
+  public async borraFoto(foto:Foto){
+    await this.fotoservice.deleteFoto(foto.id);
+    console.log(foto);
+  }
+
+  public async borraVisita(id:Number){
+    await this.visitaservice.deleteVisita(id);
+    console.log(id);
+    
+  }
+  public async getAllFotos(foto){
+    await this.fotoservice.getAllFotos();
+    console.log(foto);
+  }
+  
+  public async getFoto(foto:Foto){
+    await this.fotoservice.getFotoById(foto.id)
+    console.log(foto);
+  }
+
+  public async getVisita(id:Number){
+    
+    await this.visitaservice.getVisitaById(id);
     console.log(id);
   }
 
-  public async getOneObra(id:any){
-    await this.obraservice.getObra(id)
-    console.log(id);
+  public async getAllVisitas(visita){
+    await this.visitaservice.getAllVisitas();
+    console.log(visita);
+    
+  }
+  public async getVisitaByFecha(fecha:Date){
+    await this.visitaservice.getVisitaByFecha(fecha);
+    console.log(fecha);
+    
   }
 
-  public async getObraByName(nombre:any){
-    await this.obraservice.getObraByName(nombre);
-    console.log(nombre);
-  }
 
-  public async getObraByCoordinates(latitud:Number, longitud:Number){
-    await this.obraservice.getObraByCoordinates(latitud, longitud);
-  }
 }
