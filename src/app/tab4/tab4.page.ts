@@ -18,7 +18,7 @@ export class Tab4Page {
     this.obras = await this.obraservice.getAllObras();
     console.log(this.obras);
   }
-
+  
   public async borra (id:Number){
     await this.obraservice.deleteObra(id);
     console.log(id);

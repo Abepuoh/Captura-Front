@@ -68,7 +68,7 @@ export class Tab3Page {
       datos:"Datos desde Ionic",
       latitud:6,
       longitud:-6,
-      nombre:"Piso Ionic",
+      nombre:"PISOS PICADOS",
       usuarios:[],
       visitas:[]
     }

@@ -18,7 +18,7 @@ export class FotoService {
    * @param id 
    * @returns lista de todas las fotos
    */
-  public getAllFotos(): Promise<Foto[] | null> {
+  public getAllFotos(): Promise<Foto[]> {
 
     return new Promise(async (resolve, reject) => {
       try {
@@ -35,7 +35,7 @@ export class FotoService {
    * @param id 
    * @returns foto
    */
-  public getFotoById(id?:Number):Promise<Foto[]|null>{
+  public getFotoById(id?:Number):Promise<Foto[]>{
     return new Promise(async (resolve, reject) => {
       try {
         let result: any = await this.http.get(this.FOTO_API+"/"+id).toPromise();

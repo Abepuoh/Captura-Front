@@ -121,7 +121,7 @@ export class ObraService {
      * @param id 
      * @returns Obras de un usuario
      */
-     public getObraByUser(id?:Number):Promise<Obra[]|null> {
+     public getObraByUser(id?:Number):Promise<Obra[]> {
       return new Promise(async (resolve, reject) => {
         try {
           let result: any = await this.http.get(this.OBRA_API+"/usuario"+id).toPromise();
@@ -137,7 +137,7 @@ export class ObraService {
      * @param nombre 
      * @returns obra
      */
-      public getObraByName(nombre?:String):Promise<Obra|null>{
+      public getObraByName(nombre?:String):Promise<Obra>{
         return new Promise(async (resolve, reject) => {
           try {
             let result: any = await this.http.get(this.OBRA_API+"/nombre/"+nombre).toPromise();

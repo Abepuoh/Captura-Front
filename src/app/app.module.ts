@@ -24,7 +24,7 @@ import { AuthService } from 'src/services/auth.service';
     IonicModule.forRoot(), 
     AppRoutingModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
     ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AuthService, VisitaService, UsuarioService, FotoService, ObraService],

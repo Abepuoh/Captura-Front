@@ -18,7 +18,7 @@ export class UsuarioService {
    * @param id 
    * @returns lista de todas los usuarios
    */
-  public getAllUsuarios(): Promise<Usuario[] | null> {
+  public getAllUsuarios(): Promise<Usuario[]> {
 
     return new Promise(async (resolve, reject) => {
       try {
@@ -35,7 +35,7 @@ export class UsuarioService {
    * @param id 
    * @returns usuario
    */
-  public getUsuarioById(id?:Number):Promise<Usuario[]|null>{
+  public getUsuarioById(id?:Number):Promise<Usuario[]>{
     return new Promise(async (resolve, reject) => {
       try {
         let result: any = await this.http.get(this.USUARIO_API+"/"+id).toPromise();
@@ -52,7 +52,7 @@ export class UsuarioService {
      * @param nombre 
      * @returns usuario
      */
-    public getUsuarioByName(nombre?:String):Promise<Usuario|null>{
+    public getUsuarioByName(nombre?:String):Promise<Usuario>{
       return new Promise(async (resolve, reject) => {
         try {
           let result: any = await this.http.get(this.USUARIO_API+"/nombre"+nombre).toPromise();
