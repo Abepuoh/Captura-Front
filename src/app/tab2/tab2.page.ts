@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import * as L from 'leaflet';
 import {Map, marker, tileLayer} from 'leaflet';
+import { ObraService } from 'src/services/obra.service';
+import { Obra } from 'src/shared/obra.interface';
 
 @Component({
   selector: 'app-tab2',
@@ -9,7 +11,7 @@ import {Map, marker, tileLayer} from 'leaflet';
 })
 export class Tab2Page {
   Map;
-  constructor() {}
+  constructor(private obraService: ObraService) {}
 
   ionViewDidEnter() {
   
@@ -33,7 +35,21 @@ export class Tab2Page {
     };
     L.control.layers(baseMaps).addTo(this.Map);
     // setTimeout(()=>{ this.map.invalidateSize()}, 200)
-
-  }
-  
+    //this.cargaMarcadores();
+  }/**
+  //Metodo para cargar los marcadores en el mapa
+  public async cargaMarcadores(){
+    await this.obraService.getCoordenadas().then(coordenadas => {
+      coordenadas.forEach(coordenada => {
+        L.marker(coordenada.latitud,coordenada.longitud).addTo(this.Map).setIcon(L.icon({
+          iconUrl: '../../../assets/images/casco.png',
+          iconSize: [50, 50],
+          iconAnchor: [25, 25],
+          popupAnchor: [0, -25]
+        }).bindPopup(`<h3>${coordenada.nombre}</h3>
+        <p>${coordenada.datos}</p>`)
+        .openPopup());
+      });
+    });
+  }*/
 }

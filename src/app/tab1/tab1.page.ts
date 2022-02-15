@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { ObraService } from 'src/services/obra.service';
 import { Obra } from 'src/shared/obra.interface';
+import { EditaModalPage } from '../pages/edita-modal/edita-modal.page';
 
 
 @Component({
@@ -14,14 +15,16 @@ export class Tab1Page {
   @ViewChild(IonInfiniteScroll) infinite: IonInfiniteScroll;
   public searchedItem: any;
   public obras: Obra[];
+  public obra:Obra;
+  
 
-  constructor(private obra:ObraService) {}
+  constructor(private obraService:ObraService,public modalEdit:ModalController) {}
 
   async ionViewDidEnter() {
     await this.cargarObras();
   }
   public async cargarObras(event?) {
-    await this.obra.getAllObras().then(obras => {
+    await this.obraService.getAllObras().then(obras => {
       this.obras = obras;
       if (event) {
         event.target.complete();
