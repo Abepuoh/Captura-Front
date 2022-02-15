@@ -9,7 +9,7 @@ import { Obra } from 'src/shared/obra.interface';
   providedIn: 'root',
 })
 export class ObraService {
-  public API = 'http://localhost:8080/';
+  public API = 'http://localhost:8080';
   public OBRA_API = this.API + '/obra';
 
   constructor(public http: HttpClient) {}
@@ -46,22 +46,6 @@ export class ObraService {
     });
   }
 
-  /**
-   * Metodo que nos devuelve una obra a partir del nomnbre dado
-   * @param nombre  de la obra
-   * @returns obra
-   */
-   public async getObraById(nombre: String): Promise<Obra> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        let result: any = await this.http.get(this.OBRA_API+"/nombre"+nombre).toPromise();
-        console.log(result);
-        resolve(result);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
 
   /**
    * Metodo que nos devuelve una lista de obras a partir de la latitud y longitud dada
@@ -72,7 +56,7 @@ export class ObraService {
    public async getObraByCoordinates(latitud: Number, longitud: Number): Promise<Obra> {
     return new Promise(async (resolve, reject) => {
       try {
-        let result: any = await this.http.get(this.OBRA_API+"/"+latitud+"/"+longitud).toPromise();
+        let result: any = await this.http.get(this.OBRA_API+"/coordenadas/"+latitud+"/"+longitud).toPromise();
         console.log(result);
         resolve(result);
       } catch (error) {
@@ -85,10 +69,10 @@ export class ObraService {
    * @param id de la obra
    * @returns es void porque no devuelve nada
    */
-   public async deleteObra(id): Promise<void> {
+   public async deleteObra(id: Number): Promise<void> {
     return new Promise(async (resolve, reject) => {
       try {
-        let result: any = this.http.delete(this.OBRA_API+'/'+id).toPromise();
+        const result: any = this.http.delete(this.OBRA_API+'/'+id).toPromise();
         console.log(result);
         resolve(result);
       } catch (error) {
@@ -103,7 +87,7 @@ export class ObraService {
    * @returns
    */
    public async updateObra(obra: Obra): Promise<void> {
-    
+     console.log(obra)  
     return new Promise(async (resolve, reject) => {
       try {
         let result: any = await this.http.put(this.OBRA_API+'/'+obra.id, obra).toPromise();
@@ -156,7 +140,7 @@ export class ObraService {
       public getObraByName(nombre?:String):Promise<Obra|null>{
         return new Promise(async (resolve, reject) => {
           try {
-            let result: any = await this.http.get(this.OBRA_API+"/nombre"+nombre).toPromise();
+            let result: any = await this.http.get(this.OBRA_API+"/nombre/"+nombre).toPromise();
             console.log(result);
             resolve(result);
           } catch (error) {
