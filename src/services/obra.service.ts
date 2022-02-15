@@ -148,6 +148,27 @@ export class ObraService {
           }
         });
       }
+  /**
+   * Metodo que nos devuelve las coordenadas de cada una de las obras
+   */
+  public getCoordenadas():Promise<Obra[]>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        let result: any = await this.http.get(this.OBRA_API).toPromise();
+        //coge el resultado y saca la latitud y longitud
+        let coordenadas:Obra[] = result.map(obra => {
+          return {
+            latitud: obra.latitud,
+            longitud: obra.longitud
+          }
+        });        
+        console.log(coordenadas);
+        resolve(coordenadas);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
 }
 
 
