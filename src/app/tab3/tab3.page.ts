@@ -51,8 +51,8 @@ export class Tab3Page {
     await this.obraservice.getObra(id)
   }
 
-  public async getObraByName(nombre:string){
-    nombre = "Olivo"
+  public async getObraByName(){
+    let nombre = "Olivo"
     await this.obraservice.getObraByName(nombre);
   }
 
@@ -61,14 +61,14 @@ export class Tab3Page {
 
 
   }
-
+  
   public createObra(){
     let obra: Obra = {
       id:-1,
       datos:"Datos desde Ionic",
       latitud:6,
       longitud:-6,
-      nombre:"Piso Ionic",
+      nombre:"PISOS PICADOS",
       usuarios:[],
       visitas:[]
     }
@@ -89,5 +89,10 @@ export class Tab3Page {
 
     this.obraservice.updateObra(obra);
     this.toast.showToast("Obra actualizada", "success");
+  }
+  
+  //Metodo que nos vuelve las coordenadas de las obras
+  public async getCoordenadas(){
+    await this.obraservice.getCoordenadas();
   }
 }
