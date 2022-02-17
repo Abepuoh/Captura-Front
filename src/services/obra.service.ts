@@ -22,7 +22,6 @@ export class ObraService {
     return new Promise(async (resolve, reject) => {
       try {
         let result: any = await this.http.get(this.OBRA_API).toPromise();
-        console.log(result);
         resolve(result);
       } catch (error) {
         reject(error);
@@ -38,7 +37,6 @@ export class ObraService {
     return new Promise(async (resolve, reject) => {
       try {
         let result: any = await this.http.get(this.OBRA_API+"/"+id).toPromise();
-        console.log(result);
         resolve(result);
       } catch (error) {
         reject(error);
@@ -57,7 +55,6 @@ export class ObraService {
     return new Promise(async (resolve, reject) => {
       try {
         let result: any = await this.http.get(this.OBRA_API+"/coordenadas/"+latitud+"/"+longitud).toPromise();
-        console.log(result);
         resolve(result);
       } catch (error) {
         reject(error);
@@ -73,7 +70,6 @@ export class ObraService {
     return new Promise(async (resolve, reject) => {
       try {
         const result: any = this.http.delete(this.OBRA_API+'/'+id).toPromise();
-        console.log(result);
         resolve(result);
       } catch (error) {
         reject(error);
@@ -91,7 +87,6 @@ export class ObraService {
     return new Promise(async (resolve, reject) => {
       try {
         let result: any = await this.http.put(this.OBRA_API+'/'+obra.id, obra).toPromise();
-        console.log(result);
         resolve(result);
       } catch (error) {
         reject(error);
@@ -109,7 +104,6 @@ export class ObraService {
         let result: any = await this.http
           .post(this.OBRA_API + '/guardar', obra)
           .toPromise();
-        console.log(result);
         resolve(result);
       } catch (error) {
         reject(error);
@@ -125,7 +119,6 @@ export class ObraService {
       return new Promise(async (resolve, reject) => {
         try {
           let result: any = await this.http.get(this.OBRA_API+"/usuario"+id).toPromise();
-          console.log(result);
           resolve(result);
         } catch (error) {
           reject(error);
@@ -141,7 +134,6 @@ export class ObraService {
         return new Promise(async (resolve, reject) => {
           try {
             let result: any = await this.http.get(this.OBRA_API+"/nombre/"+nombre).toPromise();
-            console.log(result);
             resolve(result);
           } catch (error) {
             reject(error);
@@ -162,7 +154,6 @@ export class ObraService {
             longitud: obra.longitud
           }
         });        
-        console.log(coordenadas);
         resolve(coordenadas);
       } catch (error) {
         reject(error);

@@ -52,7 +52,7 @@ export class Tab3Page {
   }
 
   public async getObraByName(){
-    let nombre = "Olivo"
+    let nombre = "Sevilla"
     await this.obraservice.getObraByName(nombre);
   }
 
@@ -78,7 +78,7 @@ export class Tab3Page {
 
   public updateObra(){
     let obra: Obra = {
-      id:20,
+      id:9,
       datos:"Prueba 1 Actualizada",
       latitud:6,
       longitud:-6,
