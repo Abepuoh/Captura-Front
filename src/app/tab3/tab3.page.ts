@@ -95,4 +95,8 @@ export class Tab3Page {
   public async getCoordenadas(){
     await this.obraservice.getCoordenadas();
   }
+
+  public async getObraByUser(id:Number){
+    await this.obraservice.getObraByUser(id);
+  }
 }

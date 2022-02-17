@@ -124,7 +124,7 @@ export class ObraService {
      public getObraByUser(id?:Number):Promise<Obra[]> {
       return new Promise(async (resolve, reject) => {
         try {
-          let result: any = await this.http.get(this.OBRA_API+"/usuario"+id).toPromise();
+          let result: any = await this.http.get(this.OBRA_API+"/usuario/"+id).toPromise();
           console.log(result);
           resolve(result);
         } catch (error) {

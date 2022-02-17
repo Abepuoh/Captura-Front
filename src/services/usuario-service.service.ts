@@ -65,6 +65,23 @@ export class UsuarioService {
       });
     }
 
+    /**
+     * Metodo que devuelve los usuarios de una obra
+     * @param id 
+     * @returns Obras de un usuario
+     */
+         public getUserByObra(id?:Number):Promise<Usuario[]> {
+          return new Promise(async (resolve, reject) => {
+            try {
+              let result: any = await this.http.get(this.USUARIO_API+"/obra/"+id).toPromise();
+              console.log(result);
+              resolve(result);
+            } catch (error) {
+              reject(error);
+            }
+          });
+        }
+
   /**
    * Método que borra una obra de la Base de Datos
    * @param id 

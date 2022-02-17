@@ -44,6 +44,10 @@ export class Tab5Page{
     await this.userService.getUsuarioByName(nombre);
   }
 
+  public async getUserByObra(id:Number){
+    await this.userService.getUserByObra(id);
+  }
+
 
   public createUser(){
     let usuario:Usuario = {
