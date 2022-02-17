@@ -88,7 +88,7 @@ export class Tab3Page {
     }
 
     this.obraservice.updateObra(obra);
-    this.toast.showToast("Obra creada", "success");
+    this.toast.showToast("Obra actualizada", "success");
   }
   
   //Metodo que nos vuelve las coordenadas de las obras
