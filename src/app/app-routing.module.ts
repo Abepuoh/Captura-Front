@@ -22,7 +22,10 @@ const routes: Routes = [
     path: 'edita-modal',
     loadChildren: () => import('./pages/edita-modal/edita-modal.module').then( m => m.EditaModalPageModule)
   },
-
+  {
+    path: 'crea-obra',
+    loadChildren: () => import('./modal/crea-obra/crea-obra.module').then( m => m.CreaObraPageModule)
+  }
 
 ];
 @NgModule({
