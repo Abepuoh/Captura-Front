@@ -1,41 +1,26 @@
+
 <ion-header>
   <ion-toolbar>
     <ion-title>Editar Obra</ion-title>
     <ion-button  slot="end" fill="clear" size="large" (click)="closeModal()">
-      <ion-icon style="color: red;" name="close-circle"></ion-icon>
+      <ion-icon style="color: blue;" name="close-circle"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>  
-  <form [formGroup]="formObra" (ngSubmit)="editObra()">
+  <form [formGroup]="formObra" (ngSubmit)="editObra(obra)">
     <ion-item>
-        <ion-label>Datos</ion-label>
-        <ion-input type="text" formControlName="datos" [(ngModel)]="this.obre.datos"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label>Latitud</ion-label>
-        <ion-textarea type="text" formControlName="latitud" [(ngModel)]="this.obre.latitud"></ion-textarea>
-    </ion-item>
-    <ion-item>
-      <ion-label>Longitud</ion-label>
-      <ion-input type="text" formControlName="longitud" [(ngModel)]="this.obre.longitud"></ion-input>
-  </ion-item>
-  <ion-item>
-      <ion-label>Nombre</ion-label>
+      <ion-label color="primary">Nombre</ion-label>
       <ion-textarea type="text" formControlName="nombre" [(ngModel)]="this.obre.nombre"></ion-textarea>
   </ion-item>
-  <ion-item>
-    <ion-label>Usuario</ion-label>
-    <ion-input type="text" formControlName="usuario" [(ngModel)]="this.obre.usuario[0].nombre"></ion-input>
-</ion-item>
-<ion-item>
-    <ion-label>Visitas</ion-label>
-    <ion-textarea type="text" formControlName="visita" [(ngModel)]="this.obre.visita"></ion-textarea>
-</ion-item>
+    <ion-item>
+        <ion-label color="primary">Datos</ion-label>
+        <ion-input type="text" formControlName="datos" [(ngModel)]="this.obre.datos"></ion-input>
+    </ion-item>
     <ion-row>
       <ion-col>
-        <ion-button expand="full" color="primary" type="Submit">Agregar</ion-button>
+        <ion-button expand="full" color="primary" type="Submit">Editar</ion-button>
       </ion-col>
     </ion-row>
   </form>

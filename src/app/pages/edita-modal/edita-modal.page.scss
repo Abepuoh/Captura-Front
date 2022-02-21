@@ -1,0 +1,14 @@
+.modal-content {
+    overflow: hidden;
+  }
+  .modal-dialog {
+    white-space: nowrap;
+  }
+  .modal-pages {
+    transition: transform .5s ease-in-out;
+  }
+  .modal-page {
+    display: inline-block;
+    min-width: 100%;
+    max-width: 100%;
+  }

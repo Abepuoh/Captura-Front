@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Obra } from 'src/shared/obra.interface';
 
 
@@ -11,6 +12,8 @@ import { Obra } from 'src/shared/obra.interface';
 export class ObraService {
   public API = 'http://localhost:8080';
   public OBRA_API = this.API + '/obra';
+  private last:any=null;
+  private obraslistadas:string;
 
   constructor(public http: HttpClient) {}
 
@@ -160,6 +163,7 @@ export class ObraService {
       }
     });
   }
+
 }
 
 

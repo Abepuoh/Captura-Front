@@ -51,8 +51,7 @@ export class Tab3Page {
     await this.obraservice.getObra(id)
   }
 
-  public async getObraByName(){
-    let nombre = "Sevilla"
+  public async getObraByName(nombre:String){
     await this.obraservice.getObraByName(nombre);
   }
 
