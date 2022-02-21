@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { AlertController, IonInfiniteScroll, ModalController } from '@ionic/angular';
+import { IonLoaderService } from 'src/services/ion-loader.service';
 import { ObraService } from 'src/services/obra.service';
 import { ToastServiceService } from 'src/services/toast-service.service';
 import { Obra } from 'src/shared/obra.interface';
@@ -24,16 +25,21 @@ export class Tab1Page {
   
 
   constructor(private obraService:ObraService,public modalEdit:ModalController,public alertController:AlertController,
-   public toast:ToastServiceService) {}
+   public toast:ToastServiceService, private loading:IonLoaderService) {}
 
   async ionViewDidEnter() {
     await this.cargarObras();
   }
   public async cargarObras(event?) {
+    if(!event){
+      await this.loading.customLoader("Espere...");
+    }
     await this.obraService.getAllObras().then(obras => {
       this.obras = obras;
       if (event) {
         event.target.complete();
+      }else{
+        this.loading.dismissLoader();
       }
     });
   }
