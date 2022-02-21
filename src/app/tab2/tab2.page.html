@@ -1,4 +1,9 @@
 <ion-content [fullscreen]="true">
+  <div class="button_Buscar">
+    <ion-button color="primary" (click)="buscar()" class="boton">
+      <ion-icon name="search"></ion-icon>
+    </ion-button>
+  </div>
   <div id = "map"></div>
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button (click)="crearObra(marker,User)" color="danger">

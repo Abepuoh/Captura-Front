@@ -11,8 +11,8 @@ import { Usuario } from 'src/shared/usuario.interface';
 })
 export class Tab5Page{
 
-  private usuario:Usuario;
-  private usuarios:Usuario[];
+  public usuario:Usuario;
+  public usuarios:Usuario[];
 
   constructor(public userService:UsuarioService, public toast:ToastServiceService) { }
 
@@ -73,5 +73,6 @@ export class Tab5Page{
     this.userService.updateUsuario(usuario.id, usuario);
     this.toast.showToast("Obra actualizada", "success");
   }
-
+  editar(){
+  }
 }

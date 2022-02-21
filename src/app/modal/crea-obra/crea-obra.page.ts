@@ -11,8 +11,11 @@ export class CreaObraPage implements OnInit {
   constructor(private modalController:ModalController) { }
 
   ngOnInit() {
+    //cargar datos que recibirá el modal
+    
   }
   public closeModal(){
     this.modalController.dismiss();
   }
+  
 }
