@@ -30,7 +30,6 @@ export class Tab5Page{
 
 
   public async borra(usuario:Usuario){
-    usuario.id=6;
     await this.userService.deleteUsuario(usuario.id);
     console.log(usuario);
   }
