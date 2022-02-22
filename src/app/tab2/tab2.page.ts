@@ -161,4 +161,5 @@ export class Tab2Page {
     console.log(marcador, User);
     return await modal.present();
   }
+  
 }

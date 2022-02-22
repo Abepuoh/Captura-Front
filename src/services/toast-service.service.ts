@@ -10,19 +10,34 @@ export class ToastServiceService {
 
   constructor(public toast:ToastController, private alertController : AlertController) { }
 
-  showToast(msn:string, clr:string) {
-    this.myToast = this.toast.create({
-      message: msn,
-      color: clr,
-      duration: 2000
-    }).then((toastData) => {
-      console.log(toastData);
-      toastData.present();
+  async presentToastWithOptions() {
+    const toast = await this.toast.create({
+      header: 'Toast header',
+      message: 'Click to Close',
+      icon: 'information-circle',
+      position: 'top',
+      buttons: [
+        {
+          side: 'start',
+          icon: 'star',
+          text: 'Favorite',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Done',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
     });
-  }
+    await toast.present();
 
-  HideToast() {
-    this.myToast = this.toast.dismiss();
+    const { role } = await toast.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
 }
+

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'
+import { MenuController } from '@ionic/angular';
 import { AuthService } from 'src/services/auth.service';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { Platform, ToastController } from '@ionic/angular';
@@ -18,9 +19,8 @@ export class LoginPage implements OnInit {
   
   constructor(private platform:Platform,
     private authS:AuthService,
-    private router:Router,private toastController:ToastServiceService) {
+    private router:Router,private toastController:ToastServiceService,public menuCtrl:MenuController) {
   }
-
   ngOnInit() {
     if(this.authS.isLogged()){
       this.router.navigate(['private/tabs/tab1']);
@@ -28,6 +28,7 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.menuCtrl.enable(false);
     if(this.authS.isLogged){
       this.router.navigate(['private/tabs/tab1']);
     }
@@ -52,4 +53,9 @@ export class LoginPage implements OnInit {
     await this.authS.login(email.value, password.value); 
     this.router.navigate(['private/tabs/tab1']);
   }
+
+  ionViewDidLeave() {
+    this.menuCtrl.enable(true);
+  }
+
 }
