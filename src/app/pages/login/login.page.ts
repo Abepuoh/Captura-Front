@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'
+import { MenuController } from '@ionic/angular';
 import { AuthService } from 'src/services/auth.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { AuthService } from 'src/services/auth.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private router:Router, private authService: AuthService) { }
+  constructor(private router:Router,public menuCtrl:MenuController, private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -24,6 +25,12 @@ export class LoginPage implements OnInit {
   //Method to navigate to the tabs page
   goToTabsPage(){
     this.router.navigate(['private/tabs/tab1']);
+  }
+  ionViewWillEnter() {
+    this.menuCtrl.enable(false);
+  }
+  ionViewDidLeave() {
+    this.menuCtrl.enable(true);
   }
   
 }
