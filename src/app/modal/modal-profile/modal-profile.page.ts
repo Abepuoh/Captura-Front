@@ -8,11 +8,11 @@ import { ModalController } from '@ionic/angular';
 })
 export class ModalProfilePage implements OnInit {
 
-  constructor(private modalController:ModalController) { }
+  constructor(private modalCtrl: ModalController) { }
 
   ngOnInit() {
   }
-   public closeModal(){
-    this.modalController.dismiss();
-  }
+  closeModal() {
+    this.modalCtrl.dismiss();
+}
 }

@@ -85,7 +85,7 @@ export class VisitaService {
    * @param id 
    * @returns visita borrada
    */
-   public deleteVisita(id: Number): Promise<void> {
+   public deleteVisita(id:Number): Promise<void> {
 
     return new Promise(async (resolve, reject) => {
       try {
