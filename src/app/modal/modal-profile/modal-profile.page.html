@@ -10,7 +10,7 @@
   
     <div id="cambiarFoto">
       <div id="textFoto">
-        <p>ELIJA UNA FOTO</p>
+        <ion-button (click)="choosePhoto()">ELIJA UNA FOTO</ion-button>
       </div>
     </div>
   
@@ -20,7 +20,8 @@
           Nombre
         </div>
       </ion-label>
-      <ion-input placeholder="Ingresa Nombre Completo"></ion-input>
+      <ion-input placeholder="Ingresa Nombre Completo" 
+      (ionChange)="ionChangeNombre($event)" value="{{user.nombre}}"></ion-input>
     </ion-item>
   
     <ion-item>
@@ -29,9 +30,22 @@
           Email
         </div>
       </ion-label>
-      <ion-input placeholder="Ingresa Email"></ion-input>
+      <ion-input placeholder="Ingresa Email" 
+      (ionChange)="ionChangeMail($event)" value="{{user.email}}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">
+        <div class="text-field">
+          Datos
+        </div>
+      </ion-label>
+      <ion-input placeholder="Datos" 
+      (ionChange)="ionChangeMail($event)" value="{{user.datos}}"></ion-input>
     </ion-item>
   
-    <ion-button fill="outline" class="button-edit"><div class="text-edit">ACTUALIZAR</div></ion-button>
+    <ion-button fill="outline" class="button-edit" (click)="actualizar(user.id, user)">
+      <div class="text-edit" routerLinkActive="active">ACTUALIZAR</div>
+    </ion-button>
   </div> 
 </ion-content>

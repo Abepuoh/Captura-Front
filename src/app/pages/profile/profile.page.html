@@ -1,5 +1,12 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button (click)="goBack()" ></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 <ion-content  class="background-image" no-scroll padding>
-<ion-avatar id="avatar" ></ion-avatar>
+<ion-avatar id="avatar"></ion-avatar>
 
 <div class="name">
     <p>NOMBRE DE PERFIL</p>
@@ -7,12 +14,12 @@
 
 <div id="layout_user">
     <div id="user_desciption">
-        <p class="text">Location</p>
-        <p>Localizacion de Usuario</p>
-        <p class="text">Description</p>
-        <p>Descripcion de Usuario</p>
-        <p class="text">Protip</p>
-        <p>Protip del usuario</p>
+        <p class="text">Nombre</p>
+        <p>{{user.nombre}}</p>
+        <p class="text">Correo</p>
+        <p>{{user.email}}</p>
+        <p class="text">Datos</p>
+        <p>{{user.datos}}</p>
     </div>
 
     <div id="user_buttons">

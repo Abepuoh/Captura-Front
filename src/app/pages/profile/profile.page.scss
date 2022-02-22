@@ -16,12 +16,13 @@
 }
 
 .text{
-    color: #bbacac;
+    color: #a43a40;
 }
 
 .text-logout{
     color: black;
 }
+
 
 #body {
     background-color: rgb(239, 245, 243);
@@ -41,4 +42,7 @@
 
 #user_buttons {
     display: grid;
+}
+ion-back-button {
+    display: block;
 }
