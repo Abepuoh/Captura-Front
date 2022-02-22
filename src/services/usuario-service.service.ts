@@ -8,7 +8,7 @@ import { Usuario } from 'src/shared/usuario.interface';
 })
 export class UsuarioService {
 
-  public API = 'http://localhost:8080/';
+  public API = 'http://localhost:8080';
   public USUARIO_API = this.API + '/usuario';
 
   constructor( public http: HttpClient) { }
@@ -18,7 +18,7 @@ export class UsuarioService {
    * @param id 
    * @returns lista de todas los usuarios
    */
-  public getAllUsuarios(): Promise<Usuario[] | null> {
+  public getAllUsuarios(): Promise<Usuario[]> {
 
     return new Promise(async (resolve, reject) => {
       try {
@@ -35,7 +35,7 @@ export class UsuarioService {
    * @param id 
    * @returns usuario
    */
-  public getUsuarioById(id?:Number):Promise<Usuario[]|null>{
+  public getUsuarioById(id?:Number):Promise<Usuario[]>{
     return new Promise(async (resolve, reject) => {
       try {
         let result: any = await this.http.get(this.USUARIO_API+"/"+id).toPromise();
@@ -52,10 +52,11 @@ export class UsuarioService {
      * @param nombre 
      * @returns usuario
      */
-    public getUsuarioByName(nombre?:String):Promise<Usuario|null>{
+
+    public getUsuarioByName(nombre:string):Promise<Usuario>{
       return new Promise(async (resolve, reject) => {
         try {
-          let result: any = await this.http.get(this.USUARIO_API+"/nombre"+nombre).toPromise();
+          let result: any = await this.http.get(this.USUARIO_API+"/nombre/"+nombre).toPromise();
           console.log(result);
           resolve(result);
         } catch (error) {
@@ -107,7 +108,7 @@ export class UsuarioService {
      * @param usuario 
      * @returns usuario
      */
-    public createObra(usuario: Usuario): Promise<Usuario> {
+    public createUsuario(usuario: Usuario): Promise<Usuario> {
 
       return new Promise(async (resolve, reject) => {
         try {

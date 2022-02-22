@@ -15,5 +15,4 @@ export class ModalProfilePage implements OnInit {
   closeModal() {
     this.modalCtrl.dismiss();
 }
-
 }

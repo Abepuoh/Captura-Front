@@ -17,7 +17,16 @@ const routes: Routes = [
   {
     path: 'modal-profile',
     loadChildren: () => import('./modal/modal-profile/modal-profile.module').then( m => m.ModalProfilePageModule)
+  },
+  {
+    path: 'edita-modal',
+    loadChildren: () => import('./pages/edita-modal/edita-modal.module').then( m => m.EditaModalPageModule)
+  },
+  {
+    path: 'crea-obra',
+    loadChildren: () => import('./modal/crea-obra/crea-obra.module').then( m => m.CreaObraPageModule)
   }
+
 ];
 @NgModule({
   imports: [

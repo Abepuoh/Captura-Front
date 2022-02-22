@@ -58,7 +58,7 @@ export class Tab4Page {
     await this.fotoservice.deleteFoto(foto.id);
     console.log(foto);
   }
-
+  
   public async borraVisita(visita: Visita) {
     this.alertController.create({
       header: 'ALERTA',
@@ -73,22 +73,19 @@ export class Tab4Page {
             if (i > -1) {
               this.visita.splice(i, 1);
             }
-            console.log('SI');
           }
         },
         {
           text: 'NO',
           handler: () => {
 
-            console.log('NO');
+            
           }
         }
       ]
     }).then(res => {
       res.present();
     });
-
-    console.log(visita);
     await this.cargarVisitas();
 
   }
@@ -99,7 +96,9 @@ export class Tab4Page {
 
   public async getFoto(id: Number) {
     await this.fotoservice.getFotoById(id)
-    console.log(id);
+  }
+  public async borra (id:Number){
+    await this.obraservice.deleteObra(id);
   }
 
   public async getVisita(id: Number) {

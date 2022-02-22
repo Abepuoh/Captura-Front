@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Obra } from 'src/shared/obra.interface';
 
 
@@ -9,8 +10,10 @@ import { Obra } from 'src/shared/obra.interface';
   providedIn: 'root',
 })
 export class ObraService {
-  public API = 'http://localhost:8080/';
+  public API = 'http://localhost:8080';
   public OBRA_API = this.API + '/obra';
+  private last:any=null;
+  private obraslistadas:string;
 
   constructor(public http: HttpClient) {}
 
@@ -22,7 +25,6 @@ export class ObraService {
     return new Promise(async (resolve, reject) => {
       try {
         let result: any = await this.http.get(this.OBRA_API).toPromise();
-        console.log(result);
         resolve(result);
       } catch (error) {
         reject(error);
@@ -38,7 +40,6 @@ export class ObraService {
     return new Promise(async (resolve, reject) => {
       try {
         let result: any = await this.http.get(this.OBRA_API+"/"+id).toPromise();
-        console.log(result);
         resolve(result);
       } catch (error) {
         reject(error);
@@ -46,22 +47,6 @@ export class ObraService {
     });
   }
 
-  /**
-   * Metodo que nos devuelve una obra a partir del nomnbre dado
-   * @param nombre  de la obra
-   * @returns obra
-   */
-   public async getObraById(nombre: String): Promise<Obra> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        let result: any = await this.http.get(this.OBRA_API+"/nombre"+nombre).toPromise();
-        console.log(result);
-        resolve(result);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
 
   /**
    * Metodo que nos devuelve una lista de obras a partir de la latitud y longitud dada
@@ -72,8 +57,7 @@ export class ObraService {
    public async getObraByCoordinates(latitud: Number, longitud: Number): Promise<Obra> {
     return new Promise(async (resolve, reject) => {
       try {
-        let result: any = await this.http.get(this.OBRA_API+"/"+latitud+"/"+longitud).toPromise();
-        console.log(result);
+        let result: any = await this.http.get(this.OBRA_API+"/coordenadas/"+latitud+"/"+longitud).toPromise();
         resolve(result);
       } catch (error) {
         reject(error);
@@ -85,11 +69,10 @@ export class ObraService {
    * @param id de la obra
    * @returns es void porque no devuelve nada
    */
-   public async deleteObra(id): Promise<void> {
+   public async deleteObra(id: Number): Promise<void> {
     return new Promise(async (resolve, reject) => {
       try {
-        let result: any = this.http.delete(this.OBRA_API+'/'+id).toPromise();
-        console.log(result);
+        const result: any = this.http.delete(this.OBRA_API+'/'+id).toPromise();
         resolve(result);
       } catch (error) {
         reject(error);
@@ -103,11 +86,10 @@ export class ObraService {
    * @returns
    */
    public async updateObra(obra: Obra): Promise<void> {
-    
+     console.log(obra)  
     return new Promise(async (resolve, reject) => {
       try {
         let result: any = await this.http.put(this.OBRA_API+'/'+obra.id, obra).toPromise();
-        console.log(result);
         resolve(result);
       } catch (error) {
         reject(error);
@@ -125,7 +107,6 @@ export class ObraService {
         let result: any = await this.http
           .post(this.OBRA_API + '/guardar', obra)
           .toPromise();
-        console.log(result);
         resolve(result);
       } catch (error) {
         reject(error);
@@ -137,11 +118,10 @@ export class ObraService {
      * @param id 
      * @returns Obras de un usuario
      */
-     public getObraByUser(id?:Number):Promise<Obra[]|null> {
+     public getObraByUser(id?:Number):Promise<Obra[]> {
       return new Promise(async (resolve, reject) => {
         try {
           let result: any = await this.http.get(this.OBRA_API+"/usuario"+id).toPromise();
-          console.log(result);
           resolve(result);
         } catch (error) {
           reject(error);
@@ -153,17 +133,37 @@ export class ObraService {
      * @param nombre 
      * @returns obra
      */
-      public getObraByName(nombre?:String):Promise<Obra|null>{
+      public getObraByName(nombre?:String):Promise<Obra>{
         return new Promise(async (resolve, reject) => {
           try {
-            let result: any = await this.http.get(this.OBRA_API+"/nombre"+nombre).toPromise();
-            console.log(result);
+            let result: any = await this.http.get(this.OBRA_API+"/nombre/"+nombre).toPromise();
             resolve(result);
           } catch (error) {
             reject(error);
           }
         });
       }
+  /**
+   * Metodo que nos devuelve las coordenadas de cada una de las obras
+   */
+  public getCoordenadas():Promise<Obra[]>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        let result: any = await this.http.get(this.OBRA_API).toPromise();
+        //coge el resultado y saca la latitud y longitud
+        let coordenadas:Obra[] = result.map(obra => {
+          return {
+            latitud: obra.latitud,
+            longitud: obra.longitud
+          }
+        });        
+        resolve(coordenadas);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
 }
 
 
