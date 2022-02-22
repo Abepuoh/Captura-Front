@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ export class ToastServiceService {
 
   private myToast: any;
 
-  constructor(public toast:ToastController) { }
+  constructor(public toast:ToastController, private alertController : AlertController) { }
 
   showToast(msn:string, clr:string) {
     this.myToast = this.toast.create({

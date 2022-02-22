@@ -7,6 +7,6 @@ export interface Usuario {
     foto:String,
     key_logueo:String,
     nombre:String,
-    obras:Array<Obra>
-
+    obras:Array<Obra>,
+    emailVerified:Boolean
 } 
