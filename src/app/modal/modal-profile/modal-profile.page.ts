@@ -17,8 +17,10 @@ export class ModalProfilePage implements OnInit {
     nombre: ""
   }
 
+
   constructor(private modalController: ModalController, public userService: UsuarioService, 
     public router:Router, public toast: ToastServiceService)  { }
+
 
   ngOnInit() {
     this.userService.getUsuarioById(1).then((result) => {
@@ -37,7 +39,6 @@ export class ModalProfilePage implements OnInit {
     this.user.nombre=event.target.value;
     
   }
-
   ionChangeMail(event) {
     this.user.email=event.target.value;  
   }
@@ -48,6 +49,4 @@ export class ModalProfilePage implements OnInit {
   public choosePhoto(){
     
   }
-
- 
 }

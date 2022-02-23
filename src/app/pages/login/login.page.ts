@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'
+import { MenuController } from '@ionic/angular';
 import { AuthService } from 'src/services/auth.service';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { Platform, ToastController } from '@ionic/angular';
+import { Usuario } from 'src/shared/usuario.interface';
+import { ToastServiceService } from 'src/services/toast-service.service';
 
 @Component({
   selector: 'app-login',
@@ -9,21 +14,48 @@ import { AuthService } from 'src/services/auth.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private router:Router, private authService: AuthService) { }
-
+  public userinfo:Usuario
+  private isAndroid:boolean;
+  
+  constructor(private platform:Platform,
+    private authS:AuthService,
+    private router:Router,private toastController:ToastServiceService,public menuCtrl:MenuController) {
+  }
   ngOnInit() {
-  }
-  //Login con firebase
-  public async login(email, password){
-    await this.authService.login(email, password).then(() => {
+    if(this.authS.isLogged()){
       this.router.navigate(['private/tabs/tab1']);
-    }).catch(function(error) {
-      error.code;
-    });
+    }
   }
-  //Method to navigate to the tabs page
-  goToTabsPage(){
+
+  ionViewWillEnter(){
+    this.menuCtrl.enable(false);
+    if(this.authS.isLogged){
+      this.router.navigate(['private/tabs/tab1']);
+    }
+
+   
+  }
+  public async onRegister(email,password){
+    try{
+    const user = await this.authS.register(email.value,password.value);
+    if(user){
+      await this.authS.sendVerificationEmail();
+      this.toastController.showToast('Verifica tu correo para activar tu cuenta',"");
+      console.log(user);
+      await this.authS.keepSession();
+      
+    }
+    }catch(error){
+      console.log(error);
+    }
+  }
+  public async logIn(email, password) {
+    await this.authS.login(email.value, password.value); 
     this.router.navigate(['private/tabs/tab1']);
   }
-  
+
+  ionViewDidLeave() {
+    this.menuCtrl.enable(true);
+  }
+
 }

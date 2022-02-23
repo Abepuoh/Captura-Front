@@ -1,8 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { AlertController, IonInfiniteScroll, ModalController } from '@ionic/angular';
+import { AlertController, IonInfiniteScroll, ModalController, NavController } from '@ionic/angular';
+import { IonLoaderService } from 'src/services/ion-loader.service';
 import { ObraService } from 'src/services/obra.service';
 import { ToastServiceService } from 'src/services/toast-service.service';
 import { Obra } from 'src/shared/obra.interface';
+import { Usuario } from 'src/shared/usuario.interface';
 import { EditaModalPage } from '../pages/edita-modal/edita-modal.page';
 
 
@@ -21,22 +23,39 @@ export class Tab1Page {
   page_limit = 8;
   primeraCarga = false;
   url:string;
+  user:Usuario;
   
 
   constructor(private obraService:ObraService,public modalEdit:ModalController,public alertController:AlertController,
-   public toast:ToastServiceService) {}
+   public toast:ToastServiceService, private loading:IonLoaderService, private navControl:NavController) {}
 
   async ionViewDidEnter() {
     await this.cargarObras();
   }
+
   public async cargarObras(event?) {
-    await this.obraService.getAllObras().then(obras => {
-      this.obras = obras;
-      if (event) {
-        event.target.complete();
-      }
-    });
+    if(this.infinite){
+      this.infinite.disabled = false;
+    }
+    if(!event){
+      await this.loading.customLoader("Espere...");
+    }
+    try {
+      await this.obraService.getAllObras().then(obras => {
+        this.obras = obras;
+        if (event) {
+          event.target.complete();
+        }else{
+          this.loading.dismissLoader();
+        }
+      });
+    } catch (error) {
+      await this.toast.showToast("Error al cargar las obras", "danger");
+    }
+
   }
+
+
   public buscarObras($event) {
     const texto = $event.target.value;
     if (texto.length > 0) {
@@ -68,14 +87,13 @@ export class Tab1Page {
     if(obra!=null){
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
-        header: 'Confirmación',
         subHeader: 'Borrado de la obra ' + obra.nombre,
         message: '¿Está seguro de borrar la obra?',
         buttons: [
           {
             text: 'Cancelar',
             role: 'cancel',
-            cssClass: 'secondary',
+            cssClass: 'secondary',       
             handler: async () => {
               await this.alertController.dismiss();
             },
@@ -83,7 +101,14 @@ export class Tab1Page {
           {
             text: 'Aceptar',
             handler: async () => {
-              await this.obraService.deleteObra(obra.id);
+              try {
+                await this.loading.customLoader("Borrando...");
+                await this.obraService.deleteObra(obra.id);
+                this.toast.showToast("La obra ha sido borrada correctamente", "sucess");
+              } catch (error) {
+                this.toast.showToast("Error al borrar la obra", "Danger");
+              }
+              await this.loading.dismissLoader();
             },
           },
         ],
@@ -92,7 +117,6 @@ export class Tab1Page {
     }else{
       this.toast.showToast("No ha introducido bien la obra", "Danger");
     }
-
   }
 
   public async getObraByName(nombre:String){
@@ -112,8 +136,21 @@ export class Tab1Page {
     });
   }
 
-  doInfinite(event) {
-    this.getObraPaged(true, event);
+  public async doInfinite($event) {
+    let nuevasObras = await this.obraService.getAllObras();
+    if(nuevasObras.length>10){
+      $event.target.disabled = true;
+    }
+    this.obras = this.obras.concat(nuevasObras);
+    $event.target.complete();
+   
+  }
+  /**
+   * Metodo para ir al indice de la obra donde se encuentran sus visitas
+   * @param obra 
+   */
+  goToVisitas(obra:Obra){
+    this.navControl.navigateForward("private/tabs/tab4/"+obra.id);
   }
 
 

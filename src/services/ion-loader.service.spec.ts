@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ObraService } from './obra.service';
+import { IonLoaderService } from './ion-loader.service';
 
-describe('ObraService', () => {
-  let service: ObraService;
+describe('IonLoaderService', () => {
+  let service: IonLoaderService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ObraService);
+    service = TestBed.inject(IonLoaderService);
   });
 
   it('should be created', () => {

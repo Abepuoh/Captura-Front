@@ -14,20 +14,24 @@
             <ion-input type="password" #password required></ion-input>
           </div>
           <div>
-            <ion-button (click)="login(email,password)" type="submit" color="danger" shape= "round" expand="block">
+            <ion-button type="submit" color="danger" shape= "round" expand="block">
               <ion-icon name="log-in"></ion-icon>&nbsp;
                Iniciar Sesion
             </ion-button>
           </div>
           <span class="center-span"> OR </span>
+          <!--Button login facebook-->
           <div>
-            <ion-button color="primary" shape= "round" expand="block">
+            <ion-button color="primary" shape= "round" expand="block" >
               <ion-icon name="logo-google"></ion-icon>&nbsp;
                Iniciar con Google
             </ion-button>
           </div>
-
-
+            <ion-button class="ios">
+              <ion-icon name="logo-apple"></ion-icon>&nbsp;
+               Iniciar con Apple
+            </ion-button>
+          </div>
           <div class="hr"></div>
           <div class="foot-lnk">
             <a href="#forgot">¿Olvidaste la contraseña?</a>
@@ -44,15 +48,11 @@
             <input id="pass" type="password" class="input" data-type="password">
           </div>
           <div class="group">
-            <label for="pass" class="label">Repite la contraseña</label>
-            <input id="pass" type="password" class="input" data-type="password">
-          </div>
-          <div class="group">
-            <label for="pass" class="label">Email</label>
-            <input id="pass" type="text" class="input">
+            <label for="email" class="label">Email</label>
+            <input id="email" type="text" class="input">
           </div>
           <div>
-            <ion-button type="submit" color="danger" shape= "round" expand="block">
+            <ion-button (click)="onRegister(email,password)" type="submit" color="danger" shape= "round" expand="block">
               <ion-icon name="log-in"></ion-icon>&nbsp;
                Iniciar Sesion
             </ion-button>
@@ -62,7 +62,6 @@
             <label for="tab-1">¿Ya estás registrado?</label>
           </div>
         </div>
-      </div>
     </ion-card>
   </div>
 </ion-content>  

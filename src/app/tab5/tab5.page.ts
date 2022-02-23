@@ -43,35 +43,6 @@ export class Tab5Page{
     await this.userService.getUsuarioByName(nombre);
   }
 
-
-  public createUser(){
-    let usuario:Usuario = {
-      id:-1,
-      datos:"Desde el Front",
-      email:"desdeelFront@gmail.com",
-      foto:"foto",
-      key_logueo:"key",
-      nombre:"Alberto el niño Garbanzo",
-      obras:[],
-    }
-    this.userService.createUsuario(usuario);
-    this.toast.showToast("Usuario creado", "success");
-  };
-
-  public updateUser(){
-    let usuario: Usuario = {
-      id:6,
-      datos:"Desde el Front Actualizado",
-      email:"desdeelFront@gmail.com",
-      foto:"foto",
-      key_logueo:"key",
-      nombre:"Alberto el niño Garbanzo",
-      obras:[],
-    }
-
-    this.userService.updateUsuario(usuario.id, usuario);
-    this.toast.showToast("Obra actualizada", "success");
-  }
   editar(){
   }
 }

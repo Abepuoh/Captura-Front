@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 import { ModalProfilePage } from 'src/app/modal/modal-profile/modal-profile.page';
 import { UsuarioService } from 'src/services/usuario-service.service';
 import { Usuario } from 'src/shared/usuario.interface';
@@ -42,5 +43,13 @@ export class ProfilePage implements OnInit {
   goBack() {
     this.router.navigateByUrl('/private/tabs/tab1');
   }
-
+  //metoodo para cerrar la sesion
+  public async logout(){
+    //logout with google or email
+    try {
+      await this.authS.logout();
+    } catch (error) {
+      console.log("Error al cerrar sesion ---> "+error);
+    }
+  }
 }

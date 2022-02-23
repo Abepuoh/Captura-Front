@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +24,5 @@ export class ToastServiceService {
   HideToast() {
     this.myToast = this.toast.dismiss();
   }
-
 }
+
