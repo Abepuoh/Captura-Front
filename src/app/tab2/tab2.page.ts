@@ -49,12 +49,15 @@ export class Tab2Page {
     L.control.layers(baseMaps).addTo(this.Map);
     setTimeout(()=>{ this.Map.invalidateSize()}, 200)
     await this.cargaMarcadores();
-    /**let miMarcador:Marker = await this.crearMarcador(/**()=>{
+    let miMarcador:Marker = await this.crearMarcador(()=>{
       console.log(miMarcador);
       this.crearObra(miMarcador,this.User);
-    });*/
-    let miMarcador: L.Marker<any> = await this.crearMarcador();
+    });
+    /**
+        let miMarcador: L.Marker<any> = await this.crearMarcador();
     this.crearObra(miMarcador,this.User);
+     */
+
 
     let searchControl = esri_geo.geosearch({
       position: 'topright',
