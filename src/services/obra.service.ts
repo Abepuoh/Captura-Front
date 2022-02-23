@@ -10,7 +10,7 @@ import { Obra } from 'src/shared/obra.interface';
   providedIn: 'root',
 })
 export class ObraService {
-  public API = 'http://localhost:8080';
+  public API = 'https://frozen-crag-51318.herokuapp.com/';
   public OBRA_API = this.API + '/obra';
   private last:any=null;
   private obraslistadas:string;

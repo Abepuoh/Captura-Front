@@ -8,7 +8,7 @@ import { Usuario } from 'src/shared/usuario.interface';
 })
 export class UsuarioService {
 
-  public API = 'http://localhost:8080';
+  public API = 'https://frozen-crag-51318.herokuapp.com/';
   public USUARIO_API = this.API + '/usuario';
 
   constructor( public http: HttpClient) { }

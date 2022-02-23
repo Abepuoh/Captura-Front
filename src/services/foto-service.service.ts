@@ -7,8 +7,7 @@ import { Foto } from 'src/shared/foto.interface';
 })
 export class FotoService {
 
-
-  public API = 'http://localhost:8080/';
+  public API = 'https://frozen-crag-51318.herokuapp.com/';
   public FOTO_API = this.API + '/foto';
 
   constructor( public http: HttpClient) { }
