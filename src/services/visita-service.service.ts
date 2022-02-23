@@ -8,7 +8,7 @@ import { Visita } from 'src/shared/visita.interface';
 
 export class VisitaService {
 
-  public API = 'http://localhost:8080/';
+  public API = 'https://frozen-crag-51318.herokuapp.com/';
   public VISITA_API = this.API + '/visita';
 
   constructor( public http: HttpClient) { }
@@ -18,7 +18,7 @@ export class VisitaService {
    * @param id 
    * @returns lista de todas las visitas
    */
-  public getAllVisitas(): Promise<Visita[] | null> {
+  public getAllVisitas(): Promise<Visita[]> {
 
     return new Promise(async (resolve, reject) => {
       try {
@@ -35,7 +35,7 @@ export class VisitaService {
    * @param id 
    * @returns visita
    */
-  public getVisitaById(id?:Number):Promise<Visita[]|null>{
+  public getVisitaById(id?:Number):Promise<Visita[]>{
     return new Promise(async (resolve, reject) => {
       try {
         let result: any = await this.http.get(this.VISITA_API+"/"+id).toPromise();
@@ -52,7 +52,7 @@ export class VisitaService {
    * @param id 
    * @returns visita
    */
-     public getVisitaPorObra(id?:any):Promise<Visita[]|null>{
+     public getVisitaPorObra(id?:any):Promise<Visita[]>{
       return new Promise(async (resolve, reject) => {
         try {
           let result: any = await this.http.get(this.VISITA_API+"/obra/"+id).toPromise();
@@ -68,7 +68,7 @@ export class VisitaService {
      * @param nombre 
      * @returns visita
      */
-    public getVisitaByFecha(fecha?:Date):Promise<Visita|null>{
+    public getVisitaByFecha(fecha?:Date):Promise<Visita>{
       return new Promise(async (resolve, reject) => {
         try {
           let result: any = await this.http.get(this.VISITA_API+"/fecha/"+fecha).toPromise();
