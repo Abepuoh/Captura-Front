@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { ModalProfilePage } from 'src/app/modal/modal-profile/modal-profile.page';
+import { AuthService } from 'src/services/auth.service';
 import { UsuarioService } from 'src/services/usuario-service.service';
 import { Usuario } from 'src/shared/usuario.interface';
 
@@ -15,11 +16,16 @@ export class ProfilePage implements OnInit {
 
   user: Usuario = {
     email: "",
-    nombre: ""
+    nombre: "",
+    datos: undefined,
+    foto: undefined,
+    key_logueo: undefined,
+    obras: [],
+    emailVerified: undefined
   }
 
   constructor(private modalController: ModalController, public userService: UsuarioService,
-    public router:Router) { }
+    public router:Router, private authS:AuthService) { }
 
   async openModal() {
     const modal = await this.modalController.create({
@@ -35,9 +41,7 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getUsuarioById(1).then((result) => {
-      this.user = result;
-    });
+  
 
   }
   goBack() {

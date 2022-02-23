@@ -119,10 +119,6 @@ export class Tab4Page {
     await this.fotoservice.getFotoById(id)
   }
 
-  public async borra (id:Number){
-    await this.obraS.deleteObra(id);
-  }
-
   public async getVisita(id: Number) {
     await this.visitaservice.getVisitaById(id);
     console.log(id);
