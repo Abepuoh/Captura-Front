@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Marker } from 'leaflet';
 import { ObraService } from 'src/services/obra.service';
@@ -24,12 +24,9 @@ export class CreaObraPage implements OnInit {
   ngOnInit() {
     //cargar datos que recibirá el modal
     this.formObra = this.fb.group({
-      datos:"",
-      nombre:"",
-    });
-
-
-    
+      datos:["",Validators.required],
+      nombre:["",Validators.required]
+    });  
   }
   public closeModal(){
     this.modalController.dismiss();

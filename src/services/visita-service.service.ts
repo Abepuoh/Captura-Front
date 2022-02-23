@@ -5,7 +5,9 @@ import { Visita } from 'src/shared/visita.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class VisitaServiceService {
+
+export class VisitaService {
+
   public API = 'http://localhost:8080/';
   public VISITA_API = this.API + '/visita';
 
@@ -50,11 +52,10 @@ export class VisitaServiceService {
    * @param id 
    * @returns visita
    */
-     public getVisitaPorObra(id?:Number):Promise<Visita[]|null>{
+     public getVisitaPorObra(id?:any):Promise<Visita[]|null>{
       return new Promise(async (resolve, reject) => {
         try {
           let result: any = await this.http.get(this.VISITA_API+"/obra/"+id).toPromise();
-          console.log(result);
           resolve(result);
         } catch (error) {
           reject(error);
@@ -84,7 +85,8 @@ export class VisitaServiceService {
    * @param id 
    * @returns visita borrada
    */
-   public deleteVisita(id: Number): Promise<void> {
+
+   public deleteVisita(id:Number): Promise<void> {
 
     return new Promise(async (resolve, reject) => {
       try {
@@ -103,11 +105,11 @@ export class VisitaServiceService {
    * @param visita 
    * @returns  una visita actualizada
    */
-     public updateVisita(id?:Number,visita?:Visita): Promise<Visita> {
+     public updateVisita(visita?:Visita): Promise<Visita> {
 
       return new Promise(async (resolve, reject) => {
         try {
-          let result: any = await this.http.put(this.VISITA_API+'/'+id, visita).toPromise();
+          let result: any = await this.http.put(this.VISITA_API+'/'+visita.id, visita).toPromise();
           console.log(result);
           resolve(result);
         } catch (error) {

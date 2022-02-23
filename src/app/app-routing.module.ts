@@ -25,7 +25,15 @@ const routes: Routes = [
   {
     path: 'crea-obra',
     loadChildren: () => import('./modal/crea-obra/crea-obra.module').then( m => m.CreaObraPageModule)
+  },  {
+    path: 'crea-visita',
+    loadChildren: () => import('./modal/crea-visita/crea-visita.module').then( m => m.CreaVisitaPageModule)
+  },
+  {
+    path: 'edita-visita',
+    loadChildren: () => import('./modal/edita-visita/edita-visita.module').then( m => m.EditaVisitaPageModule)
   }
+
 
 ];
 @NgModule({

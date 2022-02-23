@@ -1,12 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
-import { AlertController, IonInfiniteScroll } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { AlertController, IonInfiniteScroll, ModalController, NavController } from '@ionic/angular';
 import { FotoService } from 'src/services/foto-service.service';
+import { IonLoaderService } from 'src/services/ion-loader.service';
 import { ObraService } from 'src/services/obra.service';
-import { VisitaServiceService } from 'src/services/visita-service.service';
 import { Foto } from 'src/shared/foto.interface';
 import { Obra } from 'src/shared/obra.interface';
 import { Visita } from 'src/shared/visita.interface';
+import { ActivatedRoute } from '@angular/router';
+import { VisitaService } from 'src/services/visita-service.service';
+import { CreaVisitaPage } from '../modal/crea-visita/crea-visita.page';
+import { EditaVisitaPage } from '../modal/edita-visita/edita-visita.page';
+import { ToastServiceService } from 'src/services/toast-service.service';
 
 @Component({
   selector: 'app-tab4',
@@ -21,23 +25,37 @@ export class Tab4Page {
   public visitas: Visita[];
   public foto: Foto[];
   public visita: Visita[];
+  public obra:Obra;
 
+  constructor(public fotoservice: FotoService, public visitaservice: VisitaService, public alertController: AlertController,
+    private loading:IonLoaderService, private obraService:ObraService, private route: ActivatedRoute,
+    private modalController:ModalController, private toast:ToastServiceService, private modalEdit:ModalController,
+    private navControl:NavController) { 
+     }
 
-
-  constructor(public obraS :ObraService,
-    public fotoservice: FotoService, public visitaservice: VisitaServiceService, public alertController: AlertController) { }
+    async ngOnInit() {
+      
+     } 
 
   async ionViewDidEnter() {
-    await this.cargarVisitas()
-    await this.cargarFotos();
+    let id = this.route.snapshot.paramMap.get('id');
+    await this.cargarVisitas(event,id);
   }
-  public async cargarVisitas(event?) {
-    await this.visitaservice.getAllVisitas().then(visitas => {
+  /**
+   * Metodo que devuelve las visitas de una obra por su id
+   * @param event 
+   * @param id 
+   */
+  public async cargarVisitas(event?, id?:string) {
+    if(!event){
+      await this.loading.customLoader("Espere...");
+    }
+    await this.visitaservice.getVisitaPorObra(id).then(visitas => {
       this.visitas = visitas;
       if (event) {
-        if (event) {
           event.target.complete();
-        }
+        }else{
+          this.loading.dismissLoader();
       }
     })
   }
@@ -58,7 +76,10 @@ export class Tab4Page {
     await this.fotoservice.deleteFoto(foto.id);
     console.log(foto);
   }
-  
+  /**
+   * Metodo que borra una visita
+   * @param visita 
+   */
   public async borraVisita(visita: Visita) {
     this.alertController.create({
       header: 'ALERTA',
@@ -97,6 +118,7 @@ export class Tab4Page {
   public async getFoto(id: Number) {
     await this.fotoservice.getFotoById(id)
   }
+
   public async borra (id:Number){
     await this.obraS.deleteObra(id);
   }
@@ -134,6 +156,10 @@ export class Tab4Page {
     console.log(id);
 
   }
+  /**
+   * Metodo que busca las visitas por nombre
+   * @param $event 
+   */
   public buscarVisitas($event) {
     const texto = $event.target.value;
     if (texto.length > 0) {
@@ -141,9 +167,50 @@ export class Tab4Page {
         return (visita.header.toLowerCase().indexOf(texto.toLowerCase())) > -1;
       });
     } else {
-      this.cargarVisitas();
+      let id = this.route.snapshot.paramMap.get('id');
+      console.log(id);
+      this.cargarVisitas(id);
     }
   }
+
+    //Metodo para abir modal y crear la nueva visita
+    public async crearVisitaGo(Obra:Obra){ 
+      Obra = await this.obraService.getObra(1);
+      const modal = await this.modalController.create({
+        component: CreaVisitaPage,
+        componentProps: {
+          obra: Obra
+        },
+      });
+      console.log(Obra);
+      return await modal.present();
+    }
+
+   /**
+    * Metodo que abre un modal para editar una visita y carga los datos de la visita
+    * @param visita 
+    * @returns 
+    */
+  async editar(visita:Visita){
+    if(visita!=null){
+      const modal = await this.modalEdit.create({
+        component: EditaVisitaPage,
+        cssClass:'my-custom-class',
+        componentProps:{
+          visita:visita
+        },
+      });
+      return await modal.present();
+    }else{
+      this.toast.showToast("No ha introducido bien la obra", "Danger");
+    }
+
+  }
+
+  goToFotos(visita:Visita){
+    this.navControl.navigateForward("private/tabs/tab5/"+visita.id);
+  }
+
 }
 
 
