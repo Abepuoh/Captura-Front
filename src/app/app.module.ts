@@ -15,7 +15,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/services/auth.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { VisitaServiceService } from 'src/services/visita-service.service';
+import { VisitaService } from 'src/services/visita-service.service';
 
 
 @NgModule({
@@ -34,7 +34,7 @@ import { VisitaServiceService } from 'src/services/visita-service.service';
       registrationStrategy: 'registerWhenStable:30000'
     })
     ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AuthService, VisitaServiceService, UsuarioService, FotoService, ObraService],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AuthService, VisitaService, UsuarioService, FotoService, ObraService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

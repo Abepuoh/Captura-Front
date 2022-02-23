@@ -14,7 +14,12 @@ import { ProfilePage } from 'src/app/pages/profile/profile.page';
 export class ModalProfilePage implements OnInit {
   user: Usuario = {
     email: "",
-    nombre: ""
+    nombre: "",
+    datos: undefined,
+    foto: undefined,
+    key_logueo: undefined,
+    obras: [],
+    emailVerified: undefined
   }
 
 
@@ -23,9 +28,7 @@ export class ModalProfilePage implements OnInit {
 
 
   ngOnInit() {
-    this.userService.getUsuarioById(1).then((result) => {
-      this.user = result;
-    });
+
   }
 
   public async  actualizar(id: Number, usuario: Usuario) {
