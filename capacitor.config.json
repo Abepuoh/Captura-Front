@@ -1,6 +1,14 @@
 {
-	"appId": "io.ionic.starter",
+	"appId": "com.abepuoh.Captura",
 	"appName": "Captura",
 	"webDir": "www",
-	"bundledWebRuntime": false
+	"bundledWebRuntime": false,
+	"plugins": {
+	  "GoogleAuth": {
+		"scopes": ["profile", "email"],
+		"serverClientId": "360661644710-bk71199beab2unvisen3l03bb9ev4br5.apps.googleusercontent.com",
+		"forceCodeForRefreshToken": true
+	  }
+	}
+	
 }

@@ -8,7 +8,6 @@ import { Obra } from 'src/shared/obra.interface';
 import { Usuario } from 'src/shared/usuario.interface';
 import { CreaObraPage } from '../modal/crea-obra/crea-obra.page';
 import "leaflet-routing-machine";
-//import L.Control.Geocoder;
 import * as esri_geo from 'esri-leaflet-geocoder';
 
 @Component({
@@ -21,7 +20,7 @@ export class Tab2Page {
   public start;
   public end;
   User:Usuario;
-  marker:Marker;
+  public marker:Marker;
   public direccion: L.LatLng;
   public direccion1:L.LatLng;
   constructor(private obraService: ObraService,private modalController:ModalController) {}
@@ -49,15 +48,11 @@ export class Tab2Page {
     L.control.layers(baseMaps).addTo(this.Map);
     setTimeout(()=>{ this.Map.invalidateSize()}, 200)
     await this.cargaMarcadores();
-    let miMarcador:Marker = await this.crearMarcador(()=>{
-      console.log(miMarcador);
-      this.crearObra(miMarcador,this.User);
-    });
-    /**
-        let miMarcador: L.Marker<any> = await this.crearMarcador();
-    this.crearObra(miMarcador,this.User);
-     */
 
+    let miMarcador:Marker = await this.crearMarcador((data)=>{
+      //console.log(miMarcador.getLatLng());
+      this.crearObra(data,this.User);
+    });
 
     let searchControl = esri_geo.geosearch({
       position: 'topright',
@@ -140,9 +135,8 @@ export class Tab2Page {
             `<h3>Tu posicion</h3>
             <p>${lat+','+lng}</p>`).openPopup();
             if(callback){
-              marcadorDummy.on("dragend",()=>{ 
-                console.log(marcadorDummy.getLatLng())
-                callback();
+              marcadorDummy.on("dragend",async ()=>{ 
+                 callback(marcadorDummy.getLatLng());
               })
             }
             resolve(marcadorDummy);
@@ -167,4 +161,5 @@ export class Tab2Page {
     console.log(marcador, User);
     return await modal.present();
   }
+  
 }

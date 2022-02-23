@@ -27,8 +27,6 @@ export class Tab4Page {
   public visita: Visita[];
   public obra:Obra;
 
-
-
   constructor(public fotoservice: FotoService, public visitaservice: VisitaService, public alertController: AlertController,
     private loading:IonLoaderService, private obraService:ObraService, private route: ActivatedRoute,
     private modalController:ModalController, private toast:ToastServiceService, private modalEdit:ModalController,
@@ -119,6 +117,10 @@ export class Tab4Page {
 
   public async getFoto(id: Number) {
     await this.fotoservice.getFotoById(id)
+  }
+
+  public async borra (id:Number){
+    await this.obraS.deleteObra(id);
   }
 
   public async getVisita(id: Number) {

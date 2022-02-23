@@ -5,6 +5,7 @@ import { Visita } from 'src/shared/visita.interface';
 @Injectable({
   providedIn: 'root'
 })
+
 export class VisitaService {
 
   public API = 'http://localhost:8080/';
@@ -84,6 +85,7 @@ export class VisitaService {
    * @param id 
    * @returns visita borrada
    */
+
    public deleteVisita(id:Number): Promise<void> {
 
     return new Promise(async (resolve, reject) => {
@@ -135,3 +137,4 @@ export class VisitaService {
       });
     }
 }
+

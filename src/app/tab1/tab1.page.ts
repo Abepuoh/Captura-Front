@@ -87,14 +87,13 @@ export class Tab1Page {
     if(obra!=null){
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
-        header: 'Confirmación',
         subHeader: 'Borrado de la obra ' + obra.nombre,
         message: '¿Está seguro de borrar la obra?',
         buttons: [
           {
             text: 'Cancelar',
             role: 'cancel',
-            cssClass: 'secondary',
+            cssClass: 'secondary',       
             handler: async () => {
               await this.alertController.dismiss();
             },

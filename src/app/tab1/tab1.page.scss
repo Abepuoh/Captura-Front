@@ -1,3 +1,15 @@
 .backGroundColor{
     background-color: #e0e0e0;    
 }
+.my-custom-class{
+    //alert controller animation
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+    animation-duration: 0.5s;
+    animation-delay: 0.5s;
+    animation-play-state: running;
+    background-color: #e0e0e0;
+}
+

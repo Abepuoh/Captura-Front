@@ -168,3 +168,27 @@ a{color:inherit;text-decoration:none}
 	font-style: italic;
 	font-weight: bold;
   }
+.facebook{
+	background:#3b5998;
+	color:#fff;
+}
+//change color of facebook button
+.facebook:hover{
+	--background:#2d4373;
+}
+.facebook{
+	--background:#2d4373;
+}
+.ios{
+	//size of button
+	width:231.613px;
+	height:36px;
+	--background:#34a853;
+	--color:#fff;
+}
+.buttons{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	margin-top:20px;
+}
