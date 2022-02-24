@@ -2,6 +2,12 @@
   <ion-row>
     <ion-col>
       <ion-toolbar>
+        <ion-buttons slot="start">
+        <ion-back-button
+        defaultHref="/private/tabs/tab1"
+            [icon]="exit">
+        </ion-back-button>
+        </ion-buttons>
         <ion-searchbar debounce="500" Placeholder="Buscar"[animated]="true" 
         (ionChange)="buscarVisitas($event)">
         </ion-searchbar>

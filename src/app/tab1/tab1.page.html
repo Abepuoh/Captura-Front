@@ -3,6 +3,12 @@
   <ion-row>
     <ion-col>
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button
+          defaultHref="/"
+              [icon]="exit">
+          </ion-back-button>
+        </ion-buttons>
         <ion-searchbar debounce="500" [animated]="true" (ionChange)="buscarObras($event)"></ion-searchbar>
       </ion-toolbar>
       </ion-col>
@@ -25,6 +31,9 @@
     </ion-item-options>
 
     <ion-item class="backGroundColor">
+      <ion-thumbnail>
+        <!-- Poner una foto de la obra? {{obra.fotos[0]}} ??-->
+      </ion-thumbnail>
       <ion-label>
         <h2>{{obra.nombre}}</h2>
         <p>{{obra.datos}}</p>
