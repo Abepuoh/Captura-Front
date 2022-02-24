@@ -38,7 +38,8 @@ export class Tab4Page {
      } 
 
   async ionViewDidEnter() {
-    let id = this.route.snapshot.paramMap.get('id');
+    let idString = this.route.snapshot.paramMap.get('id');
+    let id = Number(idString);
     await this.cargarVisitas(event,id);
   }
   /**
@@ -46,7 +47,7 @@ export class Tab4Page {
    * @param event 
    * @param id 
    */
-  public async cargarVisitas(event?, id?:string) {
+  public async cargarVisitas(event?, id?:Number) {
     if(!event){
       await this.loading.customLoader("Espere...");
     }

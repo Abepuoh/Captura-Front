@@ -123,18 +123,6 @@ export class Tab1Page {
     await this.obraService.getObraByName(nombre);
   }
 
-  getObraPaged(primeraCarga, event){
-    this.url = '?_page=' + this.page_number + '&_limit=' + this.page_limit;
-    this.obraService.getObra(this.url).then((data:any)=>{
-      for(let i = 0;i<data.length;i++){
-        this.obras.push(data[i]);
-      }
-      if(primeraCarga){
-        event.target.complete();
-        this.page_number++;
-      }
-    });
-  }
 
   public async doInfinite($event) {
     let nuevasObras = await this.obraService.getAllObras();

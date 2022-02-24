@@ -10,12 +10,13 @@ import { Obra } from 'src/shared/obra.interface';
   providedIn: 'root',
 })
 export class ObraService {
-  public API = 'https://frozen-crag-51318.herokuapp.com/';
+  public API = 'https://frozen-crag-51318.herokuapp.com';
   public OBRA_API = this.API + '/obra';
   private last:any=null;
   private obraslistadas:string;
 
   constructor(public http: HttpClient) {}
+
 
   /**
    * Metodo que nos devuelve todas las obras almacenadas en la Base de Datos
@@ -23,9 +24,10 @@ export class ObraService {
    */
    public async getAllObras(): Promise<Obra[]> {
     return new Promise(async (resolve, reject) => {
+      let endpoint = this.OBRA_API;
       try {
-        let result: any = await this.http.get(this.OBRA_API).toPromise();
-        resolve(result);
+        let obra:Obra[] = await this.http.get(endpoint).toPromise() as Obra[];
+        resolve(obra);
       } catch (error) {
         reject(error);
       }
@@ -36,11 +38,12 @@ export class ObraService {
    * @param id de la obra
    * @returns la obra con el id dado
    */
-   public async getObra(id): Promise<Obra> {
+   public async getObra(id:Number): Promise<Obra> {
     return new Promise(async (resolve, reject) => {
+      let endpoint = this.OBRA_API + "/" + id;
       try {
-        let result: any = await this.http.get(this.OBRA_API+"/"+id).toPromise();
-        resolve(result);
+        let obra: Obra = await this.http.get(endpoint).toPromise() as Obra;
+        resolve(obra);
       } catch (error) {
         reject(error);
       }
@@ -56,9 +59,10 @@ export class ObraService {
    */
    public async getObraByCoordinates(latitud: Number, longitud: Number): Promise<Obra> {
     return new Promise(async (resolve, reject) => {
+      let endpoint = this.OBRA_API+"/coordenadas/"+latitud+"/"+longitud;
       try {
-        let result: any = await this.http.get(this.OBRA_API+"/coordenadas/"+latitud+"/"+longitud).toPromise();
-        resolve(result);
+        let obra: Obra = await this.http.get(endpoint).toPromise() as Obra;
+        resolve(obra);
       } catch (error) {
         reject(error);
       }
@@ -69,13 +73,18 @@ export class ObraService {
    * @param id de la obra
    * @returns es void porque no devuelve nada
    */
-   public async deleteObra(id: Number): Promise<void> {
+   public async deleteObra(id: Number): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
-      try {
-        const result: any = this.http.delete(this.OBRA_API+'/'+id).toPromise();
-        resolve(result);
-      } catch (error) {
-        reject(error);
+      if(id && id >-1){
+        let endpoint = this.OBRA_API+'/'+id;
+        try {
+          this.http.delete(endpoint).toPromise();
+          resolve(true);
+        } catch (error) {
+          reject(error);
+        }
+      }else{
+        reject(false);
       }
     });
   }
@@ -85,12 +94,12 @@ export class ObraService {
    * @param obra que queremos actualizar
    * @returns
    */
-   public async updateObra(obra: Obra): Promise<void> {
-     console.log(obra)  
+   public async updateObra(obra: Obra): Promise<Obra> {
     return new Promise(async (resolve, reject) => {
+      let endpoint = this.OBRA_API+'/'+obra.id;
       try {
-        let result: any = await this.http.put(this.OBRA_API+'/'+obra.id, obra).toPromise();
-        resolve(result);
+        let updateObra: Obra = await this.http.put(endpoint, obra).toPromise() as Obra;
+        resolve(updateObra);
       } catch (error) {
         reject(error);
       }
@@ -101,13 +110,13 @@ export class ObraService {
    * @param obra que queremos guardar
    * @returns es void porque no devuelve nada
    */
-   public async createObra(obra: Obra): Promise<void> {
+   public async createObra(obra: Obra): Promise<Obra> {
     return new Promise(async (resolve, reject) => {
+      let endpoint = this.API + this.OBRA_API + '/guardar'
+      let obra:Obra;
       try {
-        let result: any = await this.http
-          .post(this.OBRA_API + '/guardar', obra)
-          .toPromise();
-        resolve(result);
+        let newObra:Obra = await this.http.post(endpoint, obra).toPromise() as Obra;
+        resolve(newObra);
       } catch (error) {
         reject(error);
       }
@@ -118,13 +127,18 @@ export class ObraService {
      * @param id 
      * @returns Obras de un usuario
      */
-     public getObraByUser(id?:Number):Promise<Obra[]> {
+     public getObraByUser(id:Number):Promise<Obra[]> {
       return new Promise(async (resolve, reject) => {
-        try {
-          let result: any = await this.http.get(this.OBRA_API+"/usuario"+id).toPromise();
-          resolve(result);
-        } catch (error) {
-          reject(error);
+        if(id&&id>-1){
+          let endpoint = this.API + this.OBRA_API+"/usuario"+id
+          try {
+            let obras:Obra[] = await this.http.get(endpoint).toPromise() as Obra[];
+            resolve(obras);
+          } catch (error) {
+            reject(error);
+          }
+        }else{
+          reject();
         }
       });
     }
@@ -135,11 +149,16 @@ export class ObraService {
      */
       public getObraByName(nombre?:String):Promise<Obra>{
         return new Promise(async (resolve, reject) => {
-          try {
-            let result: any = await this.http.get(this.OBRA_API+"/nombre/"+nombre).toPromise();
-            resolve(result);
-          } catch (error) {
-            reject(error);
+          let endpoint = this.OBRA_API+"/nombre/"+nombre;
+          if(nombre!=null&&nombre!=undefined){
+            try {
+              let obra:Obra = await this.http.get(endpoint).toPromise() as Obra;
+              resolve(obra);
+            } catch (error) {
+              reject(error);
+            }
+          }else{
+            reject();
           }
         });
       }
