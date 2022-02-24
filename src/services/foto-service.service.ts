@@ -7,7 +7,7 @@ import { Foto } from 'src/shared/foto.interface';
 })
 export class FotoService {
 
-  public API = 'https://frozen-crag-51318.herokuapp.com/';
+  public API = 'https://frozen-crag-51318.herokuapp.com';
   public FOTO_API = this.API + '/foto';
 
   constructor( public http: HttpClient) { }
@@ -21,9 +21,8 @@ export class FotoService {
 
     return new Promise(async (resolve, reject) => {
       try {
-        let result: any = await this.http.get(this.FOTO_API).toPromise();
-        console.log(result);
-        resolve(result);
+        let fotos: Foto[] = await this.http.get(this.FOTO_API).toPromise() as Foto[];
+        resolve(fotos);
       } catch (error) {
         reject(error);
       }
@@ -37,9 +36,8 @@ export class FotoService {
   public getFotoById(id?:Number):Promise<Foto[]>{
     return new Promise(async (resolve, reject) => {
       try {
-        let result: any = await this.http.get(this.FOTO_API+"/"+id).toPromise();
-        console.log(result);
-        resolve(result);
+        let fotos: Foto[] = await this.http.get(this.FOTO_API+"/"+id).toPromise() as Foto[];
+        resolve(fotos);
       } catch (error) {
         reject(error);
       }
@@ -52,18 +50,20 @@ export class FotoService {
    * @param id 
    * @returns foto borrada
    */
-   public deleteFoto(id: Number): Promise<void> {
+   public deleteFoto(id: Number): Promise<boolean> {
 
     return new Promise(async (resolve, reject) => {
-      try {
-        let result: any = this.http.delete(this.FOTO_API+'/'+id).toPromise();
-        console.log(result);
-        resolve(result);
-      } catch (error) {
-        reject(error);
+      if(id && id >-1){
+        try {
+          this.http.delete(this.FOTO_API+'/'+id).toPromise();
+          resolve(true);
+        } catch (error) {
+          reject(error);
+        }
+      }else{
+        reject(false);
       }
     });
-
   }
 
     /**
@@ -72,12 +72,10 @@ export class FotoService {
      * @returns nueva foto
      */
     public createFoto(foto: Foto): Promise<Foto> {
-
       return new Promise(async (resolve, reject) => {
         try {
-          let result: any = await this.http.post(this.FOTO_API+'/guardar', foto).toPromise();
-          console.log(result);
-          resolve(result);
+          let newFoto: Foto = await this.http.post(this.FOTO_API+'/guardar', foto).toPromise() as Foto;
+          resolve(newFoto);
         } catch (error) {
           reject(error);
         }

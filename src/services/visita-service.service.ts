@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Usuario } from 'src/shared/usuario.interface';
 import { Visita } from 'src/shared/visita.interface';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { Visita } from 'src/shared/visita.interface';
 
 export class VisitaService {
 
-  public API = 'https://frozen-crag-51318.herokuapp.com/';
+  public API = 'https://frozen-crag-51318.herokuapp.com';
   public VISITA_API = this.API + '/visita';
 
   constructor( public http: HttpClient) { }
@@ -19,12 +20,10 @@ export class VisitaService {
    * @returns lista de todas las visitas
    */
   public getAllVisitas(): Promise<Visita[]> {
-
     return new Promise(async (resolve, reject) => {
       try {
-        let result: any = await this.http.get(this.VISITA_API).toPromise();
-        console.log(result);
-        resolve(result);
+        let visitas: Visita[] = await this.http.get(this.VISITA_API).toPromise() as Visita[];
+        resolve(visitas);
       } catch (error) {
         reject(error);
       }
@@ -35,12 +34,11 @@ export class VisitaService {
    * @param id 
    * @returns visita
    */
-  public getVisitaById(id?:Number):Promise<Visita[]>{
+  public getVisitaById(id?:Number):Promise<Visita>{
     return new Promise(async (resolve, reject) => {
       try {
-        let result: any = await this.http.get(this.VISITA_API+"/"+id).toPromise();
-        console.log(result);
-        resolve(result);
+        let visita:Visita = await this.http.get(this.VISITA_API+"/"+id).toPromise() as Visita;
+        resolve(visita);
       } catch (error) {
         reject(error);
       }
@@ -52,11 +50,11 @@ export class VisitaService {
    * @param id 
    * @returns visita
    */
-     public getVisitaPorObra(id?:any):Promise<Visita[]>{
+     public getVisitaPorObra(id?:Number):Promise<Visita[]>{
       return new Promise(async (resolve, reject) => {
         try {
-          let result: any = await this.http.get(this.VISITA_API+"/obra/"+id).toPromise();
-          resolve(result);
+          let visitas: Visita[] = await this.http.get(this.VISITA_API+"/obra/"+id).toPromise() as Visita[];
+          resolve(visitas);
         } catch (error) {
           reject(error);
         }
@@ -71,9 +69,8 @@ export class VisitaService {
     public getVisitaByFecha(fecha?:Date):Promise<Visita>{
       return new Promise(async (resolve, reject) => {
         try {
-          let result: any = await this.http.get(this.VISITA_API+"/fecha/"+fecha).toPromise();
-          console.log(result);
-          resolve(result);
+          let visita: Visita = await this.http.get(this.VISITA_API+"/fecha/"+fecha).toPromise() as Visita;
+          resolve(visita);
         } catch (error) {
           reject(error);
         }
@@ -85,19 +82,19 @@ export class VisitaService {
    * @param id 
    * @returns visita borrada
    */
-
-   public deleteVisita(id:Number): Promise<void> {
-
+   public deleteVisita(id:Number): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
-      try {
-        let result: any = this.http.delete(this.VISITA_API+'/'+id).toPromise();
-        console.log(result);
-        resolve(result);
-      } catch (error) {
-        reject(error);
+      if(id && id >-1){
+        try {
+          await this.http.delete(this.VISITA_API+'/'+id).toPromise();
+          resolve(true);
+        } catch (error) {
+          reject(error);
+        }
+      }else{
+        reject(false);
       }
     });
-
   }
 
     /**
@@ -106,12 +103,10 @@ export class VisitaService {
    * @returns  una visita actualizada
    */
      public updateVisita(visita?:Visita): Promise<Visita> {
-
       return new Promise(async (resolve, reject) => {
         try {
-          let result: any = await this.http.put(this.VISITA_API+'/'+visita.id, visita).toPromise();
-          console.log(result);
-          resolve(result);
+          let updateVisita: Visita = await this.http.put(this.VISITA_API+'/'+visita.id, visita).toPromise() as Visita;
+          resolve(updateVisita);
         } catch (error) {
           reject(error);
         }
@@ -128,9 +123,8 @@ export class VisitaService {
 
       return new Promise(async (resolve, reject) => {
         try {
-          let result: any = await this.http.post(this.VISITA_API+'/guardar', visita).toPromise();
-          console.log(result);
-          resolve(result);
+          let newVisita: Visita = await this.http.post(this.VISITA_API+'/guardar', visita).toPromise() as Visita;
+          resolve(newVisita);
         } catch (error) {
           reject(error);
         }
