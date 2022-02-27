@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Obra } from 'src/shared/obra.interface';
 
 
@@ -10,8 +11,6 @@ import { Obra } from 'src/shared/obra.interface';
   providedIn: 'root',
 })
 export class ObraService {
-  public API = 'https://frozen-crag-51318.herokuapp.com';
-  public OBRA_API = this.API + '/obra';
   private last:any=null;
   private obraslistadas:string;
 
@@ -24,10 +23,10 @@ export class ObraService {
    */
    public async getAllObras(): Promise<Obra[]> {
     return new Promise(async (resolve, reject) => {
-      let endpoint = this.OBRA_API;
+      let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra;
       try {
-        let obra:Obra[] = await this.http.get(endpoint).toPromise() as Obra[];
-        resolve(obra);
+        let Obra:any[] = await this.http.get(endpoint).toPromise() as Obra[];
+        resolve(Obra);
       } catch (error) {
         reject(error);
       }
@@ -40,7 +39,7 @@ export class ObraService {
    */
    public async getObra(id:Number): Promise<Obra> {
     return new Promise(async (resolve, reject) => {
-      let endpoint = this.OBRA_API + "/" + id;
+      let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra+'/'+id;
       try {
         let obra: Obra = await this.http.get(endpoint).toPromise() as Obra;
         resolve(obra);
@@ -59,7 +58,7 @@ export class ObraService {
    */
    public async getObraByCoordinates(latitud: Number, longitud: Number): Promise<Obra> {
     return new Promise(async (resolve, reject) => {
-      let endpoint = this.OBRA_API+"/coordenadas/"+latitud+"/"+longitud;
+      let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra+"/coordenadas/"+latitud+"/"+longitud;
       try {
         let obra: Obra = await this.http.get(endpoint).toPromise() as Obra;
         resolve(obra);
@@ -76,7 +75,7 @@ export class ObraService {
    public async deleteObra(id: Number): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
       if(id && id >-1){
-        let endpoint = this.OBRA_API+'/'+id;
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra+'/'+id;
         try {
           this.http.delete(endpoint).toPromise();
           resolve(true);
@@ -96,7 +95,7 @@ export class ObraService {
    */
    public async updateObra(obra: Obra): Promise<Obra> {
     return new Promise(async (resolve, reject) => {
-      let endpoint = this.OBRA_API+'/'+obra.id;
+      let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra+'/'+obra.id;
       try {
         let updateObra: Obra = await this.http.put(endpoint, obra).toPromise() as Obra;
         resolve(updateObra);
@@ -112,7 +111,7 @@ export class ObraService {
    */
    public async createObra(obra: Obra): Promise<Obra> {
     return new Promise(async (resolve, reject) => {
-      let endpoint = this.API + this.OBRA_API + '/guardar'
+      let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra + '/guardar'
       let obra:Obra;
       try {
         let newObra:Obra = await this.http.post(endpoint, obra).toPromise() as Obra;
@@ -130,7 +129,7 @@ export class ObraService {
      public getObraByUser(id:Number):Promise<Obra[]> {
       return new Promise(async (resolve, reject) => {
         if(id&&id>-1){
-          let endpoint = this.API + this.OBRA_API+"/usuario"+id
+          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra+"/usuario"+id
           try {
             let obras:Obra[] = await this.http.get(endpoint).toPromise() as Obra[];
             resolve(obras);
@@ -149,7 +148,7 @@ export class ObraService {
      */
       public getObraByName(nombre?:String):Promise<Obra>{
         return new Promise(async (resolve, reject) => {
-          let endpoint = this.OBRA_API+"/nombre/"+nombre;
+          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra+"/nombre/"+nombre;
           if(nombre!=null&&nombre!=undefined){
             try {
               let obra:Obra = await this.http.get(endpoint).toPromise() as Obra;
@@ -168,7 +167,8 @@ export class ObraService {
   public getCoordenadas():Promise<Obra[]>{
     return new Promise(async (resolve, reject) => {
       try {
-        let result: any = await this.http.get(this.OBRA_API).toPromise();
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra+"/coordenadas";
+        let result: any = await this.http.get(endpoint).toPromise();
         //coge el resultado y saca la latitud y longitud
         let coordenadas:Obra[] = result.map(obra => {
           return {

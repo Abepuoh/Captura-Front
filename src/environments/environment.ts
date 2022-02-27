@@ -11,7 +11,16 @@ export const environment = {
   storageBucket: "captura-1e121.appspot.com",
   messagingSenderId: "360661644710",
   appId: "1:360661644710:web:26ce3a916e3397f47d8b67",
-  measurementId: "G-5YE3NH852L"}
+  measurementId: "G-5YE3NH852L"},
+
+  apiEnviroment: {
+    endpoint: 'https://frozen-crag-51318.herokuapp.com',
+    obra: '/obra',
+    visita: '/visita',
+    usuario: '/usuario',
+    foto: '/foto',
+  }
+  
 };
 
 /*
