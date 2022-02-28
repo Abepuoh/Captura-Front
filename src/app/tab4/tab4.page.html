@@ -24,11 +24,6 @@
   <ion-list>
     <!-- Sliding item with text options on both sides -->
     <ion-item-sliding *ngFor="let visita of visitas ; let i = index" >
-      <ion-item-options side="start">
-        <ion-item-option color="primary" (click)="editar(visita)">
-          <ion-icon name="create" style="zoom: 1.5;"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
       <ion-item>
         <ion-label>
           <h2>{{visita.header}}</h2>

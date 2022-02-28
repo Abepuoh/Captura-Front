@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FotoService } from 'src/services/foto-service.service';
 import { ToastServiceService } from 'src/services/toast-service.service';
-import { UsuarioService } from 'src/services/usuario-service.service';
-import { Obra } from 'src/shared/obra.interface';
-import { Usuario } from 'src/shared/usuario.interface';
+import { Foto } from 'src/shared/foto.interface';
 
 @Component({
   selector: 'app-tab5',
@@ -11,17 +10,17 @@ import { Usuario } from 'src/shared/usuario.interface';
 })
 export class Tab5Page{
 
-  public usuario:Usuario;
-  public usuarios:Usuario[];
+  public foto:Foto;
+  public fotos:Foto[];
 
-  constructor(public userService:UsuarioService, public toast:ToastServiceService) { }
+  constructor(public fotoService:FotoService, public toast:ToastServiceService) { }
 
   async ionViewDidEnter() {
-    await this.cargarUsuarios();
+
   }
-  public async cargarUsuarios(event?) {
-    await this.userService.getAllUsuarios().then(usuarios => {
-      this.usuarios = usuarios;
+  public async cargarFotos(event?) {
+    await this.fotoService.getAllFotos().then(fotos => {
+      this.fotos = fotos;
       if (event) {
         event.target.complete();
       }
@@ -29,20 +28,18 @@ export class Tab5Page{
   }
 
 
-  public async borra(usuario:Usuario){
-    await this.userService.deleteUsuario(usuario.id);
-    console.log(usuario);
+  public async borra(foto:Foto){
+    await this.fotoService.deleteFoto(foto.id);
+    console.log(foto);
   }
 
-  public async getOneUsuario(id:Number){
-    await this.userService.getUsuarioById(id);
+  public async getOneFoto(id:Number){
+    await this.fotoService.getFotoById(id);
   }
 
-  public async getUserByName(nombre:string){
-    nombre = "Juan"
-    await this.userService.getUsuarioByName(nombre);
+  public async crearFoto(foto: Foto) {
+    await this.fotoService.createFoto(foto);
+    console.log(foto);
   }
 
-  editar(){
-  }
 }

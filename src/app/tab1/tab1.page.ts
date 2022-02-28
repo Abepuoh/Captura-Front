@@ -138,7 +138,11 @@ export class Tab1Page {
    * @param obra 
    */
   goToVisitas(obra:Obra){
-    this.navControl.navigateForward("private/tabs/tab4/"+obra.id);
+    if(obra!=null){
+      this.navControl.navigateForward("private/tabs/tab4/"+obra.id);
+    }else{
+      this.toast.showToast("No se ha encontrado la obra", "danger");
+    }
   }
 
 
