@@ -34,7 +34,7 @@ export class Tab4Page {
      }
 
     async ngOnInit() {
-      
+
      } 
 
   async ionViewDidEnter() {
@@ -51,32 +51,40 @@ export class Tab4Page {
     if(!event){
       await this.loading.customLoader("Espere...");
     }
-    await this.visitaservice.getVisitaPorObra(id).then(visitas => {
-      this.visitas = visitas;
-      if (event) {
-          event.target.complete();
-        }else{
-          this.loading.dismissLoader();
+    if(id!=null){
+      try {
+        await this.visitaservice.getVisitaPorObra(id).then(visitas => {
+          this.visitas = visitas;
+          if (event) {
+              event.target.complete();
+            }else{
+              this.loading.dismissLoader();
+          }
+        });
+      } catch (error) {
+        await this.toast.showToast("Error al cargar las visitas", "danger");
       }
-    })
+    }else{
+      await this.toast.showToast("Error al cargar las visitas", "danger");
+    }
   }
-
-  public async cargarFotos(event?) {
-    await this.fotoservice.getAllFotos().then(fotos => {
-      this.fotos = fotos;
-      if (event) {
-        if (event) {
-          event.target.complete();
-        }
+    /**
+   * Metodo que busca las visitas por nombre
+   * @param $event 
+   */
+     public buscarVisitas($event) {
+      const texto = $event.target.value;
+      if (texto.length > 0) {
+        this.visitas = this.visitas.filter((visita) => {
+          return (visita.header.toLowerCase().indexOf(texto.toLowerCase())) > -1;
+        });
+      } else {
+        let idString = this.route.snapshot.paramMap.get('id');
+        let id = Number(idString);
+        this.cargarVisitas(event,id);
       }
-    })
-  }
+    }
 
-  public async borraFoto(foto: Foto) {
-
-    await this.fotoservice.deleteFoto(foto.id);
-    console.log(foto);
-  }
   /**
    * Metodo que borra una visita
    * @param visita 
@@ -100,91 +108,36 @@ export class Tab4Page {
         {
           text: 'NO',
           handler: () => {
-
-            
+            this.cargarVisitas(event, visita.id);
           }
         }
       ]
     }).then(res => {
       res.present();
     });
-    await this.cargarVisitas();
-
-  }
-  public async getAllFotos(foto) {
-    await this.fotoservice.getAllFotos();
-    console.log(foto);
-  }
-
-  public async getFoto(id: Number) {
-    await this.fotoservice.getFotoById(id)
-  }
-
-  public async getVisita(id: Number) {
-    await this.visitaservice.getVisitaById(id);
-    console.log(id);
-  }
-
-  public async getAllVisitas(visita) {
-    await this.visitaservice.getAllVisitas();
-    console.log(visita);
-
-  }
-  public async getVisitaByFecha(fecha: Date) {
-    await this.visitaservice.getVisitaByFecha(fecha);
-    console.log(fecha);
-
-  }
-  public async crearVisita(visita: Visita) {
-    await this.visitaservice.createVisita(visita);
-    console.log(visita);
-
-  }
-  public async crearFoto(foto: Foto) {
-    await this.fotoservice.createFoto(foto);
-    console.log(foto);
-
-  }
-  public async updateVisita(visita: Visita) {
-
-  }
-  public async visitaByObra(id: Number) {
-    await this.visitaservice.getVisitaPorObra(id);
-    console.log(id);
-
-  }
-  /**
-   * Metodo que busca las visitas por nombre
-   * @param $event 
-   */
-  public buscarVisitas($event) {
-    const texto = $event.target.value;
-    if (texto.length > 0) {
-      this.visitas = this.visitas.filter((visita) => {
-        return (visita.header.toLowerCase().indexOf(texto.toLowerCase())) > -1;
-      });
-    } else {
-      let id = this.route.snapshot.paramMap.get('id');
-      console.log(id);
-      this.cargarVisitas(id);
-    }
   }
 
     //Metodo para abir modal y crear la nueva visita
-    public async crearVisitaGo(Obra:Obra){ 
-      Obra = await this.obraService.getObra(1);
-      const modal = await this.modalController.create({
-        component: CreaVisitaPage,
-        componentProps: {
-          obra: Obra
-        },
-      });
-      console.log(Obra);
-      return await modal.present();
+    public async crearVisitaGo(){ 
+      let idString = this.route.snapshot.paramMap.get('id');
+      let id = Number(idString);
+      if(id!=undefined&&id!=null){
+        let Obra:Obra = await this.obraService.getObra(id);
+        const modal = await this.modalController.create({
+          component: CreaVisitaPage,
+          componentProps: {
+            obra: Obra
+          },
+        });
+        return await modal.present();
+      }else{
+        this.toast.showToast("Error al cargar la obra", "danger");
+      }
+
     }
 
    /**
-    * Metodo que abre un modal para editar una visita y carga los datos de la visita
+    * Metodo que abre un modal para editar una visita y carga los datos de la visita, de momento apartado
     * @param visita 
     * @returns 
     */
@@ -201,13 +154,19 @@ export class Tab4Page {
     }else{
       this.toast.showToast("No ha introducido bien la obra", "Danger");
     }
-
   }
 
+  /**
+   * 
+   * @param visita 
+   */
   goToFotos(visita:Visita){
-    this.navControl.navigateForward("private/tabs/tab5/"+visita.id);
+    if(visita!=null){
+      this.navControl.navigateForward("private/tabs/tab5/"+visita.id);
+    }else{
+      this.toast.showToast("No se ha encontrado la visita", "danger");
+    }   
   }
-
 }
 
 
