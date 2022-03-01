@@ -8,43 +8,45 @@
 <ion-content>
   <div class="padding15">
     <p>Foto de perfil</p>
-  
+
     <div id="cambiarFoto">
+
       <div id="textFoto">
-        <ion-button (click)="choosePhoto()">ELIJA UNA FOTO</ion-button>
+        <ion-button class="hazFoto">
+          <input id="myFileInput" (click)="hazFoto()" />CAMBIAR FOTO
+        </ion-button>
       </div>
     </div>
-    <ion-item>
-      <ion-label position="stacked">
-        <div class="text-field">
-          Nombre
-        </div>
-      </ion-label>
-      <ion-input placeholder="Ingresa Nombre Completo" 
-      (ionChange)="ionChangeNombre($event)" value="{{user.nombre}}"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">
-        <div class="text-field">
-          Email
-        </div>
-      </ion-label>
-      <ion-input placeholder="Ingresa Email" 
-      (ionChange)="ionChangeMail($event)" value="{{user.email}}"></ion-input>
-    </ion-item>
+    <div class="container">
+      <ion-item>
+        <ion-label position="stacked">
+          <div class="text-field">
+            Nombre
+          </div>
+        </ion-label>
+        <ion-input placeholder="Ingresa Nombre Completo" (ionChange)="ionChangeNombre($event)" value="{{user.nombre}}">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">
+          <div class="text-field">
+            Email
+          </div>
+        </ion-label>
+        <ion-input placeholder="Ingresa Email" (ionChange)="ionChangeMail($event)" value="{{user.email}}"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="stacked">
-        <div class="text-field">
-          Datos
-        </div>
-      </ion-label>
-      <ion-input placeholder="Datos" 
-      (ionChange)="ionChangeMail($event)" value="{{user.datos}}"></ion-input>
-    </ion-item>
-  
-    <ion-button fill="outline" class="button-edit" (click)="actualizar(user.id, user)">
+      <ion-item>
+        <ion-label position="stacked">
+          <div class="text-field">
+            Datos
+          </div>
+        </ion-label>
+        <ion-input placeholder="Datos" (ionChange)="ionChangeDatos($event)" value="{{user.datos}}"></ion-input>
+      </ion-item>
+    </div>
+    <ion-button fill="solid" color="#a43a40" class="button-edit" (click)="actualizar(user.id, user)">
       <div class="text-edit" routerLinkActive="active">ACTUALIZAR</div>
     </ion-button>
-  </div> 
+  </div>
 </ion-content>

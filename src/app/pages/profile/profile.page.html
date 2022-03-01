@@ -1,31 +1,39 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button (click)="goBack()" ></ion-back-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-<ion-content  class="background-image" no-scroll padding>
-<ion-avatar id="avatar"></ion-avatar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="background-image" no-scroll padding>
+  <ion-avatar id="avatar"></ion-avatar>
 
-<div class="name">
-    <p>NOMBRE DE PERFIL</p>
-</div>
 
-<div id="layout_user">
+
+  <div class="name">
+    <p>{{user.nombre}}</p>
+  </div>
+
+  <div id="layout_user">
     <div id="user_desciption">
-        <p class="text">Nombre</p>
-        <p>{{user.nombre}}</p>
-        <p class="text">Correo</p>
-        <p>{{user.email}}</p>
-        <p class="text">Datos</p>
-        <p>{{user.datos}}</p>
+      <p class="text">Nombre</p>
+      <p>{{user.nombre}}</p>
+      <p class="text">Correo</p>
+      <p>{{user.email}}</p>
+      <p class="text">Datos</p>
+      <p>{{user.datos}}</p>
     </div>
 
     <div id="user_buttons">
-        <!--abrir modal-->
-        <ion-button  fill="clear" (click)="openModal()" class="text">EDITAR PERFIL</ion-button>
-        <ion-button fill="clear" (click)="logout()" class="text-logout">CERRAR SESION</ion-button>
+      <!--abrir modal-->
+      <ion-button fill="outline" color="#a43a40" (click)="openModal()" class="text">
+        <ion-icon name="pencil-outline">
+        </ion-icon> EDITAR PERFIL
+      </ion-button>
+      <ion-button fill="outline" color="#e0e0e0" (click)="logout()" class="text-logout">
+        <ion-icon name="log-out-outline">
+        </ion-icon>CERRAR SESION
+      </ion-button>
     </div>
-</div>
+  </div>
 </ion-content>

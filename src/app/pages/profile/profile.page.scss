@@ -37,12 +37,19 @@
     font-weight: bold;
     padding: 15px;
     border-radius: 6px;
-    height: 75%;
+    height: 65%;
 }
 
 #user_buttons {
     display: grid;
+
 }
 ion-back-button {
     display: block;
+}
+ion-content {
+    --overflow: hidden;
+}
+.outline-button {
+	--border-color: var(--ion-color-medium);
 }
