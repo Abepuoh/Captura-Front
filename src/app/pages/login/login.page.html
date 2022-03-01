@@ -14,14 +14,14 @@
             <ion-input type="password" #password required></ion-input>
           </div>
           <div>
-            <ion-button (click)="login()"type="submit" color="danger" shape= "round" expand="block">
+            <ion-button (click)="login()"type="submit" color="primary" shape= "round" expand="block">
               <ion-icon name="log-in"></ion-icon>&nbsp;
                Iniciar Sesion
             </ion-button>
           </div>
           <span class="center-span"> OR </span>
           <div>
-            <ion-button (click)="googleSignIn()" color="primary" shape= "round" expand="block">
+            <ion-button (click)="googleSignIn()" color="tertiary" shape= "round" expand="block">
               <ion-icon name="logo-google"></ion-icon>&nbsp;
                Iniciar con Google
             </ion-button>
@@ -33,31 +33,25 @@
         </div>
 
         <div class="sign-up-htm">
+          <form>
           <div class="group">
-            <ion-label for="user" class="label">Nombre</ion-label>
-            <ion-input #nombre type="text" required ></ion-input>
+              <ion-label for="user" class="label">Nombre</ion-label>
+              <ion-input #nombre type="text" required ></ion-input>
           </div>
           <div class="group">
             <ion-label for="pass" class="label">Contraseña</ion-label>
             <ion-input #passwordR  type="password" required ></ion-input>
           </div>
           <div class="group">
-            <ion-label for="pass" class="label">Repite la contraseña</ion-label>
-            <ion-input  #passwordRR  type="password" required ></ion-input>
-          </div>
-          <div class="group">
             <ion-label for="pass" class="label">Email</ion-label>
             <ion-input #emailR type="text" required></ion-input>
           </div>
+          </form>
           <div>
-            <ion-button (click)="registro()"type="submit" color="danger" shape= "round" expand="block">
+            <ion-button (click)="registro(emailR,passwordR)"type="submit" color="primary" shape= "round" expand="block">
               <ion-icon name="log-in"></ion-icon>&nbsp;
                Registrarse
             </ion-button>
-          </div>
-          <div class="hr"></div>
-          <div class="foot-lnk">
-            <label for="tab-1">¿Ya estás registrado?</label>
           </div>
         </div>
       </div>

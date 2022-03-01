@@ -168,3 +168,14 @@ a{color:inherit;text-decoration:none}
 	font-style: italic;
 	font-weight: bold;
   }
+.sc-ion-input-ios-h {
+	background-color:rgba(197, 197, 197, 0.65) !important;
+	color: #000;
+}
+.sc-ion-input-ios-h ::after {
+	color: #000;
+	background-color:rgba(197, 197, 197, 0.65) !important;
+}
+:root {
+	--ion-color-tertiary: #1161ee;
+}

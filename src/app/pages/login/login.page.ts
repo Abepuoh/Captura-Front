@@ -6,6 +6,7 @@ import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { Platform, ToastController } from '@ionic/angular';
 import { Usuario } from 'src/shared/usuario.interface';
 import { ToastServiceService } from 'src/services/toast-service.service';
+import { LocalStorageService } from 'src/services/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -13,17 +14,13 @@ import { ToastServiceService } from 'src/services/toast-service.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
-  public userinfo:any=null;
+  
   private isAndroid:boolean;
   @ViewChild('email') email:IonInput;
   @ViewChild('password') password:IonInput;
   @ViewChild('nombre') nombre:IonInput;
-  @ViewChild('emailR') emailR:IonInput;
-  @ViewChild('passwordR') passwordR:IonInput;
-  @ViewChild('passwrodRR') passwordRR:IonInput;
   
-  constructor(public menuCtrl:MenuController, private router:Router, public authService:AuthService, private toastService:ToastServiceService) {
+  constructor(public authStorage:LocalStorageService,public menuCtrl:MenuController, private router:Router, public authService:AuthService, private toastService:ToastServiceService) {
     GoogleAuth.initialize();
   }
   ngOnInit() {
@@ -33,28 +30,33 @@ export class LoginPage implements OnInit {
     let googleUser = await GoogleAuth.signIn();
   }
 
-  async login(){
+  public async login(){
     let correo = this.email.value.toString();
     let password = this.password.value.toString();
-    this.authService.SignIn(correo,password).then(res=>{
-      this.router.navigate(['/private/tabs/tab1']);
-    }).catch(err=>{
-      console.log(err);
-    })
-  }
-  public async registro(){
-    let nombre = this.nombre.value.toString();
-    let correo = this.emailR.value.toString();
-    let password = this.passwordR.value.toString();
-
-    if(password == this.passwordRR.value.toString()){
-      this.authService.SignUp(correo,password).then(res=>{
+    //si no estas logueado no puedes entrar
+    if(correo == "" || password == ""){
+      this.toastService.showToast("Por favor ingrese su correo y contraseña","");
+    }else{
+      this.authService.SignIn(correo, password).then(res=>{
+        this.authStorage.setItem('user',res);
         this.router.navigate(['/private/tabs/tab1']);
       }).catch(err=>{
-        console.log(err);
-      })
+        this.toastService.showToast(err.message ,"");
+      });
+    }
+  }
+  public async registro(emailR,passwordR){
+
+    let nombre = this.nombre.value.toString();
+    if(emailR.value == "" || passwordR.value == "" || this.nombre.value == ""){
+      this.toastService.showToast("Por favor ingrese todos los campos","");
     }else{
-      this.toastService.showToast("Las contraseñas no coinciden","");
+        this.authService.SignUp(emailR.value, passwordR.value).then(res=>{
+          this.authStorage.setItem('user',res);
+          this.router.navigate(['/private/tabs/tab1']);
+        }).catch(err=>{
+          this.toastService.showToast(err.message ,"");
+        });
     }
   }
   ionViewWillEnter(){
