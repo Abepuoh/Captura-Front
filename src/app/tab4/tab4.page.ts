@@ -34,20 +34,19 @@ export class Tab4Page {
      }
 
     async ngOnInit() {
-
      } 
 
   async ionViewDidEnter() {
-    let idString = this.route.snapshot.paramMap.get('id');
-    let id = Number(idString);
-    await this.cargarVisitas(event,id);
+    await this.cargarVisitas();
   }
   /**
    * Metodo que devuelve las visitas de una obra por su id
    * @param event 
    * @param id 
    */
-  public async cargarVisitas(event?, id?:Number) {
+  public async cargarVisitas(event?) {
+    let idString = this.route.snapshot.paramMap.get('id');
+    let id = Number(idString);
     if(!event){
       await this.loading.customLoader("Espere...");
     }
@@ -63,9 +62,11 @@ export class Tab4Page {
         });
       } catch (error) {
         await this.toast.showToast("Error al cargar las visitas", "danger");
+        this.loading.dismissLoader();
       }
     }else{
       await this.toast.showToast("Error al cargar las visitas", "danger");
+      this.loading.dismissLoader();
     }
   }
     /**
@@ -79,9 +80,7 @@ export class Tab4Page {
           return (visita.header.toLowerCase().indexOf(texto.toLowerCase())) > -1;
         });
       } else {
-        let idString = this.route.snapshot.paramMap.get('id');
-        let id = Number(idString);
-        this.cargarVisitas(event,id);
+        this.cargarVisitas();
       }
     }
 
@@ -97,18 +96,22 @@ export class Tab4Page {
       buttons: [
         {
           text: 'Si',
-          handler: () => {
-            this.visitaservice.deleteVisita(visita.id);
-            let i = this.visita.indexOf(visita, 0)
-            if (i > -1) {
-              this.visita.splice(i, 1);
+          handler:async () => {
+            try {
+              await this.loading.customLoader("Eliminando...");
+              await this.visitaservice.deleteVisita(visita.id);
+              await this.toast.showToast("Visita borrada con éxito", "sucess");
+              await this.loading.dismissLoader();
+              await this.cargarVisitas();
+            } catch (error) {
+              await this.toast.showToast("La visita no se ha podido borrar", "danger");
             }
           }
         },
         {
           text: 'NO',
           handler: () => {
-            this.cargarVisitas(event, visita.id);
+            this.cargarVisitas();
           }
         }
       ]
@@ -133,7 +136,6 @@ export class Tab4Page {
       }else{
         this.toast.showToast("Error al cargar la obra", "danger");
       }
-
     }
 
    /**

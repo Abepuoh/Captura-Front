@@ -25,7 +25,9 @@ export class CreaObraPage implements OnInit {
     //cargar datos que recibirá el modal
     this.formObra = this.fb.group({
       datos:["",Validators.required],
-      nombre:["",Validators.required]
+      nombre:["",Validators.required],
+      latitud:"",
+      longitud: ""
     });  
   }
   public closeModal(){

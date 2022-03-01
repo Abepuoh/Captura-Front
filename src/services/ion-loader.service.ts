@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 
 @Injectable({
