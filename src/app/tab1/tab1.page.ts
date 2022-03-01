@@ -19,8 +19,6 @@ export class Tab1Page {
   public searchedItem: any;
   public obras: Obra[];
   public obra:Obra;
-  page_number = 1;
-  page_limit = 8;
   primeraCarga = false;
   url:string;
   user:Usuario;

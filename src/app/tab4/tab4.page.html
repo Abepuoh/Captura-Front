@@ -8,8 +8,8 @@
             [icon]="exit">
         </ion-back-button>
         </ion-buttons>
-        <ion-searchbar debounce="500" Placeholder="Buscar"[animated]="true" 
-        (ionChange)="buscarVisitas($event)">
+        <ion-searchbar debounce="500" Placeholder="Buscar Visitas..."[animated]="true" 
+        (ionChange)="buscarVisitas($event)" style="--background: #fcfcfc !important;">
         </ion-searchbar>
       </ion-toolbar>
       </ion-col>
@@ -21,16 +21,21 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> -->
   <!-- List of Text Items -->
-  <ion-list>
+  <ion-list style="--background-color: #DA696B !important;">
     <!-- Sliding item with text options on both sides -->
-    <ion-item-sliding *ngFor="let visita of visitas ; let i = index" >
+    <ion-item-sliding *ngFor="let visita of visitas ; let i = index">
       <ion-item>
+      <!-- 
+      <ion-thumbnail>
+        Poner una foto de la obra? {{obra.fotos[0]}} ??
+      </ion-thumbnail>
+      -->
         <ion-label>
           <h2>{{visita.header}}</h2>
           <p>{{visita.nota}}</p>
           <p>{{visita.fecha}}</p>
         </ion-label>
-        <ion-icon name="add-circle-outline" (click)="goToFotos(visita)"></ion-icon>
+        <ion-icon name="add-circle-outline" (click)="goToFotos(visita)" class="ion-icon"></ion-icon>
       </ion-item>
   
       <ion-item-options side="end">
@@ -41,7 +46,7 @@
     </ion-item-sliding>
   </ion-list>
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button (click)="crearVisitaGo(Obra)" color="danger">
+    <ion-fab-button (click)="crearVisitaGo(Obra)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
