@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import { IonLoaderService } from 'src/services/ion-loader.service';
 import { ObraService } from 'src/services/obra.service';
 import { ToastServiceService } from 'src/services/toast-service.service';
 import { Obra } from 'src/shared/obra.interface';
@@ -22,7 +23,7 @@ export class EditaModalPage implements OnInit {
   private visita:Visita;
 
   constructor(private modalController:ModalController, private obraService:ObraService, private fb:FormBuilder,
-    private toast:ToastServiceService) {
+    private toast:ToastServiceService, private alertController:AlertController, private loading:IonLoaderService) {
 
    }
 
@@ -40,19 +41,42 @@ export class EditaModalPage implements OnInit {
   }
 
   public async editObra(){
-    this.obre.datos = this.formObra.get("datos").value;
-    this.obre.latitud = this.formObra.get("latitud").value;
-    this.obre.longitud = this.formObra.get("longitud").value;
-    this.obre.nombre = this.formObra.get("nombre").value;
-    this.obre.usuarios = this.obre.usuarios;
-    this.obre.visitas = this.obre.visitas;
-    try {
-      await this.obraService.updateObra(this.obre);
-      this.toast.showToast("Obra actualizada", "success");
-    } catch (error) {
-      this.toast.showToast("Error al actualizar", "danger");
-    }
-    this.closeModal();
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      subHeader: 'Edición de la obra ',
+      message: '¿Está seguro de editar la obra?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',       
+          handler: async () => {
+            await this.alertController.dismiss();
+          },
+        },
+        {
+          text: 'Aceptar',
+          handler: async () => {
+            await this.loading.customLoader("Editando la Obra...");
+            this.obre.datos = this.formObra.get("datos").value;
+            this.obre.latitud = this.formObra.get("latitud").value;
+            this.obre.longitud = this.formObra.get("longitud").value;
+            this.obre.nombre = this.formObra.get("nombre").value;
+            this.obre.usuarios = this.obre.usuarios;
+            this.obre.visitas = this.obre.visitas;
+            try {
+              await this.obraService.updateObra(this.obre);
+              this.toast.showToast("Obra actualizada", "success");
+            } catch (error) {
+              this.toast.showToast("Error al actualizar", "danger");
+            }
+            this.closeModal();
+            await this.loading.dismissLoader();
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 
   public closeModal(){

@@ -123,6 +123,7 @@ export class VisitaService {
 
       return new Promise(async (resolve, reject) => {
         try {
+          console.log(visita)
           let newVisita: Visita = await this.http.post(this.VISITA_API+'/guardar', visita).toPromise() as Visita;
           resolve(newVisita);
         } catch (error) {
