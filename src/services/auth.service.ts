@@ -1,112 +1,117 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { Injectable,NgZone } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { User } from '@firebase/auth';
+import * as auth from 'firebase/auth';
 import { Platform } from '@ionic/angular';
 import { Usuario } from 'src/shared/usuario.interface';
 import { LocalStorageService } from './local-storage.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  public user: any;
-  public userdata: Usuario;
-
-  constructor(private storage:LocalStorageService,public afAuth: AngularFireAuth, private afs: AngularFirestore) { }
+  userData: any; // Save logged in user data
   
-  /**
-   * Metodo que ser encarga de cargar la sesion
-   * del usuario si este existe dentro del registro de la aplicacion
-   */
-  public async loadSession(){
-    try {
-      let user= await this.storage.getItem('user');
-      if(user){
-        user=JSON.parse(user);
-        this.user=user;
+  constructor(
+    public afs: AngularFirestore, // Inject Firestore service
+    public afAuth: AngularFireAuth, // Inject Firebase auth service
+    public router: Router,
+    public ngZone: NgZone // NgZone service to remove outside scope warning
+  ) {
+    /* Saving user data in localstorage when 
+    logged in and setting up null when logged out */
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.userData = user;
+        localStorage.setItem('user', JSON.stringify(this.userData));
+        JSON.parse(localStorage.getItem('user')!);
+      } else {
+        localStorage.setItem('user', 'null');
+        JSON.parse(localStorage.getItem('user')!);
       }
-    } catch (error) {
-      console.log("Error al cargar sesion ---> "+error);
-    }
+    });
   }
-  /**
-   * Metodo que sera encargado de cerrar la sesion del usuario,
-   * removiendo al mismo de la base de datos y eliminando la 
-   * sesion del dispositivo
-   */
-  public async logout(){
-    //logout with google or email
-    try {
-      await this.afAuth.signOut();
-      await this.storage.removeItem('user');
-    this.user=null;
-    } catch (error) {
-      console.log("Error al cerrar sesion ---> "+error);
-    }
+  // Sign in with email/password
+  async SignIn(email: string, password: string) {
+    return await this.afAuth
+      .signInWithEmailAndPassword(email, password)
+      .then((result) => {
+        this.ngZone.run(() => {
+          this.router.navigate(['dashboard']);
+        });
+        //this.SetUserData(result.user);
+      })
+      .catch((error) => {
+        window.alert(error.message);
+      });
   }
-  /**
-   * Metodo que se encarga de guardar la sesion del usuario
-   */
-  public async keepSession(){
-    try {
-      await this.storage.setItem('user',JSON.stringify(this.user));
-    } catch (error) {
-      console.log("Error al guardar sesion ---> "+error);
-    }
+  // Sign up with email/password
+  SignUp(email: string, password: string) {
+    return this.afAuth
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        /* Call the SendVerificaitonMail() function when new user sign 
+        up and returns promise */
+        this.SendVerificationMail();
+        //this.SetUserData(result.user);
+      })
+      .catch((error) => {
+        window.alert(error.message);
+      });
   }
-  /**
-   * Metodo que se encarga de validar si el usuario esta autenticado
-   * @returns Devuelve si el usuario actualmente logueado
-   */
-  public isLogged():boolean{
-    if(this.user) return true; else return false;
+  // Send email verfificaiton when new user sign up
+  SendVerificationMail() {
+    return this.afAuth.currentUser
+      .then((u: any) => u.sendEmailVerification())
+      .then(() => {
+        this.router.navigate(['verify-email-address']);
+      });
   }
-  /**
-   * Metodo que se encarga de registrar un usuario en firebase con email y conytraseña
-   * @param email Email del usuario
-   * @param password Contraseña del usuario
-   */
-  public async register(email:string,password:string){
-    try {
-      const {user} = await this.afAuth.createUserWithEmailAndPassword(email,password);
-      await this.sendVerificationEmail();
-      return user;
-    } catch (error) {
-      console.log("Error al registrar usuario ---> "+error);
-    }
+  // Reset Forggot password
+  ForgotPassword(passwordResetEmail: string) {
+    return this.afAuth
+      .sendPasswordResetEmail(passwordResetEmail)
+      .then(() => {
+        window.alert('Password reset email sent, check your inbox.');
+      })
+      .catch((error) => {
+        window.alert(error);
+      });
   }
-  public async login(email:string,password:string):Promise<User>{
-    try {
-      const {user} = await this.afAuth.signInWithEmailAndPassword(email,password);
-      //seteamos los valores de userdata con user
-      this.user=user;
-      await this.keepSession();
-      return user;
-    } catch (error) {
-      console.log("Error al iniciar sesion ---> "+error);
-    }
+  // Returns true when user is looged in and email is verified
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user')!);
+    return user !== null && user.emailVerified !== false ? true : false;
   }
-  /**
-   * Metodo que se encarga de enviar un correo de verificacion al usuario
-   * @returns envio de correo de verificacion
-   */
-  public async sendVerificationEmail(): Promise<void>{
-    try {
-      return (await this.afAuth.currentUser).sendEmailVerification();
-    } catch (error) {
-      console.log("Error al enviar email de verificacion ---> "+error);
-    }
+  // Sign in with Google
+  GoogleAuth() {
+    return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
+      if (res) {
+        this.router.navigate(['dashboard']);
+      }
+    });
   }
-  /**
-   * Metodo que se encarga de cambiar la contraseña del usuario
-   * @param email Email del usuario
-   */
-  public async resetPassword(email:string): Promise<void>{
-    try {
-      return await this.afAuth.sendPasswordResetEmail(email);
-    } catch (error) {
-      console.log("Error al enviar email de verificacion ---> "+error);
-    }
+  // Auth logic to run auth providers
+  AuthLogin(provider: any) {
+    return this.afAuth
+      .signInWithPopup(provider)
+      .then((result) => {
+        this.ngZone.run(() => {
+          this.router.navigate(['dashboard']);
+        });
+      })
+      .catch((error) => {
+        window.alert(error);
+      });
+  }
+ 
+  // Sign out
+  SignOut() {
+    return this.afAuth.signOut().then(() => {
+      localStorage.removeItem('user');
+      this.router.navigate(['sign-in']);
+    });
   }
 }

@@ -3,11 +3,9 @@
   <ion-row>
     <ion-col>
       <ion-toolbar>
-        <ion-buttons slot="start">
+        <ion-buttons slot="start" style="--background: #e0e0e0 !important">
           <ion-back-button
-          defaultHref="/"
-              [icon]="exit">
-          </ion-back-button>
+          defaultHref="/" ></ion-back-button>
         </ion-buttons>
         <ion-searchbar debounce="500" [animated]="true" (ionChange)="buscarObras($event)"></ion-searchbar>
       </ion-toolbar>
@@ -15,13 +13,13 @@
     </ion-row>    
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true"  style="background-: #e0e0e0 !important"> 
 <!-- Default Refresher
 <ion-refresher slot="fixed" (ionRefresh)="cargarObras($event)">
   <ion-refresher-content></ion-refresher-content>
 </ion-refresher> -->
 <!-- List of Text Items -->
-<ion-list>
+<ion-list style="background-color: #e0e0e0">
   <!-- Sliding item with text options on both sides -->
   <ion-item-sliding *ngFor="let obra of obras ; let i = index" >
     <ion-item-options side="start">
@@ -30,7 +28,7 @@
       </ion-item-option>
     </ion-item-options>
 
-    <ion-item class="backGroundColor">
+    <ion-item class="backGroundColor" style="--background: #e0e0e0 ">
       <ion-thumbnail>
         <!-- Poner una foto de la obra? {{obra.fotos[0]}} ??-->
       </ion-thumbnail>
@@ -38,7 +36,9 @@
         <h2>{{obra.nombre}}</h2>
         <p>{{obra.datos}}</p>
       </ion-label>
-        <ion-icon name="add-circle-outline" (click)="goToVisitas(obra)"></ion-icon>
+      <ion-item-option color="primary" (click)="goToVisitas(obra)">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-item-option>
     </ion-item>
 
     <ion-item-options side="end">

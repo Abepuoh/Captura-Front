@@ -10,12 +10,17 @@ import { HttpClientModule} from '@angular/common/http'
 import { UsuarioService } from 'src/services/usuario-service.service';
 import { FotoService } from 'src/services/foto-service.service';
 import { ObraService } from 'src/services/obra.service';
-import { AngularFireModule } from '@angular/fire/compat'
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { environment } from 'src/environments/environment';
+
 import { AuthService } from 'src/services/auth.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { VisitaService } from 'src/services/visita-service.service';
+
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -26,7 +31,10 @@ import { VisitaService } from 'src/services/visita-service.service';
     AppRoutingModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
     AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable

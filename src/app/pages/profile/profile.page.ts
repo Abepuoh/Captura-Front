@@ -48,12 +48,4 @@ export class ProfilePage implements OnInit {
     this.router.navigateByUrl('/private/tabs/tab1');
   }
   //metoodo para cerrar la sesion
-  public async logout(){
-    //logout with google or email
-    try {
-      await this.authS.logout();
-    } catch (error) {
-      console.log("Error al cerrar sesion ---> "+error);
-    }
-  }
 }
