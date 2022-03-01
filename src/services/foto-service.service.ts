@@ -9,6 +9,7 @@ export class FotoService {
 
   public API = 'https://frozen-crag-51318.herokuapp.com';
   public FOTO_API = this.API + '/foto';
+  
 
   constructor( public http: HttpClient) { }
 
@@ -43,6 +44,23 @@ export class FotoService {
       }
     });
   }
+
+
+      /**
+   * Método que nos devuelve las fotos a partir de un ID dado
+   * @param id 
+   * @returns fotos de una visita
+   */
+       public getFotoPorVisita(id?:Number):Promise<Foto[]>{
+        return new Promise(async (resolve, reject) => {
+          try {
+            let fotos: Foto[] = await this.http.get(this.FOTO_API+"/visita/"+id).toPromise() as Foto[];
+            resolve(fotos);
+          } catch (error) {
+            reject(error);
+          }
+        });
+      }
 
 
   /**
@@ -80,5 +98,31 @@ export class FotoService {
           reject(error);
         }
       });
+    }
+/**
+
+    uploadImagenFile(file:File){
+      const formData = new FormData();
+      formData.append('file', file, file.name);
+      formData.append('nombre', file.name);
+      return this.http.post('https://cors-anywhere.herokuapp.com/'+this.FOTO_API+'/guardar', FormData);
+    }*/
+
+    public uploadImagenFile(file:File): Promise<Foto> {
+      return new Promise(async (resolve, reject) => {
+        try {
+          let newFoto: Foto = await this.http.post('https://cors-anywhere.herokuapp.com/'+this.FOTO_API+'/guardar', file).toPromise() as Foto;
+          resolve(newFoto);
+        } catch (error) {
+          reject(error);
+        }
+      });
+    }
+
+    uploadImage(blobData, name, ext){
+      const formData = new FormData();
+      formData.append('file', blobData, `fotoVisita.${ext}`);
+      formData.append('nombre', name);
+      return this.http.post('https://cors-anywhere.herokuapp.com/'+this.FOTO_API+'/guardar', FormData);
     }
 }

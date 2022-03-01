@@ -15,10 +15,22 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> -->
   <!-- List of Text Items -->
-  <ion-list>
-  </ion-list>
+  <ion-row>
+    <ion-col size="6" *ngFor="let foto of fotos; let i = index;" class="ion-text-center">
+      <ion-label>
+        {{foto.comentario}}
+      </ion-label>
+      <img [src]="foto.url"/>
+      <ion-fab vertical="bottom" horizontal="end">
+        <ion-fab-button color="danger" size="small" (click)="borraFoto(foto)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ion-col>
+  </ion-row>
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button>
+    <input type="file" #fileInput (change)="uploadFile($event)" hidden="true" accept="image/*"/>
+    <ion-fab-button (click)="selectImagenSource()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
