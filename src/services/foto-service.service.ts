@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { Foto } from 'src/shared/foto.interface';
+import { VisitaService } from './visita-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,7 @@ export class FotoService {
   public FOTO_API = this.API + '/foto';
   
 
-  constructor( public http: HttpClient) { }
+  constructor( public http: HttpClient, private visitaService: VisitaService) { }
 
  /**
    * Método que obtiene todas las fotos almacenadas en la Base de Datos
@@ -108,10 +111,18 @@ export class FotoService {
       return this.http.post('https://cors-anywhere.herokuapp.com/'+this.FOTO_API+'/guardar', FormData);
     }*/
 
-    public uploadImagenFile(file:File): Promise<Foto> {
+    public uploadImagenFile(blobData, id:Number): Promise<Foto> {
       return new Promise(async (resolve, reject) => {
         try {
-          let newFoto: Foto = await this.http.post('https://cors-anywhere.herokuapp.com/'+this.FOTO_API+'/guardar', file).toPromise() as Foto;
+          let foto: Foto;
+          foto.comentario = blobData.name;
+          foto.visita =  await this.visitaService.getVisitaById(id);
+          const formData = new FormData();
+          formData.append('file', blobData, blobData.name);
+          formData.append('visita', JSON.stringify(foto));
+
+          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/guardar';
+          let newFoto: Foto = await this.http.post(endpoint,formData).toPromise() as Foto;
           resolve(newFoto);
         } catch (error) {
           reject(error);

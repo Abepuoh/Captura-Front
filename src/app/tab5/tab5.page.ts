@@ -23,7 +23,7 @@ export class Tab5Page{
 
   constructor(public fotoService:FotoService, public toast:ToastServiceService, private plt:Platform,
     private actionSheetCtrl:ActionSheetController, private route:ActivatedRoute, private loading:IonLoaderService,
-    private alertController:AlertController) { }
+    private alertController:AlertController,private router: ActivatedRoute) { }
 
   async ionViewDidEnter() {
     await this.cargarFotos();
@@ -144,11 +144,13 @@ export class Tab5Page{
    * @param event 
    */
   uploadFile(event:EventTarget){
+    let idString = this.route.snapshot.paramMap.get('id');
+    let id = Number(idString);
     const eventObj:any = event as any;
     const target: HTMLInputElement = eventObj.target as HTMLInputElement;
     const file:File = target.files[0];
     console.log('file: ', file);
-    this.fotoService.uploadImagenFile(file).then((newFoto:Foto)=>{
+    this.fotoService.uploadImagenFile(file,id).then((newFoto:Foto)=>{
       console.log(newFoto);
       this.fotos.push(newFoto);
     });

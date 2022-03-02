@@ -28,6 +28,8 @@ export class LoginPage implements OnInit {
   }
   async googleSignIn() {
     let googleUser = await GoogleAuth.signIn();
+    console.log(googleUser);
+    this.router.navigate(['/private/tabs/tab1']);
   }
 
   public async login(){
