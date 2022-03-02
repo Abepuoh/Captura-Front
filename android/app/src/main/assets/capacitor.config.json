@@ -1,0 +1,16 @@
+{
+	"appId": "com.abepuoh.CapturaP",
+	"appName": "Captura",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+	"plugins": {
+		"GoogleAuth": {
+			"scopes": [
+				"profile",
+				"email"
+			],
+			"serverClientId": "479333163958-vpvlb80upk0pag52ojmav0c5shued1jo.apps.googleusercontent.com",
+			"forceCodeForRefreshToken": true
+		}
+	}
+}
