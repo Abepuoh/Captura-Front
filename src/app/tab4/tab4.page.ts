@@ -26,6 +26,7 @@ export class Tab4Page {
   public foto: Foto[];
   public visita: Visita[];
   public obra:Obra;
+  help = false;
 
   constructor(public fotoservice: FotoService, public visitaservice: VisitaService, public alertController: AlertController,
     private loading:IonLoaderService, private obraService:ObraService, private route: ActivatedRoute,
@@ -159,7 +160,7 @@ export class Tab4Page {
   }
 
   /**
-   * 
+   * Metodo que sirve para ir al tab de fotos
    * @param visita 
    */
   goToFotos(visita:Visita){
@@ -169,6 +170,16 @@ export class Tab4Page {
       this.toast.showToast("No se ha encontrado la visita", "danger");
     }   
   }
+  /**
+   * Metodo que sirve para abrir la ayuda al usuario
+   */
+  public showHelp() {
+    if(this.help==false){
+      this.help = true;
+    }else{
+      this.help = false;
+    }
+}
 }
 
 

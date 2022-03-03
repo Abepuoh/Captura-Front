@@ -22,6 +22,8 @@ export class Tab1Page {
   primeraCarga = false;
   url:string;
   user:Usuario;
+  help = false;
+
   
 
   constructor(private obraService:ObraService,public modalEdit:ModalController,public alertController:AlertController,
@@ -141,6 +143,16 @@ export class Tab1Page {
     }else{
       this.toast.showToast("No se ha encontrado la obra", "danger");
     }
+  }
+  /**
+   * Metodo que abre la ayuda al usuario
+   */
+  public showHelp() {
+      if(this.help==false){
+        this.help = true;
+      }else{
+        this.help = false;
+      }
   }
 
 
