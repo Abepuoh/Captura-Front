@@ -8,12 +8,11 @@
           defaultHref="/" ></ion-back-button>
         </ion-buttons>
         <ion-searchbar debounce="500" Placeholder="Buscar Obras..." style="--background: #fcfcfc !important;" [animated]="true" (ionChange)="buscarObras($event)"></ion-searchbar>
+        <ion-icon name="help-circle-outline" slot="end" style="zoom:2.5;padding-right:5px" (click)="showHelp()"></ion-icon>
       </ion-toolbar>
       </ion-col>
     </ion-row>  
 </ion-header>
-
-<ion-content [fullscreen]="true"  style="background-: #e0e0e0 !important"> 
 <!-- Default Refresher
 <ion-refresher slot="fixed" (ionRefresh)="cargarObras($event)">
   <ion-refresher-content></ion-refresher-content>
@@ -48,7 +47,24 @@
     </ion-item-options>
   </ion-item-sliding>
 </ion-list>
-
+<ion-content [fullscreen]="true"> 
+  <div *ngIf="help" class="myHelp">
+    <ion-grid style="margin-top:50px;color:rgb(0, 0, 0)">
+     <ion-row>
+       <ion-col size="12">
+          Puedes deslizar hacia la derecha de la obra para poder editarla al puslar el botón:   
+          <ion-icon name="create" style="zoom: 2; color: #DA696B;"></ion-icon>
+          <br><br><br>
+          Puedes deslizar hacia la izquierda de la obra para poder borrarla al puslar el botón: 
+          <ion-icon name="remove-circle" style="zoom: 2;color:red"></ion-icon>
+          <br><br><br>
+          Para obtener las visitas de la obra puede pulsar el botón:  
+          <ion-icon name="add-circle-outline" style="color:#DA696B; zoom: 2;" class="ion-icon"></ion-icon>
+          
+       </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 <ion-infinite-scroll #infiniteScroll (ionInfinite)="doInfinite($event)">
   <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
   </ion-infinite-scroll-content>
