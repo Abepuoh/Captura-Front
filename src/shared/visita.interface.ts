@@ -1,3 +1,4 @@
+import { Foto } from "./foto.interface";
 import { Obra } from "./obra.interface";
 
 export interface Visita {
@@ -5,5 +6,6 @@ export interface Visita {
     fecha:Date,
     header:String,
     nota:String,
-    obra:Obra
+    obra:Obra,
+    fotos:Foto[]
 } 

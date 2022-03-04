@@ -35,6 +35,7 @@ export class CreaVisitaPage implements OnInit {
       fecha:this.formVisita.get("fecha").value,
       header:this.formVisita.get("header").value,
       nota:this.formVisita.get("nota").value,
+      fotos:[],
       obra:this.obra
     }
     await this.loading.customLoader("Guardando...");

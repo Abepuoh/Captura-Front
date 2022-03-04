@@ -156,11 +156,9 @@ export class Tab5Page{
     });
   }
 
-  /**
-   * 
-   * @param source 
-   */
   async addFoto(source:CameraSource){
+    let idString = this.route.snapshot.paramMap.get('id');
+    let id = Number(idString);
     const image = await Camera.getPhoto({
       quality:60,
       allowEditing:true,
@@ -171,11 +169,7 @@ export class Tab5Page{
     const blobData = this.b64toBlob(image.base64String, `image/${image.format}`);
     const blobUrl = URL.createObjectURL(blobData);//Este transforma el blob en una URL
     console.log(blobUrl);
-    const imageName = "Dando un nombre";
-    this.fotoService.uploadImage(blobData, imageName,image.format).subscribe((newFoto:Foto)=>{
-      console.log(newFoto);
-      this.fotos.push(newFoto);
-    });
+    await this.fotoService.uploadImage(blobData,id);
   }
   /**
    * Metodo de ayuda para transformar un Base64 en Blob

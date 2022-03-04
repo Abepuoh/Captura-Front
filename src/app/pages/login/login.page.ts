@@ -7,6 +7,7 @@ import { Platform, ToastController } from '@ionic/angular';
 import { Usuario } from 'src/shared/usuario.interface';
 import { ToastServiceService } from 'src/services/toast-service.service';
 import { LocalStorageService } from 'src/services/local-storage.service';
+import { UsuarioService } from 'src/services/usuario-service.service';
 
 @Component({
   selector: 'app-login',
@@ -19,8 +20,9 @@ export class LoginPage implements OnInit {
   @ViewChild('email') email:IonInput;
   @ViewChild('password') password:IonInput;
   @ViewChild('nombre') nombre:IonInput;
+  currentUser: Usuario;
   
-  constructor(public authStorage:LocalStorageService,public menuCtrl:MenuController, private router:Router, public authService:AuthService, private toastService:ToastServiceService) {
+  constructor(public UServ: UsuarioService,public authStorage:LocalStorageService,public menuCtrl:MenuController, private router:Router, public authService:AuthService, private toastService:ToastServiceService) {
     GoogleAuth.initialize();
   }
   ngOnInit() {
@@ -39,12 +41,7 @@ export class LoginPage implements OnInit {
     if(correo == "" || password == ""){
       this.toastService.showToast("Por favor ingrese su correo y contraseña","");
     }else{
-      this.authService.SignIn(correo, password).then(res=>{
-        this.authStorage.setItem('user',res);
-        this.router.navigate(['/private/tabs/tab1']);
-      }).catch(err=>{
-        this.toastService.showToast(err.message ,"");
-      });
+       await this.authService.SignIn(correo, password)
     }
   }
   public async registro(emailR,passwordR){
@@ -53,8 +50,8 @@ export class LoginPage implements OnInit {
     if(emailR.value == "" || passwordR.value == "" || this.nombre.value == ""){
       this.toastService.showToast("Por favor ingrese todos los campos","");
     }else{
-        this.authService.SignUp(emailR.value, passwordR.value).then(res=>{
-          this.authStorage.setItem('user',res);
+        this.authService.SignUp(emailR.value, passwordR.value,nombre).then(res=>{
+          
           this.router.navigate(['/private/tabs/tab1']);
         }).catch(err=>{
           this.toastService.showToast(err.message ,"");
@@ -67,4 +64,5 @@ export class LoginPage implements OnInit {
   ionViewDidLeave() {
     this.menuCtrl.enable(true);
   }
+ 
 }

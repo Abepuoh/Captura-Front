@@ -19,7 +19,7 @@ export class ProfilePage implements OnInit {
     nombre: "",
     datos: undefined,
     foto: undefined,
-    key_logueo: undefined,
+    key: undefined,
     obras: [],
     emailVerified: undefined
   }

@@ -23,7 +23,6 @@ export class UsuarioService {
     return new Promise(async (resolve, reject) => {
       try {
         let result: any = await this.http.get(this.USUARIO_API).toPromise();
-        console.log(result);
         resolve(result);
       } catch (error) {
         reject(error);

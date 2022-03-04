@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { AlertController, IonInfiniteScroll, ModalController, NavController } from '@ionic/angular';
 import { IonLoaderService } from 'src/services/ion-loader.service';
+import { LocalStorageService } from 'src/services/local-storage.service';
 import { ObraService } from 'src/services/obra.service';
 import { ToastServiceService } from 'src/services/toast-service.service';
 import { Obra } from 'src/shared/obra.interface';
@@ -21,11 +22,12 @@ export class Tab1Page {
   public obra:Obra;
   primeraCarga = false;
   url:string;
-  user:Usuario;
+  user:any;
   
 
   constructor(private obraService:ObraService,public modalEdit:ModalController,public alertController:AlertController,
-   public toast:ToastServiceService, private loading:IonLoaderService, private navControl:NavController) {}
+   public toast:ToastServiceService, private loading:IonLoaderService, private navControl:NavController,
+   private UserStorage: LocalStorageService) {}
 
   async ionViewDidEnter() {
     await this.cargarObras();
@@ -39,7 +41,9 @@ export class Tab1Page {
       await this.loading.customLoader("Espere...");
     }
     try {
-      await this.obraService.getAllObras().then(obras => {
+      
+      this.user = await this.UserStorage.getItem('user');
+      await this.obraService.getObraByUser(this.user.id).then(obras => {
         this.obras = obras;
         if (event) {
           event.target.complete();
