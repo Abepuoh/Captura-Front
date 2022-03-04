@@ -8,6 +8,6 @@ export interface Obra {
     latitud:any,
     longitud:any,
     nombre:String,
-    usuarios:Array<Usuario>,
+    usuario:Usuario,
     visitas:Array<Visita>
 } 

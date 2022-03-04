@@ -5,7 +5,7 @@ export interface Usuario {
     datos:String,
     email:String,
     foto:String,
-    key_logueo:String,
+    key:any,
     nombre:String,
     obras:Array<Obra>,
     emailVerified:Boolean

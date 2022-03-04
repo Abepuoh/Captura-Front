@@ -34,7 +34,7 @@ export class VisitaService {
    * @param id 
    * @returns visita
    */
-  public getVisitaById(id?:Number):Promise<Visita>{
+  public async getVisitaById(id:Number):Promise<Visita>{
     return new Promise(async (resolve, reject) => {
       try {
         let visita:Visita = await this.http.get(this.VISITA_API+"/"+id).toPromise() as Visita;

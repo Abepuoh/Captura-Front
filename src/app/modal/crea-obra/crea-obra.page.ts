@@ -2,8 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Marker } from 'leaflet';
+import { LocalStorageService } from 'src/services/local-storage.service';
 import { ObraService } from 'src/services/obra.service';
 import { ToastServiceService } from 'src/services/toast-service.service';
+import { UsuarioService } from 'src/services/usuario-service.service';
 import { Obra } from 'src/shared/obra.interface';
 import { Usuario } from 'src/shared/usuario.interface';
 
@@ -19,7 +21,7 @@ export class CreaObraPage implements OnInit {
   public formObra:FormGroup;
 
   constructor(private modalController:ModalController, private obraService:ObraService, private fb: FormBuilder,
-    public toast:ToastServiceService) { }
+    public toast:ToastServiceService,private local: LocalStorageService, private userSer:UsuarioService) { }
 
   ngOnInit() {
     //cargar datos que recibirá el modal
@@ -34,13 +36,15 @@ export class CreaObraPage implements OnInit {
     this.modalController.dismiss();
   }
 
-  public async crearObra() {
+  public async crearObra() { 
+    this.user = await this.local.getItem('user');
+
     let obra:Obra = {
       datos:this.formObra.get("datos").value,
       latitud:this.marcador.getLatLng().lat,
       longitud:this.marcador.getLatLng().lng,
       nombre:this.formObra.get("nombre").value,
-      usuarios:this.user,
+      usuario: await this.userSer.getUsuarioById(this.user.id),
       visitas:[]
     }
     try {

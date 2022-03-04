@@ -7,18 +7,22 @@ import { Platform } from '@ionic/angular';
 import { Usuario } from 'src/shared/usuario.interface';
 import { LocalStorageService } from './local-storage.service';
 import { Router } from '@angular/router';
+import { UsuarioService } from './usuario-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   userData: any; // Save logged in user data
+  currentUser: Usuario;
   
   constructor(
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
-    public ngZone: NgZone // NgZone service to remove outside scope warning
+    public ngZone: NgZone,
+    public UsuarioS: UsuarioService,
+    public local: LocalStorageService// NgZone service to remove outside scope warning
   ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
@@ -34,26 +38,38 @@ export class AuthService {
     });
   }
   // Sign in with email/password
-  async SignIn(email: string, password: string) {
-    return await this.afAuth
-      .signInWithEmailAndPassword(email, password)
-      .then((result) => {
+  async SignIn(email, password) {
+    try {
+      const result = await this.afAuth.signInWithEmailAndPassword(email, password);
+      if(await this.setCurrentUser(result)){
         this.ngZone.run(() => {
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['/private/tabs/tab1']);
         });
-        //this.SetUserData(result.user);
-      })
-      .catch((error) => {
-        window.alert(error.message);
-      });
+      }else{
+        window.alert("El Usuario no se encuentra en la base de datos.");
+      }
+    } catch (error) {
+      window.alert(error.message);
+    }
   }
   // Sign up with email/password
-  SignUp(email: string, password: string) {
+  SignUp(email: string, password: string, nombre :String) {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        /* Call the SendVerificaitonMail() function when new user sign 
-        up and returns promise */
+        //guardamos el usuario en la base de datos
+        let Usuario:Usuario = {
+          key: result.user.uid,
+          nombre: nombre,
+          email: result.user.email,
+          datos: "",
+          foto: "",
+          obras: [],
+          emailVerified: false,
+        };
+    
+        this.UsuarioS.createUsuario(Usuario);
+
         this.SendVerificationMail();
         //this.SetUserData(result.user);
       })
@@ -89,7 +105,7 @@ export class AuthService {
   GoogleAuth() {
     return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
       if (res) {
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['private/tabs/tab1']);
       }
     });
   }
@@ -99,7 +115,7 @@ export class AuthService {
       .signInWithPopup(provider)
       .then((result) => {
         this.ngZone.run(() => {
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['private/tabs/tab1']);
         });
       })
       .catch((error) => {
@@ -114,4 +130,18 @@ export class AuthService {
       this.router.navigate(['sign-in']);
     });
   }
+
+  public async setCurrentUser(usuario:firebase.default.auth.UserCredential):Promise<boolean>{
+    let setCurrentUser:boolean = false;
+    let usuarios:Usuario[] = await this.UsuarioS.getAllUsuarios();
+    usuarios.forEach(element => {
+      if (usuario.user.uid == element.key) {
+        setCurrentUser = true;
+        this.currentUser = element;
+        this.local.setItem('user',this.currentUser);
+      }
+    });
+    return setCurrentUser;
+  }
+
 }

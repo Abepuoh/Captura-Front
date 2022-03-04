@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Foto } from 'src/shared/foto.interface';
+import { Visita } from 'src/shared/visita.interface';
 import { VisitaService } from './visita-service.service';
 
 @Injectable({
@@ -102,21 +103,15 @@ export class FotoService {
         }
       });
     }
-/**
 
-    uploadImagenFile(file:File){
-      const formData = new FormData();
-      formData.append('file', file, file.name);
-      formData.append('nombre', file.name);
-      return this.http.post('https://cors-anywhere.herokuapp.com/'+this.FOTO_API+'/guardar', FormData);
-    }*/
 
     public uploadImagenFile(blobData, id:Number): Promise<Foto> {
       return new Promise(async (resolve, reject) => {
         try {
+          let visita:Visita = await this.visitaService.getVisitaById(id);
+          console.log(visita);
           let foto: Foto;
-          foto.comentario = blobData.name;
-          foto.visita =  await this.visitaService.getVisitaById(id);
+          foto.visita=  visita;
           const formData = new FormData();
           formData.append('file', blobData, blobData.name);
           formData.append('visita', JSON.stringify(foto));
@@ -130,10 +125,15 @@ export class FotoService {
       });
     }
 
-    uploadImage(blobData, name, ext){
+    async uploadImage(blobData, id:Number){
+      let visita:Visita = await this.visitaService.getVisitaById(id);
+      console.log(visita);
+      let foto: Foto;
+      foto.visita=  visita;
       const formData = new FormData();
-      formData.append('file', blobData, `fotoVisita.${ext}`);
-      formData.append('nombre', name);
-      return this.http.post('https://cors-anywhere.herokuapp.com/'+this.FOTO_API+'/guardar', FormData);
+      formData.append('file', blobData);
+      formData.append('foto', JSON.stringify(foto));
+      let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/add';
+      this.http.post(endpoint,FormData);
     }
 }
