@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Event} from '@angular/router';
 import { CameraSource, CameraPlugin, Camera, CameraResultType } from '@capacitor/camera';
+import { Share } from '@capacitor/share';
 import { base64 } from '@firebase/util';
 import { ActionSheetController, AlertController, Platform } from '@ionic/angular'; 
 import { FotoService } from 'src/services/foto-service.service';
@@ -198,6 +199,7 @@ export class Tab5Page{
     return blob;
   }
 
+
   public async getOneFoto(id:Number){
     await this.fotoService.getFotoById(id);
   }
@@ -206,5 +208,15 @@ export class Tab5Page{
     await this.fotoService.createFoto(foto);
     console.log(foto);
   }
+
+  public async share(foto:Foto){
+    await Share.share({
+      title: 'See cool stuff',
+      text: 'Really awesome thing you need to see right meow',
+      url: foto.url,
+      dialogTitle: 'Share with buddies',
+    });
+  }
+
 
 }

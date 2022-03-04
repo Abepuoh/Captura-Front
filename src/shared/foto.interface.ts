@@ -4,6 +4,6 @@ export interface Foto {
     foto: Number;
     id?:Number,
     comentario:String,
-    url:String,
+    url:string,
     visita:Visita
 }
