@@ -62,7 +62,7 @@ export class EditaModalPage implements OnInit {
             this.obre.latitud = this.formObra.get("latitud").value;
             this.obre.longitud = this.formObra.get("longitud").value;
             this.obre.nombre = this.formObra.get("nombre").value;
-            this.obre.usuarios = this.obre.usuarios;
+            this.obre.usuario = this.obre.usuario;
             this.obre.visitas = this.obre.visitas;
             try {
               await this.obraService.updateObra(this.obre);

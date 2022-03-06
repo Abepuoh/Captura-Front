@@ -8,5 +8,4 @@ export interface Usuario {
     key:any,
     nombre:String,
     obras:Array<Obra>,
-    emailVerified:Boolean
 } 

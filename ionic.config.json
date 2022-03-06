@@ -1,12 +1,12 @@
 {
-  "name": "Captura",
+  "name": "CapturaP",
   "integrations": {
     "capacitor": {}
   },
   "type": "angular",
   "proxies": [
     {
-      "path": "VISITA_API",
+      "path": "/foto",
       "proxyUrl": "http://localhost:8100"
     }
   ]

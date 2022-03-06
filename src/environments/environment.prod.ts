@@ -1,12 +1,20 @@
 export const environment = {
   production: true,
-  firebaseConfig : {
-    apiKey: "AIzaSyA050SBYxDImUavQDbzRTu9Vm7gQfb4tcQ",
-    authDomain: "captura-1e121.firebaseapp.com",
-    projectId: "captura-1e121",
-    storageBucket: "captura-1e121.appspot.com",
-    messagingSenderId: "360661644710",
-    appId: "1:360661644710:web:26ce3a916e3397f47d8b67",
-    measurementId: "G-5YE3NH852L"
+  firebase:{
+    apiKey: "AIzaSyDlJDAIqZaQCnUmYU1MVthEPEqgOQMzfgA",
+    authDomain: "capturap-bba93.firebaseapp.com",
+    projectId: "capturap-bba93",
+    storageBucket: "capturap-bba93.appspot.com",
+    messagingSenderId: "479333163958",
+    appId: "1:479333163958:web:05f92ee64a5dd5d0e15717",
+    measurementId: "G-J4GKG210QM"},
+
+  apiEnviroment: {
+    endpoint: 'https://frozen-crag-51318.herokuapp.com',
+    obra: '/obra',
+    visita: '/visita',
+    usuario: '/usuario',
+    foto: '/foto',
   }
+  
 };

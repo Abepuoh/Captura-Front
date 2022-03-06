@@ -13,7 +13,8 @@ import { Visita } from 'src/shared/visita.interface';
 export class EditaVisitaPage implements OnInit {
 
   public formVisita:FormGroup;
-  @Input() visita:Visita
+ //nos traemos la visita que queremos editar
+   @Input() public visita:Visita;
 
   constructor(private fb:FormBuilder, private visitaService:VisitaService, private toast:ToastServiceService,
     private modalController:ModalController) { }
@@ -26,9 +27,6 @@ export class EditaVisitaPage implements OnInit {
     });
   }
 
-  /**
-   * Metodo para editar una visita ya creada
-   */
   public async editVisita(){
     this.visita.header = this.formVisita.get("header").value;
     this.visita.fecha = this.formVisita.get("fecha").value;

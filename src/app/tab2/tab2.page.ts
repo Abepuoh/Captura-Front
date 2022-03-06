@@ -50,8 +50,8 @@ export class Tab2Page {
     await this.cargaMarcadores();
 
     let miMarcador:Marker = await this.crearMarcador((data)=>{
-      //console.log(miMarcador.getLatLng());
-      this.crearObra(data,this.User);
+      console.log(data);
+      this.crearObra(data);
     });
 
     let searchControl = esri_geo.geosearch({
@@ -142,7 +142,7 @@ export class Tab2Page {
             resolve(marcadorDummy);
         }); 
         marcadorDummy.on("dragend",()=>{
-           this.crearObra(marcadorDummy,this.User);
+           this.crearObra(marcadorDummy);
         })
         resolve(marcadorDummy);
       }
@@ -150,15 +150,14 @@ export class Tab2Page {
     
   }
   //Metodo para abir modal y pasa el marcador
-  public async crearObra(marcador:Marker,User:Usuario){
+  public async crearObra(marcador:Marker){
     const modal = await this.modalController.create({
       component: CreaObraPage,
       componentProps: {
-        marcador: marcador,
-        user: User
+        marcador:marcador
       },
     });
-    console.log(marcador, User);
+    console.log(marcador);
     return await modal.present();
   }
   

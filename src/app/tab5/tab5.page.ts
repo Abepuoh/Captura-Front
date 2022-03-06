@@ -59,8 +59,9 @@ export class Tab5Page{
         await this.toast.showToast("Error al cargar las fotos", "danger");
         this.loading.dismissLoader();
       }
+   
     }
-
+    
   public async loadImage(){
     this.fotoService.getAllFotos().then(images=>{
       this.fotos = images;
@@ -150,13 +151,11 @@ export class Tab5Page{
     const eventObj:any = event as any;
     const target: HTMLInputElement = eventObj.target as HTMLInputElement;
     const file:File = target.files[0];
-    console.log('file: ', file);
     this.fotoService.uploadImagenFile(file,id).then((newFoto:Foto)=>{
       console.log(newFoto);
       this.fotos.push(newFoto);
     });
-  }
-
+  } 
   async addFoto(source:CameraSource){
     let idString = this.route.snapshot.paramMap.get('id');
     let id = Number(idString);
@@ -206,7 +205,6 @@ export class Tab5Page{
 
   public async crearFoto(foto: Foto) {
     await this.fotoService.createFoto(foto);
-    console.log(foto);
   }
 
   public async share(foto:Foto){

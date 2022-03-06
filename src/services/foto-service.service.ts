@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Foto } from 'src/shared/foto.interface';
+import { FotoWrapper } from 'src/shared/fotoWrapper.interface';
 import { Visita } from 'src/shared/visita.interface';
 import { VisitaService } from './visita-service.service';
 
@@ -13,7 +14,6 @@ export class FotoService {
 
   public API = 'https://frozen-crag-51318.herokuapp.com';
   public FOTO_API = this.API + '/foto';
-  
 
   constructor( public http: HttpClient, private visitaService: VisitaService) { }
 
@@ -93,10 +93,11 @@ export class FotoService {
      * @param foto
      * @returns nueva foto
      */
-    public createFoto(foto: Foto): Promise<Foto> {
+    public async createFoto(foto: Foto): Promise<Foto> {
       return new Promise(async (resolve, reject) => {
         try {
-          let newFoto: Foto = await this.http.post(this.FOTO_API+'/guardar', foto).toPromise() as Foto;
+          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/guardar';
+          let newFoto: Foto = await this.http.post(endpoint, foto).toPromise() as Foto;
           resolve(newFoto);
         } catch (error) {
           reject(error);
@@ -105,18 +106,18 @@ export class FotoService {
     }
 
 
-    public uploadImagenFile(blobData, id:Number): Promise<Foto> {
+    public async uploadImagenFile(blobData, id:Number): Promise<Foto> {
       return new Promise(async (resolve, reject) => {
         try {
-          let visita:Visita = await this.visitaService.getVisitaById(id);
-          console.log(visita);
-          let foto: Foto;
-          foto.visita=  visita;
+          //creamos una foto
+          let foto: FotoWrapper = {
+            visita: id,
+            comentario: blobData.name,
+            File : blobData,
+          };
           const formData = new FormData();
           formData.append('file', blobData, blobData.name);
-          formData.append('visita', JSON.stringify(foto));
-
-          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/guardar';
+          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/guardar';     
           let newFoto: Foto = await this.http.post(endpoint,formData).toPromise() as Foto;
           resolve(newFoto);
         } catch (error) {
@@ -125,15 +126,30 @@ export class FotoService {
       });
     }
 
-    async uploadImage(blobData, id:Number){
-      let visita:Visita = await this.visitaService.getVisitaById(id);
-      console.log(visita);
-      let foto: Foto;
-      foto.visita=  visita;
-      const formData = new FormData();
-      formData.append('file', blobData);
-      formData.append('foto', JSON.stringify(foto));
-      let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/add';
-      this.http.post(endpoint,FormData);
+    async uploadImage(blobData, id:Number): Promise<void> {
+      const headers = {
+        'enctype': 'multipart/form-data;',
+        'Accept': 'plain/text',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
+        'Access-Control-Allow-Headers': 'Authorization, Origin, Content-Type, X-CSRF-Token',
+        'auth': 'b9e1d304-a6b1-4d09-aa66-ece2bd6fb7b6',
+      };
+      return new Promise(async (resolve, reject) => {
+        try {
+          let foto: FotoWrapper = {
+            id: null,
+            visita: id,
+            comentario: blobData.name,
+            File : blobData,
+          };
+
+          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/guardar';
+          await this.http.post(endpoint,foto,{headers}).toPromise() as Foto;
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
     }
 }

@@ -4,48 +4,5 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> -->
   <!-- List of Text Items -->
-  <ion-list>
-    <!-- Sliding item with text options on both sides -->
-    <ion-item-sliding *ngFor="let obra of obras ; let i = index" >
-      <ion-item-options side="start">
-        <ion-item-option color="primary" (click)="editar(obra)">
-          <ion-icon name="create" style="zoom: 1.5;"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-  
-      <ion-item>
-        <ion-label>
-          <h2>{{obra.nombre}}</h2>
-          <p>{{obra.datos}}</p>
-        </ion-label>
-        <ion-icon name="add-circle-outline"></ion-icon>
-      </ion-item>
-  
-      <ion-item-options side="end">
-        <ion-item-option color="danger" expandable (click)="borra(obra)">
-          <ion-icon name="remove-circle" style="zoom: 1.5;"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-  <div class="multi-button">
-    <ion-button (click)="createObra()" expand="block" fill="solid" shape="round" color="primary">
-      GET Obras
-    </ion-button>
-    <ion-button (click)="updateObra()" expand="block" fill="solid" shape="round" color="primary">
-      Update Obra
-    </ion-button>
-    <ion-button (click)="getObraByCoordinates(10, 20)" expand="block" fill="solid" shape="round" color="primary">
-      GET getObraByCoordinates
-    </ion-button>
-    <ion-button (click)="getOneObra(1)" expand="block" fill="solid" shape="round" color="primary">
-      GET una Obra por ID
-    </ion-button>
-    <ion-button (click)="getObraByName()" expand="block" fill="solid" shape="round" color="primary">
-      GET Obra por Nombre
-    </ion-button>
-    <ion-button (click)="getCoordenadas()" expand="block" fill="solid" shape="round" color="primary">
-      GET coordenadas de obra
-    </ion-button>
-  </div>
+
   </ion-content>

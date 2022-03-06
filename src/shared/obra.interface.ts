@@ -4,10 +4,10 @@ import { Visita } from "./visita.interface";
 
 export interface Obra {
     id?:Number,
-    datos:String,
+    datos:string,
     latitud:any,
     longitud:any,
-    nombre:String,
-    usuario:Usuario,
+    nombre:string,
+    usuario:Array<Usuario>,
     visitas:Array<Visita>
 } 

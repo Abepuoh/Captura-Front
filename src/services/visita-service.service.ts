@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/shared/usuario.interface';
 import { Visita } from 'src/shared/visita.interface';
 
@@ -37,7 +38,8 @@ export class VisitaService {
   public async getVisitaById(id:Number):Promise<Visita>{
     return new Promise(async (resolve, reject) => {
       try {
-        let visita:Visita = await this.http.get(this.VISITA_API+"/"+id).toPromise() as Visita;
+        let endpoint = environment.apiEnviroment.visita;
+        let visita:Visita = await this.http.get(endpoint+"/"+id).toPromise() as Visita;
         resolve(visita);
       } catch (error) {
         reject(error);

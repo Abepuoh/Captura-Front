@@ -65,7 +65,6 @@ export class AuthService {
           datos: "",
           foto: "",
           obras: [],
-          emailVerified: false,
         };
     
         this.UsuarioS.createUsuario(Usuario);

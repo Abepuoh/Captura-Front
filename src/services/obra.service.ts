@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { REFUSED } from 'dns';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Obra } from 'src/shared/obra.interface';
@@ -111,16 +112,15 @@ export class ObraService {
    */
    public async createObra(obra: Obra): Promise<Obra> {
     return new Promise(async (resolve, reject) => {
-      let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra + '/guardar'
-      let obra:Obra;
+      let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra+'/guardar';
       try {
-        let newObra:Obra = await this.http.post(endpoint, obra).toPromise() as Obra;
-        resolve(newObra);
+        await this.http.post(endpoint,obra).toPromise() as Obra;
+        resolve(obra);
       } catch (error) {
         reject(error);
       }
     });
-   }
+    }
     /**
      * Metodo que devuelve las obras de un usuario
      * @param id 
@@ -129,7 +129,7 @@ export class ObraService {
      public getObraByUser(id:Number):Promise<Obra[]> {
       return new Promise(async (resolve, reject) => {
         if(id&&id>-1){
-          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra+"/usuario/"
+          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra+"/usuario"
           try {
             let obras:Obra[] = await this.http.get(endpoint+id).toPromise() as Obra[];
             resolve(obras);
@@ -148,7 +148,7 @@ export class ObraService {
      */
       public getObraByName(nombre?:String):Promise<Obra>{
         return new Promise(async (resolve, reject) => {
-          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra+"/nombre/"+nombre;
+          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra+"/nombre"+nombre;
           if(nombre!=null&&nombre!=undefined){
             try {
               let obra:Obra = await this.http.get(endpoint).toPromise() as Obra;

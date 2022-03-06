@@ -19,7 +19,6 @@ export class ModalProfilePage implements OnInit {
     foto: undefined,
     key: undefined,
     obras: [],
-    emailVerified: undefined
   }
 
 

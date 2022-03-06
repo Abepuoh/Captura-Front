@@ -10,11 +10,9 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
-  <!-- Default Refresher
   <ion-refresher slot="fixed" (ionRefresh)="cargarFotos($event)">
     <ion-refresher-content></ion-refresher-content>
-  </ion-refresher> -->
-  <!-- List of Text Items -->
+  </ion-refresher> 
   <ion-row>
     <ion-col size="6" *ngFor="let foto of fotos; let i = index;" class="ion-text-center">
       <ion-label>
@@ -26,8 +24,8 @@
           <ion-icon name="trash-outline"></ion-icon>
         </ion-fab-button>
       </ion-fab>
-      <ion-fab vertical="bottom" horizontal="start">
-        <ion-fab-button color="data" size="small" (click)="share(foto)">
+      <ion-fab horizontal="start" vertical="bottom">
+        <ion-fab-button color="primary" size="small" (click)="share(foto)">
           <ion-icon name="share"></ion-icon>
         </ion-fab-button>
       </ion-fab>

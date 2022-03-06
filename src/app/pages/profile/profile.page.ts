@@ -21,7 +21,6 @@ export class ProfilePage implements OnInit {
     foto: undefined,
     key: undefined,
     obras: [],
-    emailVerified: undefined
   }
 
   constructor(private modalController: ModalController, public userService: UsuarioService,
