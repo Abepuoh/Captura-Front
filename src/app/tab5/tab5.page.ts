@@ -105,8 +105,9 @@ export class Tab5Page{
       res.present();
     });
   }
+  
   /**
-   * 
+   * Metodo que nos permite seleccionar entre diferentes opciones para subir una foto a la aplicación
    */
   public async selectImagenSource(){
     const buttons = [
@@ -142,7 +143,7 @@ export class Tab5Page{
   }
 
   /**
-   * 
+   * Método para cargar una foto en la visita seleccionada
    * @param event 
    */
   uploadFile(event:EventTarget){
@@ -156,6 +157,10 @@ export class Tab5Page{
       this.fotos.push(newFoto);
     });
   } 
+  /**
+   * Método para subir una foto desde la camara del dispositivo
+   * @param source 
+   */
   async addFoto(source:CameraSource){
     let idString = this.route.snapshot.paramMap.get('id');
     let id = Number(idString);
@@ -206,13 +211,16 @@ export class Tab5Page{
   public async crearFoto(foto: Foto) {
     await this.fotoService.createFoto(foto);
   }
-
+  /**
+   * Metodo que nos permite compartir la url de la foto desde la aplicacion
+   * @param foto 
+   */
   public async share(foto:Foto){
     await Share.share({
-      title: 'See cool stuff',
-      text: 'Really awesome thing you need to see right meow',
+      title:'Compartir la foto de la visita '+foto.visita,
+      text: 'Esta compartiendo una foto',
       url: foto.url,
-      dialogTitle: 'Share with buddies',
+      dialogTitle: 'Compartiendo foto',
     });
   }
 

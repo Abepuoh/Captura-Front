@@ -13,10 +13,10 @@
       </ion-col>
     </ion-row>  
 </ion-header>
-<!-- Default Refresher
+<ion-content [fullscreen]="true">
 <ion-refresher slot="fixed" (ionRefresh)="cargarObras($event)">
   <ion-refresher-content></ion-refresher-content>
-</ion-refresher> -->
+</ion-refresher>
 <!-- List of Text Items -->
 <ion-list style="background-color: #e0e0e0">
   <!-- Sliding item with text options on both sides -->
@@ -47,7 +47,7 @@
     </ion-item-options>
   </ion-item-sliding>
 </ion-list>
-<ion-content [fullscreen]="true"> 
+ 
   <div *ngIf="help" class="myHelp">
     <ion-grid style="margin-top:50px;color:rgb(0, 0, 0)">
      <ion-row>

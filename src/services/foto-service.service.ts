@@ -12,9 +12,6 @@ import { VisitaService } from './visita-service.service';
 })
 export class FotoService {
 
-  public API = 'https://frozen-crag-51318.herokuapp.com';
-  public FOTO_API = this.API + '/foto';
-
   constructor( public http: HttpClient, private visitaService: VisitaService) { }
 
  /**
@@ -25,8 +22,9 @@ export class FotoService {
   public getAllFotos(): Promise<Foto[]> {
 
     return new Promise(async (resolve, reject) => {
+      let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto;
       try {
-        let fotos: Foto[] = await this.http.get(this.FOTO_API).toPromise() as Foto[];
+        let fotos: Foto[] = await this.http.get(endpoint).toPromise() as Foto[];
         resolve(fotos);
       } catch (error) {
         reject(error);
@@ -40,8 +38,9 @@ export class FotoService {
    */
   public getFotoById(id?:Number):Promise<Foto[]>{
     return new Promise(async (resolve, reject) => {
+      let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+"/"+id;
       try {
-        let fotos: Foto[] = await this.http.get(this.FOTO_API+"/"+id).toPromise() as Foto[];
+        let fotos: Foto[] = await this.http.get(endpoint).toPromise() as Foto[];
         resolve(fotos);
       } catch (error) {
         reject(error);
@@ -57,8 +56,9 @@ export class FotoService {
    */
        public getFotoPorVisita(id?:Number):Promise<Foto[]>{
         return new Promise(async (resolve, reject) => {
+          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+"/visita/"+id;
           try {
-            let fotos: Foto[] = await this.http.get(this.FOTO_API+"/visita/"+id).toPromise() as Foto[];
+            let fotos: Foto[] = await this.http.get(endpoint).toPromise() as Foto[];
             resolve(fotos);
           } catch (error) {
             reject(error);
@@ -76,8 +76,9 @@ export class FotoService {
 
     return new Promise(async (resolve, reject) => {
       if(id && id >-1){
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/'+id;
         try {
-          this.http.delete(this.FOTO_API+'/'+id).toPromise();
+          this.http.delete(endpoint).toPromise();
           resolve(true);
         } catch (error) {
           reject(error);
@@ -136,6 +137,7 @@ export class FotoService {
         'auth': 'b9e1d304-a6b1-4d09-aa66-ece2bd6fb7b6',
       };
       return new Promise(async (resolve, reject) => {
+        console.log(blobData);
         try {
           let foto: FotoWrapper = {
             id: null,
@@ -143,7 +145,7 @@ export class FotoService {
             comentario: blobData.name,
             File : blobData,
           };
-
+          console.log(foto);
           let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/guardar';
           await this.http.post(endpoint,foto,{headers}).toPromise() as Foto;
           resolve();
