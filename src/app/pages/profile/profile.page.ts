@@ -32,19 +32,25 @@ export class ProfilePage implements OnInit {
       componentProps: {
         'name': 'ModalProfilePage',
         'showBackdrop': true,
-        'enableBackdropDismiss': true
+        'enableBackdropDismiss': true,
+        'user': this.user
 
       }
     });
     return await modal.present();
   }
 
-  ngOnInit() {
-  
+ async ngOnInit() {
+  await this.userService.getUsuarioById(this.authS.currentUser.id).then((result)=>{
+    console.log(result);
+    this.user=result;
+    
+  })
 
   }
   goBack() {
     this.router.navigateByUrl('/private/tabs/tab1');
   }
   //metoodo para cerrar la sesion
+ 
 }

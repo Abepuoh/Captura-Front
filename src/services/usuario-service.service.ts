@@ -33,7 +33,7 @@ export class UsuarioService {
    * @param id 
    * @returns usuario
    */
-  public getUsuarioById(id?:Number):Promise<Usuario[]>{
+  public getUsuarioById(id?:Number):Promise<Usuario>{
     return new Promise(async (resolve, reject) => {
       let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.usuario;
       try {
