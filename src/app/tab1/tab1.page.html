@@ -3,10 +3,7 @@
   <ion-row>
     <ion-col>
       <ion-toolbar>
-        <ion-buttons slot="start" style="--background: #e0e0e0 !important">
-          <ion-back-button
-          defaultHref="/" ></ion-back-button>
-        </ion-buttons>
+
         <ion-searchbar debounce="500" Placeholder="Buscar Obras..." style="--background: #fcfcfc !important;" [animated]="true" (ionChange)="buscarObras($event)"></ion-searchbar>
         <ion-icon name="help-circle-outline" slot="end" style="zoom:2.5;padding-right:5px" (click)="showHelp()"></ion-icon>
       </ion-toolbar>

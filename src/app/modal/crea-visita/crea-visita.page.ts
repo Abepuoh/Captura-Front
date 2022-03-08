@@ -54,7 +54,6 @@ export class CreaVisitaPage implements OnInit {
   public closeModal(){
     this.modalController.dismiss();
     this.visitaService.getVisitaPorObra(this.obra.id);
-    window.location.reload();
   }
 
 

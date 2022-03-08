@@ -1,11 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { here } from 'leaflet-control-geocoder/dist/geocoders';
 import { environment } from 'src/environments/environment';
 import { Foto } from 'src/shared/foto.interface';
 import { FotoWrapper } from 'src/shared/fotoWrapper.interface';
 import { Visita } from 'src/shared/visita.interface';
+import { IonLoaderService } from './ion-loader.service';
+import { ToastServiceService } from './toast-service.service';
 import { VisitaService } from './visita-service.service';
 
 @Injectable({
@@ -13,7 +16,8 @@ import { VisitaService } from './visita-service.service';
 })
 export class FotoService {
 
-  constructor( public http: HttpClient, private visitaService: VisitaService) { }
+  constructor( public http: HttpClient, private visitaService: VisitaService, public toast:ToastServiceService, private loading:IonLoaderService,
+    private alertController:AlertController) { }
 
  /**
    * Método que obtiene todas las fotos almacenadas en la Base de Datos
@@ -134,7 +138,6 @@ export class FotoService {
     };
 
       return new Promise(async (resolve, reject) => {
-        console.log(blobData);
         try {
           //creamos una foto
           console.log(file)
@@ -150,7 +153,10 @@ export class FotoService {
           formData.append('comentario', file.name);
           formData.append('id', "-1");
           let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/add';     
+          await this.loading.customLoader("Subiendo...");
           await this.http.post(endpoint,formData).toPromise();
+          await this.toast.showToast("Foto subida con éxito", "sucess");
+          await this.loading.dismissLoader();
           resolve();
         } catch (error) {
           reject(error);
