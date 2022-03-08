@@ -3,11 +3,13 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { User } from '@firebase/auth';
 import * as auth from 'firebase/auth';
-import { Platform } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { Usuario } from 'src/shared/usuario.interface';
 import { LocalStorageService } from './local-storage.service';
 import { Router } from '@angular/router';
 import { UsuarioService } from './usuario-service.service';
+import { ToastServiceService } from './toast-service.service';
+import { IonLoaderService } from './ion-loader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +24,10 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone,
     public UsuarioS: UsuarioService,
-    public local: LocalStorageService// NgZone service to remove outside scope warning
+    public local: LocalStorageService,
+    public toast:ToastServiceService, 
+    private loading:IonLoaderService,
+    private alertController:AlertController// NgZone service to remove outside scope warning
   ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
@@ -40,7 +45,10 @@ export class AuthService {
   // Sign in with email/password
   async SignIn(email, password) {
     try {
+      this.loading.customLoader("Iniciando Sesión...");
       const result = await this.afAuth.signInWithEmailAndPassword(email, password);
+      this.toast.showToast("Sesion iniciada con exito!", "sucess");
+      this.loading.dismissLoader();
       if(await this.setCurrentUser(result)){
         this.ngZone.run(() => {
           this.router.navigate(['/private/tabs/tab1']);
@@ -53,7 +61,7 @@ export class AuthService {
     }
   }
   // Sign up with email/password
-  SignUp(email: string, password: string, nombre :String) {
+  async SignUp(email: string, password: string, nombre :String) {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
@@ -66,9 +74,10 @@ export class AuthService {
           foto: "",
           obras: [],
         };
-    
+        this.loading.customLoader("Registrando Usuario...");
         this.UsuarioS.createUsuario(Usuario);
-
+        this.toast.showToast("Usuario registrado con exito!", "sucess");
+        this.loading.dismissLoader();
         this.SendVerificationMail();
         //this.SetUserData(result.user);
       })

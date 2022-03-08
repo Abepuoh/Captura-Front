@@ -175,6 +175,8 @@ export class Tab5Page{
       console.log(blob)
       const file = new File([blob], (new Date()).getTime()+".png",{ type: "image/png" })
       await this.fotoService.uploadImage(file,id);
+      
+      await this.cargarFotos();
     })/**
     const blobData = this.b64toBlob(image.dataUrl, `image/${image.format}`);
     const imageFile = new File([blobData], `foto.${image.format}`, {type:`image/${image.format}`}); */
