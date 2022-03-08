@@ -124,10 +124,11 @@ export class Tab1Page {
                 await this.loading.customLoader("Borrando...");
                 await this.obraService.deleteObra(obra.id);
                 this.toast.showToast("La obra ha sido borrada correctamente", "sucess");
+                await this.loading.dismissLoader();
+                await this.cargarObras();
               } catch (error) {
                 this.toast.showToast("Error al borrar la obra", "Danger");
               }
-              await this.loading.dismissLoader();
             },
           },
         ],

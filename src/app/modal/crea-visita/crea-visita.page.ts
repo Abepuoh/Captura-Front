@@ -42,7 +42,7 @@ export class CreaVisitaPage implements OnInit {
     try {
         await this.visitaService.createVisita(newVisita);
         await this.toast.showToast("Visita guardada", "sucess");
-        await this.visitaService.getVisitaPorObra(this.obra.id);
+        window.location.reload();
     } catch (error) {
       await this.toast.showToast("Error guardando la visita", "danger");
     } finally{
@@ -54,6 +54,7 @@ export class CreaVisitaPage implements OnInit {
   public closeModal(){
     this.modalController.dismiss();
     this.visitaService.getVisitaPorObra(this.obra.id);
+    window.location.reload();
   }
 
 

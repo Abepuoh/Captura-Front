@@ -118,7 +118,7 @@ export class FotoService {
           };
           const formData = new FormData();
           formData.append('file', blobData, blobData.name);
-          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/guardar';     
+          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/add';     
           let newFoto: Foto = await this.http.post(endpoint,formData).toPromise() as Foto;
           resolve(newFoto);
         } catch (error) {
@@ -146,7 +146,7 @@ export class FotoService {
             File : blobData,
           };
           console.log(foto);
-          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/guardar';
+          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/add';
           await this.http.post(endpoint,foto,{headers}).toPromise() as Foto;
           resolve();
         } catch (error) {
