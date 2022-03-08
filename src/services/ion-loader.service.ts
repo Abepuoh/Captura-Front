@@ -34,7 +34,10 @@ export class IonLoaderService {
     this.loading = false; 
   }
 
-
+  /**
+   * Metodo para mostrar un loading al que puedes pasar el mensaje a dar
+   * @param message 
+   */
   public async customLoader(message:string){
     if(this.loading){
       this.htmlLoading.dismiss();

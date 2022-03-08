@@ -35,6 +35,10 @@ export class Tab1Page {
     await this.cargarObras();
   }
 
+  /**
+   * Metodo que carga todas las obras del usuario que ha iniciado la sesion
+   * @param event 
+   */
   public async cargarObras(event?) {
     if(this.infinite){
       this.infinite.disabled = false;
@@ -59,7 +63,10 @@ export class Tab1Page {
 
   }
 
-
+  /**
+   * Método que buscar entre las obras a través de un filtro por su nombre
+   * @param $event 
+   */
   public buscarObras($event) {
     const texto = $event.target.value;
     if (texto.length > 0) {
@@ -70,7 +77,11 @@ export class Tab1Page {
       this.cargarObras();
     }
   }
-
+  /**
+   * Método que abre el modal para la edición de la obra
+   * @param obra 
+   * @returns modal
+   */
   async editar(obra:Obra){
     if(obra!=null){
       const modal = await this.modalEdit.create({
@@ -87,6 +98,10 @@ export class Tab1Page {
 
   }
 
+  /**
+   * Método para borrar una obra de un usuario
+   * @param obra 
+   */
   public async borra(obra:Obra){
     if(obra!=null){
       const alert = await this.alertController.create({
@@ -109,10 +124,11 @@ export class Tab1Page {
                 await this.loading.customLoader("Borrando...");
                 await this.obraService.deleteObra(obra.id);
                 this.toast.showToast("La obra ha sido borrada correctamente", "sucess");
+                await this.loading.dismissLoader();
+                await this.cargarObras();
               } catch (error) {
                 this.toast.showToast("Error al borrar la obra", "Danger");
               }
-              await this.loading.dismissLoader();
             },
           },
         ],

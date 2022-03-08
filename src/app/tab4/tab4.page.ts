@@ -121,7 +121,10 @@ export class Tab4Page {
     });
   }
 
-    //Metodo para abir modal y crear la nueva visita
+    /**
+     * Metodo para abrir una ventana modal para crear la visita
+     * @returns modal
+     */
     public async crearVisitaGo(){ 
       let idString = this.route.snapshot.paramMap.get('id');
       let id = Number(idString);

@@ -10,9 +10,6 @@ import { Visita } from 'src/shared/visita.interface';
 
 export class VisitaService {
 
-  public API = 'https://frozen-crag-51318.herokuapp.com';
-  public VISITA_API = this.API + '/visita';
-
   constructor( public http: HttpClient) { }
 
  /**
@@ -22,8 +19,9 @@ export class VisitaService {
    */
   public getAllVisitas(): Promise<Visita[]> {
     return new Promise(async (resolve, reject) => {
+      let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.visita;
       try {
-        let visitas: Visita[] = await this.http.get(this.VISITA_API).toPromise() as Visita[];
+        let visitas: Visita[] = await this.http.get(endpoint).toPromise() as Visita[];
         resolve(visitas);
       } catch (error) {
         reject(error);
@@ -54,8 +52,9 @@ export class VisitaService {
    */
      public getVisitaPorObra(id?:Number):Promise<Visita[]>{
       return new Promise(async (resolve, reject) => {
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.visita+"/obra/"+id;
         try {
-          let visitas: Visita[] = await this.http.get(this.VISITA_API+"/obra/"+id).toPromise() as Visita[];
+          let visitas: Visita[] = await this.http.get(endpoint).toPromise() as Visita[];
           resolve(visitas);
         } catch (error) {
           reject(error);
@@ -70,8 +69,9 @@ export class VisitaService {
      */
     public getVisitaByFecha(fecha?:Date):Promise<Visita>{
       return new Promise(async (resolve, reject) => {
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.visita+"/fecha/"+fecha;
         try {
-          let visita: Visita = await this.http.get(this.VISITA_API+"/fecha/"+fecha).toPromise() as Visita;
+          let visita: Visita = await this.http.get(endpoint).toPromise() as Visita;
           resolve(visita);
         } catch (error) {
           reject(error);
@@ -87,8 +87,9 @@ export class VisitaService {
    public deleteVisita(id:Number): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
       if(id && id >-1){
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.visita+'/'+id;
         try {
-          await this.http.delete(this.VISITA_API+'/'+id).toPromise();
+          await this.http.delete(endpoint).toPromise();
           resolve(true);
         } catch (error) {
           reject(error);
@@ -106,8 +107,9 @@ export class VisitaService {
    */
      public updateVisita(visita?:Visita): Promise<Visita> {
       return new Promise(async (resolve, reject) => {
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.visita+"/"+visita.id;
         try {
-          let updateVisita: Visita = await this.http.put(this.VISITA_API+'/'+visita.id, visita).toPromise() as Visita;
+          let updateVisita: Visita = await this.http.put(endpoint, visita).toPromise() as Visita;
           resolve(updateVisita);
         } catch (error) {
           reject(error);
@@ -124,9 +126,10 @@ export class VisitaService {
     public createVisita(visita: Visita): Promise<Visita> {
 
       return new Promise(async (resolve, reject) => {
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.visita+"/guardar"
         try {
           console.log(visita)
-          let newVisita: Visita = await this.http.post(this.VISITA_API+'/guardar', visita).toPromise() as Visita;
+          let newVisita: Visita = await this.http.post(endpoint, visita).toPromise() as Visita;
           resolve(newVisita);
         } catch (error) {
           reject(error);

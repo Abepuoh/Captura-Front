@@ -9,9 +9,6 @@ import { Usuario } from 'src/shared/usuario.interface';
 })
 export class UsuarioService {
 
-  public API = 'https://frozen-crag-51318.herokuapp.com/';
-  public USUARIO_API = this.API + '/usuario';
-
   constructor( public http: HttpClient) { }
 
  /**
@@ -23,7 +20,8 @@ export class UsuarioService {
 
     return new Promise(async (resolve, reject) => {
       try {
-        let result: any = await this.http.get(this.USUARIO_API).toPromise();
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.usuario;
+        let result: any = await this.http.get(endpoint).toPromise();
         resolve(result);
       } catch (error) {
         reject(error);
@@ -37,6 +35,7 @@ export class UsuarioService {
    */
   public getUsuarioById(id?:Number):Promise<Usuario[]>{
     return new Promise(async (resolve, reject) => {
+      let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.usuario;
       try {
         let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.usuario+'/'+id;
         let result: any = await this.http.get(endpoint).toPromise();
@@ -56,8 +55,9 @@ export class UsuarioService {
 
     public getUsuarioByName(nombre:string):Promise<Usuario>{
       return new Promise(async (resolve, reject) => {
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.usuario+"/nombre/"+nombre;
         try {
-          let result: any = await this.http.get(this.USUARIO_API+"/nombre/"+nombre).toPromise();
+          let result: any = await this.http.get(endpoint).toPromise();
           console.log(result);
           resolve(result);
         } catch (error) {
@@ -74,8 +74,9 @@ export class UsuarioService {
    public deleteUsuario(id: Number): Promise<void> {
 
     return new Promise(async (resolve, reject) => {
+      let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.usuario+'/'+id;
       try {
-        let result: any = this.http.delete(this.USUARIO_API+'/'+id).toPromise();
+        let result: any = this.http.delete(endpoint).toPromise();
         console.log(result);
         resolve(result);
       } catch (error) {
@@ -93,8 +94,9 @@ export class UsuarioService {
      public updateUsuario(id?:Number,usuario?:Usuario): Promise<Usuario> {
 
       return new Promise(async (resolve, reject) => {
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.usuario+'/'+id;
         try {
-          let result: any = await this.http.put(this.USUARIO_API+'/'+id, usuario).toPromise();
+          let result: any = await this.http.put(endpoint, usuario).toPromise();
           console.log(result);
           resolve(result);
         } catch (error) {
@@ -112,8 +114,9 @@ export class UsuarioService {
     public createUsuario(usuario: Usuario): Promise<Usuario> {
 
       return new Promise(async (resolve, reject) => {
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.usuario+'/guardar';
         try {
-          let result: any = await this.http.post(this.USUARIO_API+'/guardar', usuario).toPromise();
+          let result: any = await this.http.post(endpoint, usuario).toPromise();
           console.log(result);
           resolve(result);
         } catch (error) {
