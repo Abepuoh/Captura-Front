@@ -157,6 +157,7 @@ export class Tab2Page {
       },
     });
     console.log(marcador);
+    this.cargaMarcadores();
     return await modal.present();
   }
   

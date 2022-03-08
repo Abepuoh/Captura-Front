@@ -59,7 +59,7 @@ export class CreaObraPage implements OnInit {
     }
     try {
       let obraResult = await this.obraService.createObra(obra);
-      //refresh de la pa
+      //hasta que no se cree la obra, no salir del modal
       if(obraResult.id!=-1){
         await this.toast.showToast("Se ha guardado la obra", "success");
       }else{
