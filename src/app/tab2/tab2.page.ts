@@ -49,8 +49,7 @@ export class Tab2Page {
     setTimeout(()=>{ this.Map.invalidateSize()}, 200)
     await this.cargaMarcadores();
 
-    let miMarcador:Marker = await this.crearMarcador((data)=>{
-      console.log(data);
+    let miMarcador:Marker = await this.crearMarcador((data:Marker)=>{
       this.crearObra(data);
     });
 

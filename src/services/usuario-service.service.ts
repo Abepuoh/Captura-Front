@@ -37,7 +37,8 @@ export class UsuarioService {
     return new Promise(async (resolve, reject) => {
       let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.usuario;
       try {
-        let result: any = await this.http.get(endpoint+"/"+id).toPromise();
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.usuario+'/'+id;
+        let result: any = await this.http.get(endpoint).toPromise();
         console.log(result);
         resolve(result);
       } catch (error) {

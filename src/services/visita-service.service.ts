@@ -36,8 +36,8 @@ export class VisitaService {
   public async getVisitaById(id:Number):Promise<Visita>{
     return new Promise(async (resolve, reject) => {
       try {
-        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.visita+'/'+id;
-        let visita:Visita = await this.http.get(endpoint).toPromise() as Visita;
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.visita;
+        let visita:Visita = await this.http.get(endpoint+"/"+id).toPromise() as Visita;
         resolve(visita);
       } catch (error) {
         reject(error);
