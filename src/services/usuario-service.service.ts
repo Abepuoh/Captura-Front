@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/shared/usuario.interface';
 
 
@@ -37,7 +38,8 @@ export class UsuarioService {
   public getUsuarioById(id?:Number):Promise<Usuario[]>{
     return new Promise(async (resolve, reject) => {
       try {
-        let result: any = await this.http.get(this.USUARIO_API+"/"+id).toPromise();
+        let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.usuario+'/'+id;
+        let result: any = await this.http.get(endpoint).toPromise();
         console.log(result);
         resolve(result);
       } catch (error) {

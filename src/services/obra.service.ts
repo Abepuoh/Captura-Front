@@ -129,7 +129,7 @@ export class ObraService {
      public getObraByUser(id:Number):Promise<Obra[]> {
       return new Promise(async (resolve, reject) => {
         if(id&&id>-1){
-          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra+"/usuario"
+          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.obra+"/usuario/"
           try {
             let obras:Obra[] = await this.http.get(endpoint+id).toPromise() as Obra[];
             resolve(obras);

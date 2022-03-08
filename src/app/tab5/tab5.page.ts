@@ -65,7 +65,6 @@ export class Tab5Page{
   public async loadImage(){
     this.fotoService.getAllFotos().then(images=>{
       this.fotos = images;
-      console.log(this.fotos);
     })
   }
 
@@ -162,14 +161,18 @@ export class Tab5Page{
     const image = await Camera.getPhoto({
       quality:60,
       allowEditing:true,
-      resultType: CameraResultType.Base64,
-      source
+      resultType: CameraResultType.DataUrl
     });
-    console.log(image);
-    const blobData = this.b64toBlob(image.base64String, `image/${image.format}`);
-    const blobUrl = URL.createObjectURL(blobData);//Este transforma el blob en una URL
-    console.log(blobUrl);
-    await this.fotoService.uploadImage(blobData,id);
+    const url = image.dataUrl;
+    fetch(url)
+    .then(res => res.blob())
+    .then(async blob => {
+      console.log(blob)
+      const file = new File([blob], (new Date()).getTime()+".png",{ type: "image/png" })
+      await this.fotoService.uploadImage(file,id);
+    })/**
+    const blobData = this.b64toBlob(image.dataUrl, `image/${image.format}`);
+    const imageFile = new File([blobData], `foto.${image.format}`, {type:`image/${image.format}`}); */
   }
   /**
    * Metodo de ayuda para transformar un Base64 en Blob

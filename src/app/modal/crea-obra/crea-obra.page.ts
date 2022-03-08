@@ -15,7 +15,7 @@ import { Usuario } from 'src/shared/usuario.interface';
   styleUrls: ['./crea-obra.page.scss'],
 })
 export class CreaObraPage implements OnInit {
-  @Input() marcador: FormGroup;
+  @Input() marcador: LatLng;
   public formObra:FormGroup;
 
   constructor(private modalController:ModalController, private obraService:ObraService, private fb: FormBuilder,
@@ -30,6 +30,7 @@ export class CreaObraPage implements OnInit {
       latitud:"",
       longitud: ""
     });  
+    console.log(this.marcador)
   }
   public closeModal(){
     this.modalController.dismiss();
@@ -47,18 +48,18 @@ export class CreaObraPage implements OnInit {
       obras:[]
     };
 
-    console.log(this.marcador.value+"Esto es lo que recibo");
     let obra:Obra = {
       id:-1,
       datos: this.formObra.get("datos").value,
       nombre: this.formObra.get("nombre").value,
-      latitud: 0,
-      longitud: 0,
+      latitud: this.marcador.lat,
+      longitud: this.marcador.lng,
       usuario: [usuarioDummy],
       visitas: [],
     }
     try {
       let obraResult = await this.obraService.createObra(obra);
+      //refresh de la pa
       if(obraResult.id!=-1){
         await this.toast.showToast("Se ha guardado la obra", "success");
       }else{

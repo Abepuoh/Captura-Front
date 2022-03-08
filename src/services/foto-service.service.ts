@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { here } from 'leaflet-control-geocoder/dist/geocoders';
 import { environment } from 'src/environments/environment';
 import { Foto } from 'src/shared/foto.interface';
 import { FotoWrapper } from 'src/shared/fotoWrapper.interface';
@@ -113,39 +114,41 @@ export class FotoService {
           let foto: FotoWrapper = {
             visita: id,
             comentario: blobData.name,
-            File : blobData,
+            file : blobData,
           };
           const formData = new FormData();
           formData.append('file', blobData, blobData.name);
-          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/guardar';     
+          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/add';     
           let newFoto: Foto = await this.http.post(endpoint,formData).toPromise() as Foto;
           resolve(newFoto);
         } catch (error) {
-          reject(error);
+          reject(error);  
         }
       });
     }
 
-    async uploadImage(blobData, id:Number): Promise<void> {
-      const headers = {
-        'enctype': 'multipart/form-data;',
-        'Accept': 'plain/text',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
-        'Access-Control-Allow-Headers': 'Authorization, Origin, Content-Type, X-CSRF-Token',
-        'auth': 'b9e1d304-a6b1-4d09-aa66-ece2bd6fb7b6',
-      };
+    async uploadImage(file:File, id:Number): Promise<void> {
+      const httpOptions = {
+        headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })
+    };
+
       return new Promise(async (resolve, reject) => {
         try {
+          //creamos una foto
+          console.log(file)
           let foto: FotoWrapper = {
-            id: null,
             visita: id,
-            comentario: blobData.name,
-            File : blobData,
+            comentario: file.name,
+            id: -1,
+            file: file,
           };
-
-          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/guardar';
-          await this.http.post(endpoint,foto,{headers}).toPromise() as Foto;
+          const formData: FormData = new FormData();
+          formData.append('file', file);
+          formData.append('visita', ""+id);
+          formData.append('comentario', file.name);
+          formData.append('id', "-1");
+          let endpoint = environment.apiEnviroment.endpoint+environment.apiEnviroment.foto+'/add';     
+          await this.http.post(endpoint,formData).toPromise();
           resolve();
         } catch (error) {
           reject(error);
