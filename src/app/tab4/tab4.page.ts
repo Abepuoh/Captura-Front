@@ -90,35 +90,41 @@ export class Tab4Page {
    * @param visita 
    */
   public async borraVisita(visita: Visita) {
-    this.alertController.create({
-      header: 'ALERTA',
-      subHeader: 'Va a borrar una visita',
-      message: '¿Quiere eliminar la visita?',
-      buttons: [
-        {
-          text: 'Si',
-          handler:async () => {
-            try {
-              await this.loading.customLoader("Eliminando...");
-              await this.visitaservice.deleteVisita(visita.id);
-              await this.toast.showToast("Visita borrada con éxito", "sucess");
-              await this.loading.dismissLoader();
-              await this.cargarVisitas();
-            } catch (error) {
-              await this.toast.showToast("La visita no se ha podido borrar", "danger");
+    if(visita!=null){
+      this.alertController.create({
+        header: 'ALERTA',
+        subHeader: 'Va a borrar la visita ' + visita.header,
+        message: '¿Quiere eliminar la visita?',
+        buttons: [
+          {
+            text: 'Si',
+            handler:async () => {
+              try {
+                await this.loading.customLoader("Eliminando...");
+                await this.visitaservice.deleteVisita(visita.id);
+                await this.toast.showToast("Visita borrada con éxito", "success");
+                await this.loading.dismissLoader();
+                await this.cargarVisitas();
+              } catch (error) {
+                await this.toast.showToast("La visita no se ha podido borrar", "danger");
+              }
+            }
+          },
+          {
+            text: 'Cancelar',
+            handler:async () => {
+              await this.alertController.dismiss();
+              this.cargarVisitas();
             }
           }
-        },
-        {
-          text: 'NO',
-          handler: () => {
-            this.cargarVisitas();
-          }
-        }
-      ]
-    }).then(res => {
-      res.present();
-    });
+        ]
+      }).then(res => {
+        res.present();
+      });
+    }else{
+      await this.toast.showToast("La visita no se ha seleccionado bien", "danger");
+    }
+
   }
 
     /**
@@ -136,6 +142,9 @@ export class Tab4Page {
             obra: Obra
           },
         });
+        modal.dismiss(async()=>{
+          await this.cargarVisitas();
+         });
         return await modal.present();
       }else{
         this.toast.showToast("Error al cargar la obra", "danger");
@@ -182,7 +191,7 @@ export class Tab4Page {
     }else{
       this.help = false;
     }
-}
+  }
 }
 
 

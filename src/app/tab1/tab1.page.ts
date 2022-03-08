@@ -40,14 +40,11 @@ export class Tab1Page {
    * @param event 
    */
   public async cargarObras(event?) {
-    if(this.infinite){
-      this.infinite.disabled = false;
-    }
+
     if(!event){
       await this.loading.customLoader("Espere...");
     }
-    try {
-      
+    try {   
       this.user = await this.UserStorage.getItem('user');
       await this.obraService.getObraByUser(this.user.id).then(obras => {
         this.obras = obras;
@@ -99,51 +96,49 @@ export class Tab1Page {
   }
 
   /**
-   * Método para borrar una obra de un usuario
+   * Metodo que borra las obras de la base de datos y de oneDrive
    * @param obra 
    */
-  public async borra(obra:Obra){
+  public async borraObra(obra: Obra) {
     if(obra!=null){
-      const alert = await this.alertController.create({
-        cssClass: 'my-custom-class',
-        subHeader: 'Borrado de la obra ' + obra.nombre,
-        message: '¿Está seguro de borrar la obra?',
+      console.log(obra);
+      this.alertController.create({
+        header: 'ALERTA',
+        subHeader: 'Va a borrar la obra ' + obra.nombre,
+        message: '¿Quiere eliminar la obra?',
         buttons: [
           {
-            text: 'Cancelar',
-            role: 'cancel',
-            cssClass: 'secondary',       
-            handler: async () => {
-              await this.alertController.dismiss();
-            },
-          },
-          {
-            text: 'Aceptar',
-            handler: async () => {
+            text: 'Si',
+            handler:async () => {
               try {
-                await this.loading.customLoader("Borrando...");
+                await this.loading.customLoader("Eliminando...");
                 await this.obraService.deleteObra(obra.id);
-                this.toast.showToast("La obra ha sido borrada correctamente", "sucess");
+                await this.toast.showToast("Obra borrada con éxito", "success");
                 await this.loading.dismissLoader();
                 await this.cargarObras();
               } catch (error) {
-                this.toast.showToast("Error al borrar la obra", "Danger");
+                await this.toast.showToast("La obra no se ha podido borrar", "danger");
               }
-            },
+            }
           },
-        ],
+          {
+            text: 'Cancelar',
+            handler:async () => {
+              await this.alertController.dismiss();
+              this.cargarObras();
+            }
+          }
+        ]
+      }).then(res => {
+        res.present();
       });
-      await alert.present();
     }else{
-      this.toast.showToast("No ha introducido bien la obra", "Danger");
+      await this.toast.showToast("La obra no se ha seleccionado bien", "danger");
     }
+
   }
 
-  public async getObraByName(nombre:String){
-    await this.obraService.getObraByName(nombre);
-  }
-
-
+/** 
   public async doInfinite($event) {
     let nuevasObras = await this.obraService.getAllObras();
     if(nuevasObras.length>10){
@@ -152,7 +147,7 @@ export class Tab1Page {
     this.obras = this.obras.concat(nuevasObras);
     $event.target.complete();
    
-  }
+  }*/
   /**
    * Metodo para ir al indice de la obra donde se encuentran sus visitas
    * @param obra 

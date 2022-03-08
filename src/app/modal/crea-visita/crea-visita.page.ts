@@ -41,19 +41,18 @@ export class CreaVisitaPage implements OnInit {
     await this.loading.customLoader("Guardando...");
     try {
         await this.visitaService.createVisita(newVisita);
-        await this.toast.showToast("Visita guardada", "sucess");
-        window.location.reload();
+        await this.toast.showToast("Visita guardada", "success");
+        await this.visitaService.getVisitaPorObra(this.obra.id);
     } catch (error) {
       await this.toast.showToast("Error guardando la visita", "danger");
     } finally{
-      
       this.loading.dismissLoader();
     }
   }
 
-  public closeModal(){
-    this.modalController.dismiss();
-    this.visitaService.getVisitaPorObra(this.obra.id);
+  public async closeModal(){
+    await this.modalController.dismiss(await this.visitaService.getVisitaPorObra(this.obra.id));
+    window.location.reload();
   }
 
 
