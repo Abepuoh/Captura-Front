@@ -12,6 +12,7 @@
     <div id="cambiarFoto">
 
       <div id="textFoto">
+        <ion-img src="{{user.foto}}"></ion-img>
         <ion-button class="hazFoto">
           <input id="myFileInput" (click)="hazFoto()" />CAMBIAR FOTO
         </ion-button>
@@ -35,7 +36,14 @@
         </ion-label>
         <ion-input placeholder="Ingresa Email" (ionChange)="ionChangeMail($event)" value="{{user.email}}"></ion-input>
       </ion-item>
-
+      <ion-item>
+        <ion-label position="stacked">
+          <div class="text-field">
+            Cambiar Contraseña
+          </div>
+        </ion-label>
+        <ion-input type="password" placeholder="Contraseña" value="{{user.datos}}"></ion-input>
+      </ion-item>
       <ion-item>
         <ion-label position="stacked">
           <div class="text-field">
@@ -44,6 +52,7 @@
         </ion-label>
         <ion-input placeholder="Datos" (ionChange)="ionChangeDatos($event)" value="{{user.datos}}"></ion-input>
       </ion-item>
+     
     </div>
     <ion-button fill="solid" color="#a43a40" class="button-edit" (click)="actualizar(user.id, user)">
       <div class="text-edit" routerLinkActive="active">ACTUALIZAR</div>

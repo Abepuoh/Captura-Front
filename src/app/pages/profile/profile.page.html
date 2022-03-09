@@ -7,13 +7,10 @@
 </ion-header>
 <ion-content class="background-image" no-scroll padding>
   <ion-avatar id="avatar"></ion-avatar>
-
-
-
   <div class="name">
     <p>{{user.nombre}}</p>
+    
   </div>
-
   <div id="layout_user">
     <div id="user_desciption">
       <p class="text">Nombre</p>
@@ -25,8 +22,7 @@
     </div>
 
     <div id="user_buttons">
-      <!--abrir modal-->
-      <ion-button fill="outline" color="#a43a40" (click)="openModal()" class="text">
+      <ion-button fill="outline" color="#a43a40" (click)="openModal(this.user)" class="text">
         <ion-icon name="pencil-outline">
         </ion-icon> EDITAR PERFIL
       </ion-button>
