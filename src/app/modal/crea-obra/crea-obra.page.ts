@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController, NavParams } from '@ionic/angular';
 import { LatLng, Marker } from 'leaflet';
+import { IonLoaderService } from 'src/services/ion-loader.service';
 import { LocalStorageService } from 'src/services/local-storage.service';
 import { ObraService } from 'src/services/obra.service';
 import { ToastServiceService } from 'src/services/toast-service.service';
@@ -19,7 +20,8 @@ export class CreaObraPage implements OnInit {
   public formObra:FormGroup;
 
   constructor(private modalController:ModalController, private obraService:ObraService, private fb: FormBuilder,
-    public toast:ToastServiceService,private local: LocalStorageService, private userSer:UsuarioService) {
+    public toast:ToastServiceService,private local: LocalStorageService, private userSer:UsuarioService,
+    private loading:IonLoaderService) {
      }
 
   ngOnInit() {
@@ -59,15 +61,17 @@ export class CreaObraPage implements OnInit {
     }
     try {
       let obraResult = await this.obraService.createObra(obra);
+      await this.loading.customLoader("Creando Obra...")
       //hasta que no se cree la obra, no salir del modal
-      if(obraResult.id!=-1){
-        await this.toast.showToast("Se ha guardado la obra", "success");
+      if(obraResult.id==-1){
+        await this.toast.showToast("Se ha guardado la obra", "success");       
       }else{
         await this.toast.showToast("Error al guardar la obra", "danger");
       }
     } catch (error) {
       await this.toast.showToast("Ha ocurrido un error al crear la obra", "danger");
     }
+    await this.loading.dismissLoader();
   }
   
 }
