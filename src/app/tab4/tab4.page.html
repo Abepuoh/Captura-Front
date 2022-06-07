@@ -8,7 +8,7 @@
         text="Volver">
         </ion-back-button>
         </ion-buttons>
-        <ion-searchbar debounce="500" Placeholder="Buscar Visitas..."[animated]="true" 
+        <ion-searchbar debounce="500" Placeholder="Buscar visita"[animated]="true" 
         (ionChange)="buscarVisitas($event)" style="--background: #fcfcfc !important;">
         </ion-searchbar>
         <ion-icon name="help-circle-outline" slot="end" style="zoom:2.5;padding-right:5px" (click)="showHelp()"></ion-icon>
@@ -35,7 +35,7 @@
           <p>{{visita.nota}}</p>
           <p>{{visita.fecha}}</p>
         </ion-label>
-        <ion-icon name="add-circle-outline" (click)="goToFotos(visita)" class="ion-icon"></ion-icon>
+        <ion-icon name="add-circle-outline" (click)="goBiometric()" class="ion-icon"></ion-icon>
       </ion-item>
   
       <ion-item-options side="end">
@@ -62,7 +62,7 @@
     </ion-grid>
   </div>
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button (click)="crearVisitaGo(Obra)">
+    <ion-fab-button (click)="crearVisitaGo()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

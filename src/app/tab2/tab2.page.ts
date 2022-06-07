@@ -70,6 +70,7 @@ export class Tab2Page {
       miMarcador.setLatLng(data.results[0].latlng);
       this.direccion = data.results[0].latlng;
     });
+
     let searchControl2 = esri_geo.geosearch({
       position: 'topright',
       placeholder: 'Introduce una dirección para buscar',
@@ -94,8 +95,7 @@ export class Tab2Page {
        waypoints: [
          L.latLng(this.direccion),
          L.latLng(this.direccion1)
-       ],
-       
+       ], 
        routeWhileDragging: false,
      }).addTo(this.Map);
    }

@@ -11,6 +11,7 @@ import { VisitaService } from 'src/services/visita-service.service';
 import { CreaVisitaPage } from '../modal/crea-visita/crea-visita.page';
 import { EditaVisitaPage } from '../modal/edita-visita/edita-visita.page';
 import { ToastServiceService } from 'src/services/toast-service.service';
+import { BiometricPage } from '../modal/biometric/biometric.page';
 
 @Component({
   selector: 'app-tab4',
@@ -181,6 +182,18 @@ export class Tab4Page {
     }else{
       this.toast.showToast("No se ha encontrado la visita", "danger");
     }   
+  }
+  async goBiometric(){
+    let idString = this.route.snapshot.paramMap.get('id');
+    let id = Number(idString);
+    let visita:Visita = await this.visitaservice.getVisitaById(id);
+    const modal = await this.modalController.create({
+      component: BiometricPage,
+      componentProps: {
+        visita: visita
+      },
+    });    
+    await modal.present();
   }
   /**
    * Metodo que sirve para abrir la ayuda al usuario

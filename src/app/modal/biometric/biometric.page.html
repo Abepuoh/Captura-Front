@@ -1,0 +1,7 @@
+<ion-content>
+  <div *ngIf="showFallback" class="fallback">
+    <ion-icon name="lock-closed-outline" size="large" ></ion-icon>
+    <ion-input [(ngModel)]="password" type="password" placeholder="password"></ion-input>
+    <ion-button (click)="unlock()" expand="full"> Desbloquear con código</ion-button>
+  </div>
+</ion-content>

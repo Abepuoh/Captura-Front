@@ -64,8 +64,7 @@ export class UsuarioService {
           reject(error);
         }
       });
-    }
-
+    } 
   /**
    * Método que borra una obra de la Base de Datos
    * @param id 

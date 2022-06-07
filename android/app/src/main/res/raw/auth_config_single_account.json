@@ -1,0 +1,16 @@
+{
+    "client_id" : "e26f46cb-16f5-4fab-9859-99c2290e3f62",
+    "authorization_user_agent" : "DEFAULT",
+    "redirect_uri" : "msauth://com.abepuoh.CapturaP/M61nf%2BaC69kCXmFY1ejcX83rDNc%3D",
+    "account_mode" : "SINGLE",
+    "authorities" : [
+      {
+        "type": "AAD",
+        "audience": {
+          "type": "AzureADMultipleOrgs",
+          "tenant_id": "organizations"
+        }
+      }
+    ]
+}
+

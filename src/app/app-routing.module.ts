@@ -32,6 +32,10 @@ const routes: Routes = [
   {
     path: 'edita-visita',
     loadChildren: () => import('./modal/edita-visita/edita-visita.module').then( m => m.EditaVisitaPageModule)
+  },
+  {
+    path: 'biometric',
+    loadChildren: () => import('./modal/biometric/biometric.module').then( m => m.BiometricPageModule)
   }
 
 

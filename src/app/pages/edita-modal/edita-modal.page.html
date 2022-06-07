@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content>  
-  <form [formGroup]="formObra" (ngSubmit)="editObra(obra)">
+  <form [formGroup]="formObra" (ngSubmit)="editObra()">
     <ion-item>
       <ion-label color="primary">Nombre: </ion-label>
       <ion-textarea type="text" formControlName="nombre" [(ngModel)]="this.obre.nombre"></ion-textarea>
