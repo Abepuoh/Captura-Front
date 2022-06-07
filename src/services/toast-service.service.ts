@@ -5,6 +5,9 @@ import { AlertController, ToastController } from '@ionic/angular';
   providedIn: 'root'
 })
 export class ToastServiceService {
+  presentToast(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
 
   private myToast: any;
 

@@ -44,13 +44,14 @@ export class ProfilePage implements OnInit {
   await this.userService.getUsuarioById(this.authS.currentUser.id).then((result)=>{
     console.log(result);
     this.user=result;
-    
   })
 
   }
   goBack() {
     this.router.navigateByUrl('/private/tabs/tab1');
   }
-  //metoodo para cerrar la sesion
+  logout(){
+    this.authS.SignOut();
+  }
  
 }

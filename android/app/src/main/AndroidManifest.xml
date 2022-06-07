@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.abepuoh.CapturaP">
-
+    package="com.abepuoh.CapturaP"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name="com.microsoft.identity.client.BrowserTabActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="msauth"
+                android:host="com.abepuoh.CapturaP"
+                android:path="/M61nf+aC69kCXmFY1ejcX83rDNc=" />
+        </intent-filter>
+        </activity>
 
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
@@ -33,19 +46,13 @@
         </provider>
     </application>
 
-    <!-- Permissions -->
-    <!--GeoCoder Permissions-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!--Request the following permissions via the Android Manifest One Drive-->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!--One drive permissions-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-
-    <!--Authorize one drive android-->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
+    <uses-sdk tools:overrideLibrary="com.ahm.capacitor.biometric.capacitorbiometricauth"/>
+    <uses-permission android:name="com.microsoft.identity.client.permission.SIGN_IN" />
+   
 </manifest>

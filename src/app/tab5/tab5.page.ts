@@ -145,7 +145,7 @@ export class Tab5Page{
    * Método para cargar una foto en la visita seleccionada
    * @param event 
    */
-  uploadFile(event:EventTarget){
+  uploadFile(event : any){
     let idString = this.route.snapshot.paramMap.get('id');
     let id = Number(idString);
     const eventObj:any = event as any;
